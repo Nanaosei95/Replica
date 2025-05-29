@@ -1,0 +1,73 @@
+* Borrowing from Tufte scheme
+
+* Based on the official Stata scheme s2mono
+#include s1mono
+
+* A pure background
+color background white
+
+* For the matrix plot (?)
+* I think this is for the gray horizontal lines
+color foreground gs10
+
+* Horizontal labels for the y-axis
+anglestyle vertical_tick horizontal
+
+* Axes and ticks
+color axisline gs4
+// linewidth axisline vthin
+color tick gs4
+color minortick gs4
+
+* Legend
+color legend_line        background
+numstyle legend_cols     1
+
+
+* --- Specific plots ---
+
+* Histograms
+color histogram_line white
+color histogram gs9
+ticksetstyle major_vert_nolabel
+
+* Boxplots
+intensity box inten20
+
+* Matrix plots
+symbol matrix                smcircle_hollow
+color matrixmarkline         gs2
+color mat_label_box          background
+color matplotregion_line     gs10
+
+* By-graphs
+color textbox                white
+color bylabel_outline        white
+
+
+* --- Markers ---
+
+* Dark grey markers
+color p               gs2
+color p1              gs2
+color p2              gs2
+color p3              gs2
+color p4              gs2
+color p5              gs2
+color p6              gs2
+color p7              gs2
+color p8              gs2
+color p9              gs2
+color p10             gs2
+color p11             gs2
+color p12             gs2
+color p13             gs2
+color p14             gs2
+color p15             gs2
+
+
+* Change text size to slightly larger
+color plotregion white  
+gsize axis_title medlarge
+gsize key_label medium
+gsize tick_label medium

@@ -1,0 +1,3196 @@
+{smcl}
+{com}{sf}{ul off}{txt}{.-}
+      name:  {res}<unnamed>
+       {txt}log:  {res}C:\Dropbox\Papers\016 Pricing Algorithms\replication/analysis/logs/_log_all_2021.10.04_14.32.56.smcl
+  {txt}log type:  {res}smcl
+ {txt}opened on:  {res} 4 Oct 2021, 14:32:56
+{txt}
+{com}. di "Begin date and time: $S_DATE $S_TIME"
+{res}Begin date and time:  4 Oct 2021 14:32:56
+{txt}
+{com}. 
+. clear all
+{res}{txt}
+{com}. set more off
+{txt}
+{com}. 
+. ********************************************************************************
+. *** Import and clean data
+. ********************************************************************************
+. /*
+> * 01-05. Load and clean prices from five retailers
+> do "$BASE/analysis/scripts/01_clean_retailer_1.do"
+> do "$BASE/analysis/scripts/02_clean_retailer_2.do"
+> do "$BASE/analysis/scripts/03_clean_retailer_3.do"
+> do "$BASE/analysis/scripts/04_clean_retailer_4.do"
+> do "$BASE/analysis/scripts/05_clean_retailer_5.do"
+> 
+> * 06. Combine and prepare for analysis
+> do "$BASE/analysis/scripts/06_combine_data.do"
+> */
+. 
+. ********************************************************************************
+. *** Analysis
+. ********************************************************************************
+. 
+. * 07. Summary statistics
+. do "$BASE/analysis/scripts/07_summary_stats.do"
+{txt}
+{com}. clear all
+{res}{txt}
+{com}. 
+. // Examples
+. use "$DATA/analysis_data.dta", clear
+{txt}
+{com}. keep if brand == "Xyzal" & form == "Tablet" & size == 80 & multipack == 1
+{txt}(5,147,308 observations deleted)
+
+{com}. bysort website period_id: assert _n == 1
+{txt}
+{com}. replace price = . if flag_imputed_price == 1
+{txt}(5,743 real changes made, 5,743 to missing)
+
+{com}. 
+. twoway (line price period_id if website == "A", cmissing(n) color(black%65)) ///
+>         (line price period_id if website == "B", cmissing(n) color(olive_teal*1.1%90)) ///
+>         (line price period_id if website == "C", cmissing(n) color(navy%80)) ///
+>         (line price period_id if website == "D", cmissing(n) color(maroon%80)) ///
+>         (line price period_id if website == "E", cmissing(n) color(orange*1.3%80)), ///
+>         ylabel(, tposition(inside) angle(horizontal) format(%4.0f))  ///
+>         xlabel(0(2400)12000, tposition(inside)) /// 
+>         legend(region(lcolor(white)) order(1 "A" 2 "B" 3 "C" 4 "D" 5 "E") cols(5)) ///  legend(off) 
+>         ytitle("Price") xtitle("Hours Elapsed in Sample") 
+{res}{txt}
+{com}. graph export "$FIGURES/xyzal_tablet_80.pdf", replace
+{txt}(file C:\Dropbox\Papers\016 Pricing Algorithms\replication/paper/figures/xyzal_tablet_80.pdf written in PDF format)
+
+{com}. 
+. /*
+> * Slides: A and D only
+> twoway (line price period_id if website == "A", cmissing(n) lcolor("204 51 51")) ///
+>         (line price period_id if website == "D", cmissing(n) lcolor("51 102 204")), ///
+>                 ytitle("Price") xtitle("Hours Elapsed in Sample") ///
+>                 ylabel(, tposition(inside) angle(horizontal) format(%4.0f))  ///
+>                 xlabel(0(2400)12000, tposition(inside)) /// 
+>                 legend(region(lcolor(white)) order(1 "Retailer A" 2 "Retailer D") cols(5)) 
+> graph export "$FIGURES/xyzal_tablet_80_AD_v2.pdf", replace
+> */
+. 
+. use "$DATA/analysis_data.dta", clear
+{txt}
+{com}. keep if brand == "Claritin" & form == "Tablet" & size == 70 & multipack == 1
+{txt}(5,146,645 observations deleted)
+
+{com}. bysort website period_id: assert _n == 1
+{txt}
+{com}. replace price = . if flag_imputed_price == 1
+{txt}(4,472 real changes made, 4,472 to missing)
+
+{com}. 
+. sort website period_id
+{txt}
+{com}. twoway (line price period_id if website == "A", cmissing(n) color(black%65)) ///
+>         (line price period_id if website == "B", cmissing(n) color(olive_teal*1.1%90)) ///
+>         (line price period_id if website == "C", cmissing(n) color(navy%80)) ///
+>         (line price period_id if website == "D", cmissing(n) color(maroon%80)) ///
+>         (line price period_id if website == "E", cmissing(n) color(orange*1.3%80)), ///
+>         ylabel(, tposition(inside) angle(horizontal) format(%4.0f))  ///
+>         xlabel(0(2400)12000, tposition(inside)) /// 
+>         legend(region(lcolor(white)) order(1 "A" 2 "B" 3 "C" 4 "D" 5 "E") cols(5)) ///  legend(off) 
+>         ytitle("Price") xtitle("Hours Elapsed in Sample") 
+{res}{txt}
+{com}. graph export "$FIGURES/claritin_tablet_70.pdf", replace
+{txt}(file C:\Dropbox\Papers\016 Pricing Algorithms\replication/paper/figures/claritin_tablet_70.pdf written in PDF format)
+
+{com}. 
+. * Daily Statistics
+. use "$DATA/analysis_data.dta", clear
+{txt}
+{com}. gen abs_price_change = abs(price - price[_n-1]) if price_change
+{txt}(5,078,352 missing values generated)
+
+{com}. collapse (sum) n_price_change = price_change abs_price_change observations = is_observed ///
+>         (max) has_price_change = price_change is_observed (mean) price, ///
+>         by(website product_website_id date)
+{txt}
+{com}. collapse (sum) n_price_change abs_price_change has_price_change observations n_products = is_observed ///
+>         (mean) price (sd) sd_price = price (p10) price_10 = price (p90) price_90 = price, by(website date)
+{txt}
+{com}. 
+. gen price_change_per_product = n_price_change/n_products
+{txt}(167 missing values generated)
+
+{com}. gen has_price_change_per_product = has_price_change/n_products
+{txt}(167 missing values generated)
+
+{com}. gen price_changes_conditional = n_price_change/has_price_change
+{txt}(1,440 missing values generated)
+
+{com}. gen obs_per_product = observations/n_products
+{txt}(167 missing values generated)
+
+{com}. gen avg_abs_price_change = abs_price_change/n_price_change
+{txt}(1,440 missing values generated)
+
+{com}. format obs_per_product n_products %9.1f
+{txt}
+{com}. format price_change_per_product has_price_change_per_product %9.2f
+{txt}
+{com}. gen dow = dow(date)
+{txt}
+{com}. 
+. * Count of products, weekly average
+. preserve
+{txt}
+{com}.         encode website, gen(website_code)
+{txt}
+{com}.         tsset website_code date
+{res}{txt}{col 8}panel variable:  {res}website_code (strongly balanced)
+{txt}{col 9}time variable:  {res}{col 25}date, 10apr2018 to 01oct2019
+{txt}{col 17}delta:  {res}1 day
+{txt}
+{com}.         gen week = date - dow
+{txt}
+{com}.         collapse (mean) n_products, by(website week)
+{txt}
+{com}.         format week %td
+{txt}
+{com}.         twoway (line n_products week if website == "A", lcolor(black%65)) ///
+>         (line n_products week if website == "B", lcolor(olive_teal*1.1%90)) ///
+>         (line n_products week if website == "C", lcolor(navy%80)) ///
+>         (line n_products week if website == "D", lcolor(maroon%80)) ///
+>         (line n_products week if website == "E", lcolor(orange*1.3%80)), ///
+>                 ytitle("Count of Products") ylabel(, format(%9.0f)) ///
+>                 xtitle("Date") ///
+>                 legend(label(1 "A") label(2 "B") label(3 "C") label(4 "D") label(5 "E") cols(5)) ///
+>                 xscale(range(21284 21837)) scale(0.95)
+{res}{txt}
+{com}.         graph export "$FIGURES/count_products_weekly.pdf", replace
+{txt}(file C:\Dropbox\Papers\016 Pricing Algorithms\replication/paper/figures/count_products_weekly.pdf written in PDF format)
+
+{com}. restore
+{txt}
+{com}. 
+. * Summary Stats Table
+. label variable n_products "Count of Products"
+{txt}
+{com}. label variable obs_per_product "Observations per Product"
+{txt}
+{com}. label variable price "Price: Mean"
+{txt}
+{com}. label variable price_10 "Price: 10th Percentile of Products"
+{txt}
+{com}. label variable price_90 "Price: 90th Percentile of Products"
+{txt}
+{com}. label variable avg_abs_price_change "Mean Absolute Price Change"
+{txt}
+{com}. label variable price_change_per_product "Price Changes per Product"
+{txt}
+{com}. label variable has_price_change_per_product "Share of Products with a Price Change"
+{txt}
+{com}.         
+.         
+. global part1 "n_products obs_per_product"
+{txt}
+{com}. estpost su $part1 if website == "A"
+
+{txt}{space 0}{space 0}{ralign 12:}{space 1}{c |}{space 1}{ralign 9:e(count)}{space 1}{space 1}{ralign 9:e(sum_w)}{space 1}{space 1}{ralign 9:e(mean)}{space 1}{space 1}{ralign 9:e(Var)}{space 1}
+{space 0}{hline 13}{c   +}{hline 11}{hline 11}{hline 11}{hline 11}
+{space 0}{space 0}{ralign 12:n_products}{space 1}{c |}{space 1}{ralign 9:{res:{sf:      540}}}{space 1}{space 1}{ralign 9:{res:{sf:      540}}}{space 1}{space 1}{ralign 9:{res:{sf: 124.8537}}}{space 1}{space 1}{ralign 9:{res:{sf: 1284.192}}}{space 1}
+{space 0}{space 0}{ralign 12:obs_per_pr~t}{space 1}{c |}{space 1}{ralign 9:{res:{sf:      507}}}{space 1}{space 1}{ralign 9:{res:{sf:      507}}}{space 1}{space 1}{ralign 9:{res:{sf: 20.85253}}}{space 1}{space 1}{ralign 9:{res:{sf: 11.93972}}}{space 1}
+
+{space 0}{space 0}{ralign 12:}{space 1}{c |}{space 1}{ralign 9:e(sd)}{space 1}{space 1}{ralign 9:e(min)}{space 1}{space 1}{ralign 9:e(max)}{space 1}{space 1}{ralign 9:e(sum)}{space 1}
+{space 0}{hline 13}{c   +}{hline 11}{hline 11}{hline 11}{hline 11}
+{space 0}{space 0}{ralign 12:n_products}{space 1}{c |}{space 1}{ralign 9:{res:{sf: 35.83562}}}{space 1}{space 1}{ralign 9:{res:{sf:        0}}}{space 1}{space 1}{ralign 9:{res:{sf:      158}}}{space 1}{space 1}{ralign 9:{res:{sf:    67421}}}{space 1}
+{space 0}{space 0}{ralign 12:obs_per_pr~t}{space 1}{c |}{space 1}{ralign 9:{res:{sf:  3.45539}}}{space 1}{space 1}{ralign 9:{res:{sf:        2}}}{space 1}{space 1}{ralign 9:{res:{sf: 23.87302}}}{space 1}{space 1}{ralign 9:{res:{sf: 10572.23}}}{space 1}
+
+{com}. est store A
+{txt}
+{com}. estpost su $part1 if website == "B"
+
+{txt}{space 0}{space 0}{ralign 12:}{space 1}{c |}{space 1}{ralign 9:e(count)}{space 1}{space 1}{ralign 9:e(sum_w)}{space 1}{space 1}{ralign 9:e(mean)}{space 1}{space 1}{ralign 9:e(Var)}{space 1}
+{space 0}{hline 13}{c   +}{hline 11}{hline 11}{hline 11}{hline 11}
+{space 0}{space 0}{ralign 12:n_products}{space 1}{c |}{space 1}{ralign 9:{res:{sf:      540}}}{space 1}{space 1}{ralign 9:{res:{sf:      540}}}{space 1}{space 1}{ralign 9:{res:{sf: 41.28148}}}{space 1}{space 1}{ralign 9:{res:{sf: 437.4457}}}{space 1}
+{space 0}{space 0}{ralign 12:obs_per_pr~t}{space 1}{c |}{space 1}{ralign 9:{res:{sf:      514}}}{space 1}{space 1}{ralign 9:{res:{sf:      514}}}{space 1}{space 1}{ralign 9:{res:{sf: 20.41149}}}{space 1}{space 1}{ralign 9:{res:{sf: 7.006416}}}{space 1}
+
+{space 0}{space 0}{ralign 12:}{space 1}{c |}{space 1}{ralign 9:e(sd)}{space 1}{space 1}{ralign 9:e(min)}{space 1}{space 1}{ralign 9:e(max)}{space 1}{space 1}{ralign 9:e(sum)}{space 1}
+{space 0}{hline 13}{c   +}{hline 11}{hline 11}{hline 11}{hline 11}
+{space 0}{space 0}{ralign 12:n_products}{space 1}{c |}{space 1}{ralign 9:{res:{sf:  20.9152}}}{space 1}{space 1}{ralign 9:{res:{sf:        0}}}{space 1}{space 1}{ralign 9:{res:{sf:       77}}}{space 1}{space 1}{ralign 9:{res:{sf:    22292}}}{space 1}
+{space 0}{space 0}{ralign 12:obs_per_pr~t}{space 1}{c |}{space 1}{ralign 9:{res:{sf: 2.646964}}}{space 1}{space 1}{ralign 9:{res:{sf: 4.709677}}}{space 1}{space 1}{ralign 9:{res:{sf:       24}}}{space 1}{space 1}{ralign 9:{res:{sf: 10491.51}}}{space 1}
+
+{com}. est store B
+{txt}
+{com}. estpost su $part1 if website == "C"
+
+{txt}{space 0}{space 0}{ralign 12:}{space 1}{c |}{space 1}{ralign 9:e(count)}{space 1}{space 1}{ralign 9:e(sum_w)}{space 1}{space 1}{ralign 9:e(mean)}{space 1}{space 1}{ralign 9:e(Var)}{space 1}
+{space 0}{hline 13}{c   +}{hline 11}{hline 11}{hline 11}{hline 11}
+{space 0}{space 0}{ralign 12:n_products}{space 1}{c |}{space 1}{ralign 9:{res:{sf:      540}}}{space 1}{space 1}{ralign 9:{res:{sf:      540}}}{space 1}{space 1}{ralign 9:{res:{sf: 49.93889}}}{space 1}{space 1}{ralign 9:{res:{sf: 303.8905}}}{space 1}
+{space 0}{space 0}{ralign 12:obs_per_pr~t}{space 1}{c |}{space 1}{ralign 9:{res:{sf:      507}}}{space 1}{space 1}{ralign 9:{res:{sf:      507}}}{space 1}{space 1}{ralign 9:{res:{sf: 19.04535}}}{space 1}{space 1}{ralign 9:{res:{sf: 19.10077}}}{space 1}
+
+{space 0}{space 0}{ralign 12:}{space 1}{c |}{space 1}{ralign 9:e(sd)}{space 1}{space 1}{ralign 9:e(min)}{space 1}{space 1}{ralign 9:e(max)}{space 1}{space 1}{ralign 9:e(sum)}{space 1}
+{space 0}{hline 13}{c   +}{hline 11}{hline 11}{hline 11}{hline 11}
+{space 0}{space 0}{ralign 12:n_products}{space 1}{c |}{space 1}{ralign 9:{res:{sf: 17.43246}}}{space 1}{space 1}{ralign 9:{res:{sf:        0}}}{space 1}{space 1}{ralign 9:{res:{sf:       66}}}{space 1}{space 1}{ralign 9:{res:{sf:    26967}}}{space 1}
+{space 0}{space 0}{ralign 12:obs_per_pr~t}{space 1}{c |}{space 1}{ralign 9:{res:{sf: 4.370443}}}{space 1}{space 1}{ralign 9:{res:{sf:        1}}}{space 1}{space 1}{ralign 9:{res:{sf:       24}}}{space 1}{space 1}{ralign 9:{res:{sf: 9655.991}}}{space 1}
+
+{com}. est store C
+{txt}
+{com}. estpost su $part1 if website == "D"
+
+{txt}{space 0}{space 0}{ralign 12:}{space 1}{c |}{space 1}{ralign 9:e(count)}{space 1}{space 1}{ralign 9:e(sum_w)}{space 1}{space 1}{ralign 9:e(mean)}{space 1}{space 1}{ralign 9:e(Var)}{space 1}
+{space 0}{hline 13}{c   +}{hline 11}{hline 11}{hline 11}{hline 11}
+{space 0}{space 0}{ralign 12:n_products}{space 1}{c |}{space 1}{ralign 9:{res:{sf:      540}}}{space 1}{space 1}{ralign 9:{res:{sf:      540}}}{space 1}{space 1}{ralign 9:{res:{sf: 42.53148}}}{space 1}{space 1}{ralign 9:{res:{sf: 125.2031}}}{space 1}
+{space 0}{space 0}{ralign 12:obs_per_pr~t}{space 1}{c |}{space 1}{ralign 9:{res:{sf:      510}}}{space 1}{space 1}{ralign 9:{res:{sf:      510}}}{space 1}{space 1}{ralign 9:{res:{sf:  21.1156}}}{space 1}{space 1}{ralign 9:{res:{sf: 13.25174}}}{space 1}
+
+{space 0}{space 0}{ralign 12:}{space 1}{c |}{space 1}{ralign 9:e(sd)}{space 1}{space 1}{ralign 9:e(min)}{space 1}{space 1}{ralign 9:e(max)}{space 1}{space 1}{ralign 9:e(sum)}{space 1}
+{space 0}{hline 13}{c   +}{hline 11}{hline 11}{hline 11}{hline 11}
+{space 0}{space 0}{ralign 12:n_products}{space 1}{c |}{space 1}{ralign 9:{res:{sf: 11.18942}}}{space 1}{space 1}{ralign 9:{res:{sf:        0}}}{space 1}{space 1}{ralign 9:{res:{sf:       51}}}{space 1}{space 1}{ralign 9:{res:{sf:    22967}}}{space 1}
+{space 0}{space 0}{ralign 12:obs_per_pr~t}{space 1}{c |}{space 1}{ralign 9:{res:{sf: 3.640294}}}{space 1}{space 1}{ralign 9:{res:{sf:        1}}}{space 1}{space 1}{ralign 9:{res:{sf:       24}}}{space 1}{space 1}{ralign 9:{res:{sf: 10768.96}}}{space 1}
+
+{com}. est store D
+{txt}
+{com}. estpost su $part1 if website == "E"
+
+{txt}{space 0}{space 0}{ralign 12:}{space 1}{c |}{space 1}{ralign 9:e(count)}{space 1}{space 1}{ralign 9:e(sum_w)}{space 1}{space 1}{ralign 9:e(mean)}{space 1}{space 1}{ralign 9:e(Var)}{space 1}
+{space 0}{hline 13}{c   +}{hline 11}{hline 11}{hline 11}{hline 11}
+{space 0}{space 0}{ralign 12:n_products}{space 1}{c |}{space 1}{ralign 9:{res:{sf:      540}}}{space 1}{space 1}{ralign 9:{res:{sf:      540}}}{space 1}{space 1}{ralign 9:{res:{sf: 35.07037}}}{space 1}{space 1}{ralign 9:{res:{sf: 251.4904}}}{space 1}
+{space 0}{space 0}{ralign 12:obs_per_pr~t}{space 1}{c |}{space 1}{ralign 9:{res:{sf:      495}}}{space 1}{space 1}{ralign 9:{res:{sf:      495}}}{space 1}{space 1}{ralign 9:{res:{sf: 19.10758}}}{space 1}{space 1}{ralign 9:{res:{sf: 33.30847}}}{space 1}
+
+{space 0}{space 0}{ralign 12:}{space 1}{c |}{space 1}{ralign 9:e(sd)}{space 1}{space 1}{ralign 9:e(min)}{space 1}{space 1}{ralign 9:e(max)}{space 1}{space 1}{ralign 9:e(sum)}{space 1}
+{space 0}{hline 13}{c   +}{hline 11}{hline 11}{hline 11}{hline 11}
+{space 0}{space 0}{ralign 12:n_products}{space 1}{c |}{space 1}{ralign 9:{res:{sf: 15.85845}}}{space 1}{space 1}{ralign 9:{res:{sf:        0}}}{space 1}{space 1}{ralign 9:{res:{sf:       50}}}{space 1}{space 1}{ralign 9:{res:{sf:    18938}}}{space 1}
+{space 0}{space 0}{ralign 12:obs_per_pr~t}{space 1}{c |}{space 1}{ralign 9:{res:{sf: 5.771349}}}{space 1}{space 1}{ralign 9:{res:{sf:        1}}}{space 1}{space 1}{ralign 9:{res:{sf:       24}}}{space 1}{space 1}{ralign 9:{res:{sf: 9458.254}}}{space 1}
+
+{com}. est store E
+{txt}
+{com}. estpost su $part1 
+
+{txt}{space 0}{space 0}{ralign 12:}{space 1}{c |}{space 1}{ralign 9:e(count)}{space 1}{space 1}{ralign 9:e(sum_w)}{space 1}{space 1}{ralign 9:e(mean)}{space 1}{space 1}{ralign 9:e(Var)}{space 1}
+{space 0}{hline 13}{c   +}{hline 11}{hline 11}{hline 11}{hline 11}
+{space 0}{space 0}{ralign 12:n_products}{space 1}{c |}{space 1}{ralign 9:{res:{sf:     2700}}}{space 1}{space 1}{ralign 9:{res:{sf:     2700}}}{space 1}{space 1}{ralign 9:{res:{sf: 58.73519}}}{space 1}{space 1}{ralign 9:{res:{sf: 1595.395}}}{space 1}
+{space 0}{space 0}{ralign 12:obs_per_pr~t}{space 1}{c |}{space 1}{ralign 9:{res:{sf:     2533}}}{space 1}{space 1}{ralign 9:{res:{sf:     2533}}}{space 1}{space 1}{ralign 9:{res:{sf: 20.11328}}}{space 1}{space 1}{ralign 9:{res:{sf:  17.5412}}}{space 1}
+
+{space 0}{space 0}{ralign 12:}{space 1}{c |}{space 1}{ralign 9:e(sd)}{space 1}{space 1}{ralign 9:e(min)}{space 1}{space 1}{ralign 9:e(max)}{space 1}{space 1}{ralign 9:e(sum)}{space 1}
+{space 0}{hline 13}{c   +}{hline 11}{hline 11}{hline 11}{hline 11}
+{space 0}{space 0}{ralign 12:n_products}{space 1}{c |}{space 1}{ralign 9:{res:{sf:  39.9424}}}{space 1}{space 1}{ralign 9:{res:{sf:        0}}}{space 1}{space 1}{ralign 9:{res:{sf:      158}}}{space 1}{space 1}{ralign 9:{res:{sf:   158585}}}{space 1}
+{space 0}{space 0}{ralign 12:obs_per_pr~t}{space 1}{c |}{space 1}{ralign 9:{res:{sf: 4.188222}}}{space 1}{space 1}{ralign 9:{res:{sf:        1}}}{space 1}{space 1}{ralign 9:{res:{sf:       24}}}{space 1}{space 1}{ralign 9:{res:{sf: 50946.94}}}{space 1}
+
+{com}. est store F
+{txt}
+{com}. 
+. esttab A B C D E F using "$TABLES/daily_stats.tex", replace ///
+>                 nomtitles ///
+>                 cells(mean(fmt(1))) label booktabs nonum collabels(none) f noobs
+{res}{txt}(note: file C:\Dropbox\Papers\016 Pricing Algorithms\replication/paper/tables/daily_stats.tex not found)
+(output written to {browse  `"C:\Dropbox\Papers\016 Pricing Algorithms\replication/paper/tables/daily_stats.tex"'})
+
+{com}. 
+. global part2 "price price_10 price_90 avg_abs_price_change price_change_per_product"
+{txt}
+{com}. estpost su $part2 if website == "A"
+
+{txt}{space 0}{space 0}{ralign 12:}{space 1}{c |}{space 1}{ralign 9:e(count)}{space 1}{space 1}{ralign 9:e(sum_w)}{space 1}{space 1}{ralign 9:e(mean)}{space 1}{space 1}{ralign 9:e(Var)}{space 1}
+{space 0}{hline 13}{c   +}{hline 11}{hline 11}{hline 11}{hline 11}
+{space 0}{space 0}{ralign 12:price}{space 1}{c |}{space 1}{ralign 9:{res:{sf:      507}}}{space 1}{space 1}{ralign 9:{res:{sf:      507}}}{space 1}{space 1}{ralign 9:{res:{sf: 27.18177}}}{space 1}{space 1}{ralign 9:{res:{sf: 3.226994}}}{space 1}
+{space 0}{space 0}{ralign 12:price_10}{space 1}{c |}{space 1}{ralign 9:{res:{sf:      507}}}{space 1}{space 1}{ralign 9:{res:{sf:      507}}}{space 1}{space 1}{ralign 9:{res:{sf: 9.753571}}}{space 1}{space 1}{ralign 9:{res:{sf: .4026451}}}{space 1}
+{space 0}{space 0}{ralign 12:price_90}{space 1}{c |}{space 1}{ralign 9:{res:{sf:      507}}}{space 1}{space 1}{ralign 9:{res:{sf:      507}}}{space 1}{space 1}{ralign 9:{res:{sf: 51.11397}}}{space 1}{space 1}{ralign 9:{res:{sf: 27.35828}}}{space 1}
+{space 0}{space 0}{ralign 12:avg_abs_pr~e}{space 1}{c |}{space 1}{ralign 9:{res:{sf:      507}}}{space 1}{space 1}{ralign 9:{res:{sf:      507}}}{space 1}{space 1}{ralign 9:{res:{sf: 1.346624}}}{space 1}{space 1}{ralign 9:{res:{sf: .1888976}}}{space 1}
+{space 0}{space 0}{ralign 12:price_chan~t}{space 1}{c |}{space 1}{ralign 9:{res:{sf:      507}}}{space 1}{space 1}{ralign 9:{res:{sf:      507}}}{space 1}{space 1}{ralign 9:{res:{sf: 1.886755}}}{space 1}{space 1}{ralign 9:{res:{sf: .3629498}}}{space 1}
+
+{space 0}{space 0}{ralign 12:}{space 1}{c |}{space 1}{ralign 9:e(sd)}{space 1}{space 1}{ralign 9:e(min)}{space 1}{space 1}{ralign 9:e(max)}{space 1}{space 1}{ralign 9:e(sum)}{space 1}
+{space 0}{hline 13}{c   +}{hline 11}{hline 11}{hline 11}{hline 11}
+{space 0}{space 0}{ralign 12:price}{space 1}{c |}{space 1}{ralign 9:{res:{sf: 1.796384}}}{space 1}{space 1}{ralign 9:{res:{sf: 20.97248}}}{space 1}{space 1}{ralign 9:{res:{sf: 31.55738}}}{space 1}{space 1}{ralign 9:{res:{sf: 13781.16}}}{space 1}
+{space 0}{space 0}{ralign 12:price_10}{space 1}{c |}{space 1}{ralign 9:{res:{sf: .6345432}}}{space 1}{space 1}{ralign 9:{res:{sf:     8.15}}}{space 1}{space 1}{ralign 9:{res:{sf:   13.845}}}{space 1}{space 1}{ralign 9:{res:{sf: 4945.061}}}{space 1}
+{space 0}{space 0}{ralign 12:price_90}{space 1}{c |}{space 1}{ralign 9:{res:{sf: 5.230514}}}{space 1}{space 1}{ralign 9:{res:{sf: 31.20125}}}{space 1}{space 1}{ralign 9:{res:{sf:    66.99}}}{space 1}{space 1}{ralign 9:{res:{sf: 25914.78}}}{space 1}
+{space 0}{space 0}{ralign 12:avg_abs_pr~e}{space 1}{c |}{space 1}{ralign 9:{res:{sf: .4346235}}}{space 1}{space 1}{ralign 9:{res:{sf: .6356176}}}{space 1}{space 1}{ralign 9:{res:{sf: 3.210769}}}{space 1}{space 1}{ralign 9:{res:{sf: 682.7383}}}{space 1}
+{space 0}{space 0}{ralign 12:price_chan~t}{space 1}{c |}{space 1}{ralign 9:{res:{sf: .6024532}}}{space 1}{space 1}{ralign 9:{res:{sf: .0808824}}}{space 1}{space 1}{ralign 9:{res:{sf:     4.85}}}{space 1}{space 1}{ralign 9:{res:{sf: 956.5847}}}{space 1}
+
+{com}. est store A
+{txt}
+{com}. estpost su $part2 if website == "B"
+
+{txt}{space 0}{space 0}{ralign 12:}{space 1}{c |}{space 1}{ralign 9:e(count)}{space 1}{space 1}{ralign 9:e(sum_w)}{space 1}{space 1}{ralign 9:e(mean)}{space 1}{space 1}{ralign 9:e(Var)}{space 1}
+{space 0}{hline 13}{c   +}{hline 11}{hline 11}{hline 11}{hline 11}
+{space 0}{space 0}{ralign 12:price}{space 1}{c |}{space 1}{ralign 9:{res:{sf:      514}}}{space 1}{space 1}{ralign 9:{res:{sf:      514}}}{space 1}{space 1}{ralign 9:{res:{sf: 16.87773}}}{space 1}{space 1}{ralign 9:{res:{sf: 10.95684}}}{space 1}
+{space 0}{space 0}{ralign 12:price_10}{space 1}{c |}{space 1}{ralign 9:{res:{sf:      514}}}{space 1}{space 1}{ralign 9:{res:{sf:      514}}}{space 1}{space 1}{ralign 9:{res:{sf: 6.925358}}}{space 1}{space 1}{ralign 9:{res:{sf: 2.712916}}}{space 1}
+{space 0}{space 0}{ralign 12:price_90}{space 1}{c |}{space 1}{ralign 9:{res:{sf:      514}}}{space 1}{space 1}{ralign 9:{res:{sf:      514}}}{space 1}{space 1}{ralign 9:{res:{sf: 28.95252}}}{space 1}{space 1}{ralign 9:{res:{sf: 88.90816}}}{space 1}
+{space 0}{space 0}{ralign 12:avg_abs_pr~e}{space 1}{c |}{space 1}{ralign 9:{res:{sf:      446}}}{space 1}{space 1}{ralign 9:{res:{sf:      446}}}{space 1}{space 1}{ralign 9:{res:{sf: 2.305754}}}{space 1}{space 1}{ralign 9:{res:{sf: 14.24063}}}{space 1}
+{space 0}{space 0}{ralign 12:price_chan~t}{space 1}{c |}{space 1}{ralign 9:{res:{sf:      514}}}{space 1}{space 1}{ralign 9:{res:{sf:      514}}}{space 1}{space 1}{ralign 9:{res:{sf: .2849423}}}{space 1}{space 1}{ralign 9:{res:{sf: .0842039}}}{space 1}
+
+{space 0}{space 0}{ralign 12:}{space 1}{c |}{space 1}{ralign 9:e(sd)}{space 1}{space 1}{ralign 9:e(min)}{space 1}{space 1}{ralign 9:e(max)}{space 1}{space 1}{ralign 9:e(sum)}{space 1}
+{space 0}{hline 13}{c   +}{hline 11}{hline 11}{hline 11}{hline 11}
+{space 0}{space 0}{ralign 12:price}{space 1}{c |}{space 1}{ralign 9:{res:{sf: 3.310111}}}{space 1}{space 1}{ralign 9:{res:{sf:     7.17}}}{space 1}{space 1}{ralign 9:{res:{sf:    28.55}}}{space 1}{space 1}{ralign 9:{res:{sf: 8675.152}}}{space 1}
+{space 0}{space 0}{ralign 12:price_10}{space 1}{c |}{space 1}{ralign 9:{res:{sf: 1.647093}}}{space 1}{space 1}{ralign 9:{res:{sf:     4.22}}}{space 1}{space 1}{ralign 9:{res:{sf:  10.5525}}}{space 1}{space 1}{ralign 9:{res:{sf: 3559.634}}}{space 1}
+{space 0}{space 0}{ralign 12:price_90}{space 1}{c |}{space 1}{ralign 9:{res:{sf: 9.429113}}}{space 1}{space 1}{ralign 9:{res:{sf:    10.12}}}{space 1}{space 1}{ralign 9:{res:{sf:    73.93}}}{space 1}{space 1}{ralign 9:{res:{sf:  14881.6}}}{space 1}
+{space 0}{space 0}{ralign 12:avg_abs_pr~e}{space 1}{c |}{space 1}{ralign 9:{res:{sf: 3.773676}}}{space 1}{space 1}{ralign 9:{res:{sf:      .01}}}{space 1}{space 1}{ralign 9:{res:{sf: 53.66778}}}{space 1}{space 1}{ralign 9:{res:{sf: 1028.366}}}{space 1}
+{space 0}{space 0}{ralign 12:price_chan~t}{space 1}{c |}{space 1}{ralign 9:{res:{sf: .2901791}}}{space 1}{space 1}{ralign 9:{res:{sf:        0}}}{space 1}{space 1}{ralign 9:{res:{sf:        2}}}{space 1}{space 1}{ralign 9:{res:{sf: 146.4603}}}{space 1}
+
+{com}. est store B
+{txt}
+{com}. estpost su $part2 if website == "C"
+
+{txt}{space 0}{space 0}{ralign 12:}{space 1}{c |}{space 1}{ralign 9:e(count)}{space 1}{space 1}{ralign 9:e(sum_w)}{space 1}{space 1}{ralign 9:e(mean)}{space 1}{space 1}{ralign 9:e(Var)}{space 1}
+{space 0}{hline 13}{c   +}{hline 11}{hline 11}{hline 11}{hline 11}
+{space 0}{space 0}{ralign 12:price}{space 1}{c |}{space 1}{ralign 9:{res:{sf:      507}}}{space 1}{space 1}{ralign 9:{res:{sf:      507}}}{space 1}{space 1}{ralign 9:{res:{sf: 17.62798}}}{space 1}{space 1}{ralign 9:{res:{sf: 1.656769}}}{space 1}
+{space 0}{space 0}{ralign 12:price_10}{space 1}{c |}{space 1}{ralign 9:{res:{sf:      507}}}{space 1}{space 1}{ralign 9:{res:{sf:      507}}}{space 1}{space 1}{ralign 9:{res:{sf: 5.527442}}}{space 1}{space 1}{ralign 9:{res:{sf:  .175694}}}{space 1}
+{space 0}{space 0}{ralign 12:price_90}{space 1}{c |}{space 1}{ralign 9:{res:{sf:      507}}}{space 1}{space 1}{ralign 9:{res:{sf:      507}}}{space 1}{space 1}{ralign 9:{res:{sf: 33.29882}}}{space 1}{space 1}{ralign 9:{res:{sf: 17.76557}}}{space 1}
+{space 0}{space 0}{ralign 12:avg_abs_pr~e}{space 1}{c |}{space 1}{ralign 9:{res:{sf:      134}}}{space 1}{space 1}{ralign 9:{res:{sf:      134}}}{space 1}{space 1}{ralign 9:{res:{sf: 1.124209}}}{space 1}{space 1}{ralign 9:{res:{sf: 1.919943}}}{space 1}
+{space 0}{space 0}{ralign 12:price_chan~t}{space 1}{c |}{space 1}{ralign 9:{res:{sf:      507}}}{space 1}{space 1}{ralign 9:{res:{sf:      507}}}{space 1}{space 1}{ralign 9:{res:{sf: .0082522}}}{space 1}{space 1}{ralign 9:{res:{sf: .0003386}}}{space 1}
+
+{space 0}{space 0}{ralign 12:}{space 1}{c |}{space 1}{ralign 9:e(sd)}{space 1}{space 1}{ralign 9:e(min)}{space 1}{space 1}{ralign 9:e(max)}{space 1}{space 1}{ralign 9:e(sum)}{space 1}
+{space 0}{hline 13}{c   +}{hline 11}{hline 11}{hline 11}{hline 11}
+{space 0}{space 0}{ralign 12:price}{space 1}{c |}{space 1}{ralign 9:{res:{sf: 1.287155}}}{space 1}{space 1}{ralign 9:{res:{sf:     5.49}}}{space 1}{space 1}{ralign 9:{res:{sf:   21.265}}}{space 1}{space 1}{ralign 9:{res:{sf: 8937.387}}}{space 1}
+{space 0}{space 0}{ralign 12:price_10}{space 1}{c |}{space 1}{ralign 9:{res:{sf: .4191587}}}{space 1}{space 1}{ralign 9:{res:{sf:     4.49}}}{space 1}{space 1}{ralign 9:{res:{sf:    10.79}}}{space 1}{space 1}{ralign 9:{res:{sf: 2802.413}}}{space 1}
+{space 0}{space 0}{ralign 12:price_90}{space 1}{c |}{space 1}{ralign 9:{res:{sf: 4.214922}}}{space 1}{space 1}{ralign 9:{res:{sf:     5.49}}}{space 1}{space 1}{ralign 9:{res:{sf:    42.99}}}{space 1}{space 1}{ralign 9:{res:{sf:  16882.5}}}{space 1}
+{space 0}{space 0}{ralign 12:avg_abs_pr~e}{space 1}{c |}{space 1}{ralign 9:{res:{sf:  1.38562}}}{space 1}{space 1}{ralign 9:{res:{sf:      .03}}}{space 1}{space 1}{ralign 9:{res:{sf:        7}}}{space 1}{space 1}{ralign 9:{res:{sf:  150.644}}}{space 1}
+{space 0}{space 0}{ralign 12:price_chan~t}{space 1}{c |}{space 1}{ralign 9:{res:{sf: .0184024}}}{space 1}{space 1}{ralign 9:{res:{sf:        0}}}{space 1}{space 1}{ralign 9:{res:{sf: .1666667}}}{space 1}{space 1}{ralign 9:{res:{sf: 4.183888}}}{space 1}
+
+{com}. est store C
+{txt}
+{com}. estpost su $part2 if website == "D"
+
+{txt}{space 0}{space 0}{ralign 12:}{space 1}{c |}{space 1}{ralign 9:e(count)}{space 1}{space 1}{ralign 9:e(sum_w)}{space 1}{space 1}{ralign 9:e(mean)}{space 1}{space 1}{ralign 9:e(Var)}{space 1}
+{space 0}{hline 13}{c   +}{hline 11}{hline 11}{hline 11}{hline 11}
+{space 0}{space 0}{ralign 12:price}{space 1}{c |}{space 1}{ralign 9:{res:{sf:      510}}}{space 1}{space 1}{ralign 9:{res:{sf:      510}}}{space 1}{space 1}{ralign 9:{res:{sf: 20.92503}}}{space 1}{space 1}{ralign 9:{res:{sf: .9621594}}}{space 1}
+{space 0}{space 0}{ralign 12:price_10}{space 1}{c |}{space 1}{ralign 9:{res:{sf:      510}}}{space 1}{space 1}{ralign 9:{res:{sf:      510}}}{space 1}{space 1}{ralign 9:{res:{sf: 6.880306}}}{space 1}{space 1}{ralign 9:{res:{sf: .1773252}}}{space 1}
+{space 0}{space 0}{ralign 12:price_90}{space 1}{c |}{space 1}{ralign 9:{res:{sf:      510}}}{space 1}{space 1}{ralign 9:{res:{sf:      510}}}{space 1}{space 1}{ralign 9:{res:{sf: 38.21347}}}{space 1}{space 1}{ralign 9:{res:{sf:  5.19229}}}{space 1}
+{space 0}{space 0}{ralign 12:avg_abs_pr~e}{space 1}{c |}{space 1}{ralign 9:{res:{sf:       78}}}{space 1}{space 1}{ralign 9:{res:{sf:       78}}}{space 1}{space 1}{ralign 9:{res:{sf: 3.280589}}}{space 1}{space 1}{ralign 9:{res:{sf:  2.25197}}}{space 1}
+{space 0}{space 0}{ralign 12:price_chan~t}{space 1}{c |}{space 1}{ralign 9:{res:{sf:      510}}}{space 1}{space 1}{ralign 9:{res:{sf:      510}}}{space 1}{space 1}{ralign 9:{res:{sf: .0208922}}}{space 1}{space 1}{ralign 9:{res:{sf: .0035484}}}{space 1}
+
+{space 0}{space 0}{ralign 12:}{space 1}{c |}{space 1}{ralign 9:e(sd)}{space 1}{space 1}{ralign 9:e(min)}{space 1}{space 1}{ralign 9:e(max)}{space 1}{space 1}{ralign 9:e(sum)}{space 1}
+{space 0}{hline 13}{c   +}{hline 11}{hline 11}{hline 11}{hline 11}
+{space 0}{space 0}{ralign 12:price}{space 1}{c |}{space 1}{ralign 9:{res:{sf: .9808973}}}{space 1}{space 1}{ralign 9:{res:{sf:    18.39}}}{space 1}{space 1}{ralign 9:{res:{sf:    23.74}}}{space 1}{space 1}{ralign 9:{res:{sf: 10671.77}}}{space 1}
+{space 0}{space 0}{ralign 12:price_10}{space 1}{c |}{space 1}{ralign 9:{res:{sf:    .4211}}}{space 1}{space 1}{ralign 9:{res:{sf:     5.99}}}{space 1}{space 1}{ralign 9:{res:{sf:    13.99}}}{space 1}{space 1}{ralign 9:{res:{sf: 3508.956}}}{space 1}
+{space 0}{space 0}{ralign 12:price_90}{space 1}{c |}{space 1}{ralign 9:{res:{sf:  2.27866}}}{space 1}{space 1}{ralign 9:{res:{sf:    34.99}}}{space 1}{space 1}{ralign 9:{res:{sf:    39.99}}}{space 1}{space 1}{ralign 9:{res:{sf: 19488.87}}}{space 1}
+{space 0}{space 0}{ralign 12:avg_abs_pr~e}{space 1}{c |}{space 1}{ralign 9:{res:{sf: 1.500657}}}{space 1}{space 1}{ralign 9:{res:{sf:       .5}}}{space 1}{space 1}{ralign 9:{res:{sf:     11.5}}}{space 1}{space 1}{ralign 9:{res:{sf:  255.886}}}{space 1}
+{space 0}{space 0}{ralign 12:price_chan~t}{space 1}{c |}{space 1}{ralign 9:{res:{sf: .0595687}}}{space 1}{space 1}{ralign 9:{res:{sf:        0}}}{space 1}{space 1}{ralign 9:{res:{sf: .3571429}}}{space 1}{space 1}{ralign 9:{res:{sf: 10.65504}}}{space 1}
+
+{com}. est store D
+{txt}
+{com}. estpost su $part2 if website == "E"
+
+{txt}{space 0}{space 0}{ralign 12:}{space 1}{c |}{space 1}{ralign 9:e(count)}{space 1}{space 1}{ralign 9:e(sum_w)}{space 1}{space 1}{ralign 9:e(mean)}{space 1}{space 1}{ralign 9:e(Var)}{space 1}
+{space 0}{hline 13}{c   +}{hline 11}{hline 11}{hline 11}{hline 11}
+{space 0}{space 0}{ralign 12:price}{space 1}{c |}{space 1}{ralign 9:{res:{sf:      495}}}{space 1}{space 1}{ralign 9:{res:{sf:      495}}}{space 1}{space 1}{ralign 9:{res:{sf: 21.74243}}}{space 1}{space 1}{ralign 9:{res:{sf: .9574927}}}{space 1}
+{space 0}{space 0}{ralign 12:price_10}{space 1}{c |}{space 1}{ralign 9:{res:{sf:      495}}}{space 1}{space 1}{ralign 9:{res:{sf:      495}}}{space 1}{space 1}{ralign 9:{res:{sf: 7.501488}}}{space 1}{space 1}{ralign 9:{res:{sf: 1.732057}}}{space 1}
+{space 0}{space 0}{ralign 12:price_90}{space 1}{c |}{space 1}{ralign 9:{res:{sf:      495}}}{space 1}{space 1}{ralign 9:{res:{sf:      495}}}{space 1}{space 1}{ralign 9:{res:{sf: 39.64783}}}{space 1}{space 1}{ralign 9:{res:{sf: 9.587476}}}{space 1}
+{space 0}{space 0}{ralign 12:avg_abs_pr~e}{space 1}{c |}{space 1}{ralign 9:{res:{sf:       95}}}{space 1}{space 1}{ralign 9:{res:{sf:       95}}}{space 1}{space 1}{ralign 9:{res:{sf: 3.061473}}}{space 1}{space 1}{ralign 9:{res:{sf: 1.825226}}}{space 1}
+{space 0}{space 0}{ralign 12:price_chan~t}{space 1}{c |}{space 1}{ralign 9:{res:{sf:      495}}}{space 1}{space 1}{ralign 9:{res:{sf:      495}}}{space 1}{space 1}{ralign 9:{res:{sf: .0252075}}}{space 1}{space 1}{ralign 9:{res:{sf:  .005928}}}{space 1}
+
+{space 0}{space 0}{ralign 12:}{space 1}{c |}{space 1}{ralign 9:e(sd)}{space 1}{space 1}{ralign 9:e(min)}{space 1}{space 1}{ralign 9:e(max)}{space 1}{space 1}{ralign 9:e(sum)}{space 1}
+{space 0}{hline 13}{c   +}{hline 11}{hline 11}{hline 11}{hline 11}
+{space 0}{space 0}{ralign 12:price}{space 1}{c |}{space 1}{ralign 9:{res:{sf: .9785156}}}{space 1}{space 1}{ralign 9:{res:{sf: 18.99467}}}{space 1}{space 1}{ralign 9:{res:{sf:   23.824}}}{space 1}{space 1}{ralign 9:{res:{sf:  10762.5}}}{space 1}
+{space 0}{space 0}{ralign 12:price_10}{space 1}{c |}{space 1}{ralign 9:{res:{sf: 1.316077}}}{space 1}{space 1}{ralign 9:{res:{sf:     4.99}}}{space 1}{space 1}{ralign 9:{res:{sf:    13.49}}}{space 1}{space 1}{ralign 9:{res:{sf: 3713.237}}}{space 1}
+{space 0}{space 0}{ralign 12:price_90}{space 1}{c |}{space 1}{ralign 9:{res:{sf: 3.096365}}}{space 1}{space 1}{ralign 9:{res:{sf: 33.65667}}}{space 1}{space 1}{ralign 9:{res:{sf:    44.99}}}{space 1}{space 1}{ralign 9:{res:{sf: 19625.67}}}{space 1}
+{space 0}{space 0}{ralign 12:avg_abs_pr~e}{space 1}{c |}{space 1}{ralign 9:{res:{sf: 1.351009}}}{space 1}{space 1}{ralign 9:{res:{sf:       .2}}}{space 1}{space 1}{ralign 9:{res:{sf:      6.5}}}{space 1}{space 1}{ralign 9:{res:{sf: 290.8399}}}{space 1}
+{space 0}{space 0}{ralign 12:price_chan~t}{space 1}{c |}{space 1}{ralign 9:{res:{sf: .0769938}}}{space 1}{space 1}{ralign 9:{res:{sf:        0}}}{space 1}{space 1}{ralign 9:{res:{sf: .7142857}}}{space 1}{space 1}{ralign 9:{res:{sf: 12.47771}}}{space 1}
+
+{com}. est store E
+{txt}
+{com}. estpost su $part2 
+
+{txt}{space 0}{space 0}{ralign 12:}{space 1}{c |}{space 1}{ralign 9:e(count)}{space 1}{space 1}{ralign 9:e(sum_w)}{space 1}{space 1}{ralign 9:e(mean)}{space 1}{space 1}{ralign 9:e(Var)}{space 1}
+{space 0}{hline 13}{c   +}{hline 11}{hline 11}{hline 11}{hline 11}
+{space 0}{space 0}{ralign 12:price}{space 1}{c |}{space 1}{ralign 9:{res:{sf:     2533}}}{space 1}{space 1}{ralign 9:{res:{sf:     2533}}}{space 1}{space 1}{ralign 9:{res:{sf: 20.85589}}}{space 1}{space 1}{ralign 9:{res:{sf: 17.04258}}}{space 1}
+{space 0}{space 0}{ralign 12:price_10}{space 1}{c |}{space 1}{ralign 9:{res:{sf:     2533}}}{space 1}{space 1}{ralign 9:{res:{sf:     2533}}}{space 1}{space 1}{ralign 9:{res:{sf:  7.31516}}}{space 1}{space 1}{ralign 9:{res:{sf: 2.945052}}}{space 1}
+{space 0}{space 0}{ralign 12:price_90}{space 1}{c |}{space 1}{ralign 9:{res:{sf:     2533}}}{space 1}{space 1}{ralign 9:{res:{sf:     2533}}}{space 1}{space 1}{ralign 9:{res:{sf: 38.21296}}}{space 1}{space 1}{ralign 9:{res:{sf: 85.91852}}}{space 1}
+{space 0}{space 0}{ralign 12:avg_abs_pr~e}{space 1}{c |}{space 1}{ralign 9:{res:{sf:     1260}}}{space 1}{space 1}{ralign 9:{res:{sf:     1260}}}{space 1}{space 1}{ralign 9:{res:{sf: 1.911488}}}{space 1}{space 1}{ralign 9:{res:{sf: 6.051614}}}{space 1}
+{space 0}{space 0}{ralign 12:price_chan~t}{space 1}{c |}{space 1}{ralign 9:{res:{sf:     2533}}}{space 1}{space 1}{ralign 9:{res:{sf:     2533}}}{space 1}{space 1}{ralign 9:{res:{sf: .4462541}}}{space 1}{space 1}{ralign 9:{res:{sf: .6218293}}}{space 1}
+
+{space 0}{space 0}{ralign 12:}{space 1}{c |}{space 1}{ralign 9:e(sd)}{space 1}{space 1}{ralign 9:e(min)}{space 1}{space 1}{ralign 9:e(max)}{space 1}{space 1}{ralign 9:e(sum)}{space 1}
+{space 0}{hline 13}{c   +}{hline 11}{hline 11}{hline 11}{hline 11}
+{space 0}{space 0}{ralign 12:price}{space 1}{c |}{space 1}{ralign 9:{res:{sf: 4.128266}}}{space 1}{space 1}{ralign 9:{res:{sf:     5.49}}}{space 1}{space 1}{ralign 9:{res:{sf: 31.55738}}}{space 1}{space 1}{ralign 9:{res:{sf: 52827.96}}}{space 1}
+{space 0}{space 0}{ralign 12:price_10}{space 1}{c |}{space 1}{ralign 9:{res:{sf: 1.716115}}}{space 1}{space 1}{ralign 9:{res:{sf:     4.22}}}{space 1}{space 1}{ralign 9:{res:{sf:    13.99}}}{space 1}{space 1}{ralign 9:{res:{sf:  18529.3}}}{space 1}
+{space 0}{space 0}{ralign 12:price_90}{space 1}{c |}{space 1}{ralign 9:{res:{sf: 9.269224}}}{space 1}{space 1}{ralign 9:{res:{sf:     5.49}}}{space 1}{space 1}{ralign 9:{res:{sf:    73.93}}}{space 1}{space 1}{ralign 9:{res:{sf: 96793.42}}}{space 1}
+{space 0}{space 0}{ralign 12:avg_abs_pr~e}{space 1}{c |}{space 1}{ralign 9:{res:{sf: 2.460003}}}{space 1}{space 1}{ralign 9:{res:{sf:      .01}}}{space 1}{space 1}{ralign 9:{res:{sf: 53.66778}}}{space 1}{space 1}{ralign 9:{res:{sf: 2408.474}}}{space 1}
+{space 0}{space 0}{ralign 12:price_chan~t}{space 1}{c |}{space 1}{ralign 9:{res:{sf: .7885616}}}{space 1}{space 1}{ralign 9:{res:{sf:        0}}}{space 1}{space 1}{ralign 9:{res:{sf:     4.85}}}{space 1}{space 1}{ralign 9:{res:{sf: 1130.362}}}{space 1}
+
+{com}. est store F
+{txt}
+{com}. 
+. esttab A B C D E F using "$TABLES/daily_stats.tex", append ///
+>                 nomtitles ///
+>                 cells(mean(fmt(2))) label booktabs nonum collabels(none) f noobs plain
+{res}{txt}(output written to {browse  `"C:\Dropbox\Papers\016 Pricing Algorithms\replication/paper/tables/daily_stats.tex"'})
+
+{com}. 
+. global part3 "has_price_change_per_product"
+{txt}
+{com}. estpost su $part3 if website == "A"
+
+{txt}{space 0}{space 0}{ralign 12:}{space 1}{c |}{space 1}{ralign 9:e(count)}{space 1}{space 1}{ralign 9:e(sum_w)}{space 1}{space 1}{ralign 9:e(mean)}{space 1}{space 1}{ralign 9:e(Var)}{space 1}
+{space 0}{hline 13}{c   +}{hline 11}{hline 11}{hline 11}{hline 11}
+{space 0}{space 0}{ralign 12:has_price_~t}{space 1}{c |}{space 1}{ralign 9:{res:{sf:      507}}}{space 1}{space 1}{ralign 9:{res:{sf:      507}}}{space 1}{space 1}{ralign 9:{res:{sf:  .373499}}}{space 1}{space 1}{ralign 9:{res:{sf: .0057148}}}{space 1}
+
+{space 0}{space 0}{ralign 12:}{space 1}{c |}{space 1}{ralign 9:e(sd)}{space 1}{space 1}{ralign 9:e(min)}{space 1}{space 1}{ralign 9:e(max)}{space 1}{space 1}{ralign 9:e(sum)}{space 1}
+{space 0}{hline 13}{c   +}{hline 11}{hline 11}{hline 11}{hline 11}
+{space 0}{space 0}{ralign 12:has_price_~t}{space 1}{c |}{space 1}{ralign 9:{res:{sf:  .075596}}}{space 1}{space 1}{ralign 9:{res:{sf: .0808824}}}{space 1}{space 1}{ralign 9:{res:{sf:       .8}}}{space 1}{space 1}{ralign 9:{res:{sf:  189.364}}}{space 1}
+
+{com}. est store A
+{txt}
+{com}. estpost su $part3 if website == "B"
+
+{txt}{space 0}{space 0}{ralign 12:}{space 1}{c |}{space 1}{ralign 9:e(count)}{space 1}{space 1}{ralign 9:e(sum_w)}{space 1}{space 1}{ralign 9:e(mean)}{space 1}{space 1}{ralign 9:e(Var)}{space 1}
+{space 0}{hline 13}{c   +}{hline 11}{hline 11}{hline 11}{hline 11}
+{space 0}{space 0}{ralign 12:has_price_~t}{space 1}{c |}{space 1}{ralign 9:{res:{sf:      514}}}{space 1}{space 1}{ralign 9:{res:{sf:      514}}}{space 1}{space 1}{ralign 9:{res:{sf: .0888972}}}{space 1}{space 1}{ralign 9:{res:{sf: .0072273}}}{space 1}
+
+{space 0}{space 0}{ralign 12:}{space 1}{c |}{space 1}{ralign 9:e(sd)}{space 1}{space 1}{ralign 9:e(min)}{space 1}{space 1}{ralign 9:e(max)}{space 1}{space 1}{ralign 9:e(sum)}{space 1}
+{space 0}{hline 13}{c   +}{hline 11}{hline 11}{hline 11}{hline 11}
+{space 0}{space 0}{ralign 12:has_price_~t}{space 1}{c |}{space 1}{ralign 9:{res:{sf: .0850134}}}{space 1}{space 1}{ralign 9:{res:{sf:        0}}}{space 1}{space 1}{ralign 9:{res:{sf:        1}}}{space 1}{space 1}{ralign 9:{res:{sf: 45.69319}}}{space 1}
+
+{com}. est store B
+{txt}
+{com}. estpost su $part3 if website == "C"
+
+{txt}{space 0}{space 0}{ralign 12:}{space 1}{c |}{space 1}{ralign 9:e(count)}{space 1}{space 1}{ralign 9:e(sum_w)}{space 1}{space 1}{ralign 9:e(mean)}{space 1}{space 1}{ralign 9:e(Var)}{space 1}
+{space 0}{hline 13}{c   +}{hline 11}{hline 11}{hline 11}{hline 11}
+{space 0}{space 0}{ralign 12:has_price_~t}{space 1}{c |}{space 1}{ralign 9:{res:{sf:      507}}}{space 1}{space 1}{ralign 9:{res:{sf:      507}}}{space 1}{space 1}{ralign 9:{res:{sf: .0080202}}}{space 1}{space 1}{ralign 9:{res:{sf:  .000309}}}{space 1}
+
+{space 0}{space 0}{ralign 12:}{space 1}{c |}{space 1}{ralign 9:e(sd)}{space 1}{space 1}{ralign 9:e(min)}{space 1}{space 1}{ralign 9:e(max)}{space 1}{space 1}{ralign 9:e(sum)}{space 1}
+{space 0}{hline 13}{c   +}{hline 11}{hline 11}{hline 11}{hline 11}
+{space 0}{space 0}{ralign 12:has_price_~t}{space 1}{c |}{space 1}{ralign 9:{res:{sf: .0175791}}}{space 1}{space 1}{ralign 9:{res:{sf:        0}}}{space 1}{space 1}{ralign 9:{res:{sf: .1666667}}}{space 1}{space 1}{ralign 9:{res:{sf: 4.066257}}}{space 1}
+
+{com}. est store C
+{txt}
+{com}. estpost su $part3 if website == "D"
+
+{txt}{space 0}{space 0}{ralign 12:}{space 1}{c |}{space 1}{ralign 9:e(count)}{space 1}{space 1}{ralign 9:e(sum_w)}{space 1}{space 1}{ralign 9:e(mean)}{space 1}{space 1}{ralign 9:e(Var)}{space 1}
+{space 0}{hline 13}{c   +}{hline 11}{hline 11}{hline 11}{hline 11}
+{space 0}{space 0}{ralign 12:has_price_~t}{space 1}{c |}{space 1}{ralign 9:{res:{sf:      510}}}{space 1}{space 1}{ralign 9:{res:{sf:      510}}}{space 1}{space 1}{ralign 9:{res:{sf: .0202751}}}{space 1}{space 1}{ralign 9:{res:{sf:  .003398}}}{space 1}
+
+{space 0}{space 0}{ralign 12:}{space 1}{c |}{space 1}{ralign 9:e(sd)}{space 1}{space 1}{ralign 9:e(min)}{space 1}{space 1}{ralign 9:e(max)}{space 1}{space 1}{ralign 9:e(sum)}{space 1}
+{space 0}{hline 13}{c   +}{hline 11}{hline 11}{hline 11}{hline 11}
+{space 0}{space 0}{ralign 12:has_price_~t}{space 1}{c |}{space 1}{ralign 9:{res:{sf: .0582926}}}{space 1}{space 1}{ralign 9:{res:{sf:        0}}}{space 1}{space 1}{ralign 9:{res:{sf: .3571429}}}{space 1}{space 1}{ralign 9:{res:{sf: 10.34033}}}{space 1}
+
+{com}. est store D
+{txt}
+{com}. estpost su $part3 if website == "E"
+
+{txt}{space 0}{space 0}{ralign 12:}{space 1}{c |}{space 1}{ralign 9:e(count)}{space 1}{space 1}{ralign 9:e(sum_w)}{space 1}{space 1}{ralign 9:e(mean)}{space 1}{space 1}{ralign 9:e(Var)}{space 1}
+{space 0}{hline 13}{c   +}{hline 11}{hline 11}{hline 11}{hline 11}
+{space 0}{space 0}{ralign 12:has_price_~t}{space 1}{c |}{space 1}{ralign 9:{res:{sf:      495}}}{space 1}{space 1}{ralign 9:{res:{sf:      495}}}{space 1}{space 1}{ralign 9:{res:{sf: .0237968}}}{space 1}{space 1}{ralign 9:{res:{sf: .0050856}}}{space 1}
+
+{space 0}{space 0}{ralign 12:}{space 1}{c |}{space 1}{ralign 9:e(sd)}{space 1}{space 1}{ralign 9:e(min)}{space 1}{space 1}{ralign 9:e(max)}{space 1}{space 1}{ralign 9:e(sum)}{space 1}
+{space 0}{hline 13}{c   +}{hline 11}{hline 11}{hline 11}{hline 11}
+{space 0}{space 0}{ralign 12:has_price_~t}{space 1}{c |}{space 1}{ralign 9:{res:{sf: .0713134}}}{space 1}{space 1}{ralign 9:{res:{sf:        0}}}{space 1}{space 1}{ralign 9:{res:{sf: .6285715}}}{space 1}{space 1}{ralign 9:{res:{sf: 11.77942}}}{space 1}
+
+{com}. est store E
+{txt}
+{com}. estpost su $part3 
+
+{txt}{space 0}{space 0}{ralign 12:}{space 1}{c |}{space 1}{ralign 9:e(count)}{space 1}{space 1}{ralign 9:e(sum_w)}{space 1}{space 1}{ralign 9:e(mean)}{space 1}{space 1}{ralign 9:e(Var)}{space 1}
+{space 0}{hline 13}{c   +}{hline 11}{hline 11}{hline 11}{hline 11}
+{space 0}{space 0}{ralign 12:has_price_~t}{space 1}{c |}{space 1}{ralign 9:{res:{sf:     2533}}}{space 1}{space 1}{ralign 9:{res:{sf:     2533}}}{space 1}{space 1}{ralign 9:{res:{sf: .1031359}}}{space 1}{space 1}{ralign 9:{res:{sf: .0234462}}}{space 1}
+
+{space 0}{space 0}{ralign 12:}{space 1}{c |}{space 1}{ralign 9:e(sd)}{space 1}{space 1}{ralign 9:e(min)}{space 1}{space 1}{ralign 9:e(max)}{space 1}{space 1}{ralign 9:e(sum)}{space 1}
+{space 0}{hline 13}{c   +}{hline 11}{hline 11}{hline 11}{hline 11}
+{space 0}{space 0}{ralign 12:has_price_~t}{space 1}{c |}{space 1}{ralign 9:{res:{sf: .1531215}}}{space 1}{space 1}{ralign 9:{res:{sf:        0}}}{space 1}{space 1}{ralign 9:{res:{sf:        1}}}{space 1}{space 1}{ralign 9:{res:{sf: 261.2432}}}{space 1}
+
+{com}. est store F
+{txt}
+{com}. 
+. esttab A B C D E F using "$TABLES/daily_stats.tex", append ///
+>                 nomtitles ///
+>                 cells(mean(fmt(3))) label booktabs nonum collabels(none) f noobs plain
+{res}{txt}(output written to {browse  `"C:\Dropbox\Papers\016 Pricing Algorithms\replication/paper/tables/daily_stats.tex"'})
+
+{com}. 
+. * Brand-website tabulation              
+. use "$DATA/analysis_data.dta", clear
+{txt}
+{com}. keep if price != .
+{txt}(1,604,028 observations deleted)
+
+{com}. estpost tabulate website brand
+
+{res}brand       {txt} {c |}{space 44}
+{space 0}{space 0}{ralign 12:website}{space 1}{c |}{space 1}{ralign 9:e(b)}{space 1}{space 1}{ralign 9:e(pct)}{space 1}{space 1}{ralign 9:e(colpct)}{space 1}{space 1}{ralign 9:e(rowpct)}{space 1}
+{space 0}{hline 13}{c   +}{hline 11}{hline 11}{hline 11}{hline 11}
+{space 0}{res:{lalign 13:Allegra}}{c |}{space 11}{space 11}{space 11}{space 11}
+{space 0}{space 0}{ralign 12:A}{space 1}{c |}{space 1}{ralign 9:{res:{sf:   309554}}}{space 1}{space 1}{ralign 9:{res:{sf:  8.58214}}}{space 1}{space 1}{ralign 9:{res:{sf: 43.65431}}}{space 1}{space 1}{ralign 9:{res:{sf: 19.93098}}}{space 1}
+{space 0}{space 0}{ralign 12:B}{space 1}{c |}{space 1}{ralign 9:{res:{sf:   126738}}}{space 1}{space 1}{ralign 9:{res:{sf: 3.513711}}}{space 1}{space 1}{ralign 9:{res:{sf:   17.873}}}{space 1}{space 1}{ralign 9:{res:{sf:   25.476}}}{space 1}
+{space 0}{space 0}{ralign 12:C}{space 1}{c |}{space 1}{ralign 9:{res:{sf:    89477}}}{space 1}{space 1}{ralign 9:{res:{sf: 2.480679}}}{space 1}{space 1}{ralign 9:{res:{sf: 12.61834}}}{space 1}{space 1}{ralign 9:{res:{sf: 14.92184}}}{space 1}
+{space 0}{space 0}{ralign 12:D}{space 1}{c |}{space 1}{ralign 9:{res:{sf:   112273}}}{space 1}{space 1}{ralign 9:{res:{sf:  3.11268}}}{space 1}{space 1}{ralign 9:{res:{sf:  15.8331}}}{space 1}{space 1}{ralign 9:{res:{sf: 20.90321}}}{space 1}
+{space 0}{space 0}{ralign 12:E}{space 1}{c |}{space 1}{ralign 9:{res:{sf:    71061}}}{space 1}{space 1}{ralign 9:{res:{sf:  1.97011}}}{space 1}{space 1}{ralign 9:{res:{sf: 10.02125}}}{space 1}{space 1}{ralign 9:{res:{sf: 16.93546}}}{space 1}
+{space 0}{space 0}{ralign 12:Total}{space 1}{c |}{space 1}{ralign 9:{res:{sf:   709103}}}{space 1}{space 1}{ralign 9:{res:{sf: 19.65932}}}{space 1}{space 1}{ralign 9:{res:{sf:      100}}}{space 1}{space 1}{ralign 9:{res:{sf: 19.65932}}}{space 1}
+{space 0}{hline 13}{c   +}{hline 11}{hline 11}{hline 11}{hline 11}
+{space 0}{res:{lalign 13:Benadryl}}{c |}{space 11}{space 11}{space 11}{space 11}
+{space 0}{space 0}{ralign 12:A}{space 1}{c |}{space 1}{ralign 9:{res:{sf:   219098}}}{space 1}{space 1}{ralign 9:{res:{sf: 6.074319}}}{space 1}{space 1}{ralign 9:{res:{sf: 44.42007}}}{space 1}{space 1}{ralign 9:{res:{sf: 14.10687}}}{space 1}
+{space 0}{space 0}{ralign 12:B}{space 1}{c |}{space 1}{ralign 9:{res:{sf:    58270}}}{space 1}{space 1}{ralign 9:{res:{sf:  1.61549}}}{space 1}{space 1}{ralign 9:{res:{sf:  11.8137}}}{space 1}{space 1}{ralign 9:{res:{sf: 11.71303}}}{space 1}
+{space 0}{space 0}{ralign 12:C}{space 1}{c |}{space 1}{ralign 9:{res:{sf:    99608}}}{space 1}{space 1}{ralign 9:{res:{sf: 2.761553}}}{space 1}{space 1}{ralign 9:{res:{sf: 20.19459}}}{space 1}{space 1}{ralign 9:{res:{sf: 16.61136}}}{space 1}
+{space 0}{space 0}{ralign 12:D}{space 1}{c |}{space 1}{ralign 9:{res:{sf:    68466}}}{space 1}{space 1}{ralign 9:{res:{sf: 1.898166}}}{space 1}{space 1}{ralign 9:{res:{sf: 13.88084}}}{space 1}{space 1}{ralign 9:{res:{sf: 12.74713}}}{space 1}
+{space 0}{space 0}{ralign 12:E}{space 1}{c |}{space 1}{ralign 9:{res:{sf:    47799}}}{space 1}{space 1}{ralign 9:{res:{sf: 1.325189}}}{space 1}{space 1}{ralign 9:{res:{sf:   9.6908}}}{space 1}{space 1}{ralign 9:{res:{sf: 11.39159}}}{space 1}
+{space 0}{space 0}{ralign 12:Total}{space 1}{c |}{space 1}{ralign 9:{res:{sf:   493241}}}{space 1}{space 1}{ralign 9:{res:{sf: 13.67472}}}{space 1}{space 1}{ralign 9:{res:{sf:      100}}}{space 1}{space 1}{ralign 9:{res:{sf: 13.67472}}}{space 1}
+{space 0}{hline 13}{c   +}{hline 11}{hline 11}{hline 11}{hline 11}
+{space 0}{res:{lalign 13:Claritin}}{c |}{space 11}{space 11}{space 11}{space 11}
+{space 0}{space 0}{ralign 12:A}{space 1}{c |}{space 1}{ralign 9:{res:{sf:   508768}}}{space 1}{space 1}{ralign 9:{res:{sf: 14.10519}}}{space 1}{space 1}{ralign 9:{res:{sf: 47.18662}}}{space 1}{space 1}{ralign 9:{res:{sf: 32.75759}}}{space 1}
+{space 0}{space 0}{ralign 12:B}{space 1}{c |}{space 1}{ralign 9:{res:{sf:   144098}}}{space 1}{space 1}{ralign 9:{res:{sf: 3.995003}}}{space 1}{space 1}{ralign 9:{res:{sf: 13.36463}}}{space 1}{space 1}{ralign 9:{res:{sf: 28.96559}}}{space 1}
+{space 0}{space 0}{ralign 12:C}{space 1}{c |}{space 1}{ralign 9:{res:{sf:   171782}}}{space 1}{space 1}{ralign 9:{res:{sf:  4.76252}}}{space 1}{space 1}{ralign 9:{res:{sf: 15.93224}}}{space 1}{space 1}{ralign 9:{res:{sf: 28.64762}}}{space 1}
+{space 0}{space 0}{ralign 12:D}{space 1}{c |}{space 1}{ralign 9:{res:{sf:   128385}}}{space 1}{space 1}{ralign 9:{res:{sf: 3.559373}}}{space 1}{space 1}{ralign 9:{res:{sf:  11.9073}}}{space 1}{space 1}{ralign 9:{res:{sf: 23.90297}}}{space 1}
+{space 0}{space 0}{ralign 12:E}{space 1}{c |}{space 1}{ralign 9:{res:{sf:   125171}}}{space 1}{space 1}{ralign 9:{res:{sf: 3.470267}}}{space 1}{space 1}{ralign 9:{res:{sf: 11.60921}}}{space 1}{space 1}{ralign 9:{res:{sf:  29.8311}}}{space 1}
+{space 0}{space 0}{ralign 12:Total}{space 1}{c |}{space 1}{ralign 9:{res:{sf:  1078204}}}{space 1}{space 1}{ralign 9:{res:{sf: 29.89235}}}{space 1}{space 1}{ralign 9:{res:{sf:      100}}}{space 1}{space 1}{ralign 9:{res:{sf: 29.89235}}}{space 1}
+{space 0}{hline 13}{c   +}{hline 11}{hline 11}{hline 11}{hline 11}
+{space 0}{res:{lalign 13:Flonase}}{c |}{space 11}{space 11}{space 11}{space 11}
+{space 0}{space 0}{ralign 12:A}{space 1}{c |}{space 1}{ralign 9:{res:{sf:   104634}}}{space 1}{space 1}{ralign 9:{res:{sf: 2.900895}}}{space 1}{space 1}{ralign 9:{res:{sf: 31.34143}}}{space 1}{space 1}{ralign 9:{res:{sf: 6.736976}}}{space 1}
+{space 0}{space 0}{ralign 12:B}{space 1}{c |}{space 1}{ralign 9:{res:{sf:    46584}}}{space 1}{space 1}{ralign 9:{res:{sf: 1.291505}}}{space 1}{space 1}{ralign 9:{res:{sf: 13.95349}}}{space 1}{space 1}{ralign 9:{res:{sf: 9.363995}}}{space 1}
+{space 0}{space 0}{ralign 12:C}{space 1}{c |}{space 1}{ralign 9:{res:{sf:    80772}}}{space 1}{space 1}{ralign 9:{res:{sf:  2.23934}}}{space 1}{space 1}{ralign 9:{res:{sf: 24.19395}}}{space 1}{space 1}{ralign 9:{res:{sf: 13.47013}}}{space 1}
+{space 0}{space 0}{ralign 12:D}{space 1}{c |}{space 1}{ralign 9:{res:{sf:    50130}}}{space 1}{space 1}{ralign 9:{res:{sf: 1.389815}}}{space 1}{space 1}{ralign 9:{res:{sf: 15.01564}}}{space 1}{space 1}{ralign 9:{res:{sf: 9.333301}}}{space 1}
+{space 0}{space 0}{ralign 12:E}{space 1}{c |}{space 1}{ralign 9:{res:{sf:    51732}}}{space 1}{space 1}{ralign 9:{res:{sf: 1.434229}}}{space 1}{space 1}{ralign 9:{res:{sf: 15.49549}}}{space 1}{space 1}{ralign 9:{res:{sf: 12.32891}}}{space 1}
+{space 0}{space 0}{ralign 12:Total}{space 1}{c |}{space 1}{ralign 9:{res:{sf:   333852}}}{space 1}{space 1}{ralign 9:{res:{sf: 9.255782}}}{space 1}{space 1}{ralign 9:{res:{sf:      100}}}{space 1}{space 1}{ralign 9:{res:{sf: 9.255782}}}{space 1}
+{space 0}{hline 13}{c   +}{hline 11}{hline 11}{hline 11}{hline 11}
+{space 0}{res:{lalign 13:Nasacort}}{c |}{space 11}{space 11}{space 11}{space 11}
+{space 0}{space 0}{ralign 12:A}{space 1}{c |}{space 1}{ralign 9:{res:{sf:    66178}}}{space 1}{space 1}{ralign 9:{res:{sf: 1.834733}}}{space 1}{space 1}{ralign 9:{res:{sf: 43.03141}}}{space 1}{space 1}{ralign 9:{res:{sf: 4.260944}}}{space 1}
+{space 0}{space 0}{ralign 12:B}{space 1}{c |}{space 1}{ralign 9:{res:{sf:    12517}}}{space 1}{space 1}{ralign 9:{res:{sf: .3470239}}}{space 1}{space 1}{ralign 9:{res:{sf: 8.139021}}}{space 1}{space 1}{ralign 9:{res:{sf: 2.516081}}}{space 1}
+{space 0}{space 0}{ralign 12:C}{space 1}{c |}{space 1}{ralign 9:{res:{sf:    34633}}}{space 1}{space 1}{ralign 9:{res:{sf: .9601725}}}{space 1}{space 1}{ralign 9:{res:{sf: 22.51967}}}{space 1}{space 1}{ralign 9:{res:{sf: 5.775651}}}{space 1}
+{space 0}{space 0}{ralign 12:D}{space 1}{c |}{space 1}{ralign 9:{res:{sf:     2411}}}{space 1}{space 1}{ralign 9:{res:{sf: .0668431}}}{space 1}{space 1}{ralign 9:{res:{sf: 1.567722}}}{space 1}{space 1}{ralign 9:{res:{sf: .4488847}}}{space 1}
+{space 0}{space 0}{ralign 12:E}{space 1}{c |}{space 1}{ralign 9:{res:{sf:    38051}}}{space 1}{space 1}{ralign 9:{res:{sf: 1.054934}}}{space 1}{space 1}{ralign 9:{res:{sf: 24.74218}}}{space 1}{space 1}{ralign 9:{res:{sf:  9.06842}}}{space 1}
+{space 0}{space 0}{ralign 12:Total}{space 1}{c |}{space 1}{ralign 9:{res:{sf:   153790}}}{space 1}{space 1}{ralign 9:{res:{sf: 4.263706}}}{space 1}{space 1}{ralign 9:{res:{sf:      100}}}{space 1}{space 1}{ralign 9:{res:{sf: 4.263706}}}{space 1}
+{space 0}{hline 13}{c   +}{hline 11}{hline 11}{hline 11}{hline 11}
+{space 0}{res:{lalign 13:Xyzal}}{c |}{space 11}{space 11}{space 11}{space 11}
+{space 0}{space 0}{ralign 12:A}{space 1}{c |}{space 1}{ralign 9:{res:{sf:   108854}}}{space 1}{space 1}{ralign 9:{res:{sf: 3.017891}}}{space 1}{space 1}{ralign 9:{res:{sf:  44.2415}}}{space 1}{space 1}{ralign 9:{res:{sf: 7.008686}}}{space 1}
+{space 0}{space 0}{ralign 12:B}{space 1}{c |}{space 1}{ralign 9:{res:{sf:    34177}}}{space 1}{space 1}{ralign 9:{res:{sf: .9475303}}}{space 1}{space 1}{ralign 9:{res:{sf: 13.89055}}}{space 1}{space 1}{ralign 9:{res:{sf: 6.870025}}}{space 1}
+{space 0}{space 0}{ralign 12:C}{space 1}{c |}{space 1}{ralign 9:{res:{sf:    32508}}}{space 1}{space 1}{ralign 9:{res:{sf: .9012586}}}{space 1}{space 1}{ralign 9:{res:{sf: 13.21222}}}{space 1}{space 1}{ralign 9:{res:{sf: 5.421271}}}{space 1}
+{space 0}{space 0}{ralign 12:D}{space 1}{c |}{space 1}{ralign 9:{res:{sf:    47321}}}{space 1}{space 1}{ralign 9:{res:{sf: 1.311937}}}{space 1}{space 1}{ralign 9:{res:{sf: 19.23266}}}{space 1}{space 1}{ralign 9:{res:{sf: 8.810316}}}{space 1}
+{space 0}{space 0}{ralign 12:E}{space 1}{c |}{space 1}{ralign 9:{res:{sf:    23185}}}{space 1}{space 1}{ralign 9:{res:{sf: .6427858}}}{space 1}{space 1}{ralign 9:{res:{sf: 9.423073}}}{space 1}{space 1}{ralign 9:{res:{sf: 5.525514}}}{space 1}
+{space 0}{space 0}{ralign 12:Total}{space 1}{c |}{space 1}{ralign 9:{res:{sf:   246045}}}{space 1}{space 1}{ralign 9:{res:{sf: 6.821403}}}{space 1}{space 1}{ralign 9:{res:{sf:      100}}}{space 1}{space 1}{ralign 9:{res:{sf: 6.821403}}}{space 1}
+{space 0}{hline 13}{c   +}{hline 11}{hline 11}{hline 11}{hline 11}
+{space 0}{res:{lalign 13:Zyrtec}}{c |}{space 11}{space 11}{space 11}{space 11}
+{space 0}{space 0}{ralign 12:A}{space 1}{c |}{space 1}{ralign 9:{res:{sf:   236044}}}{space 1}{space 1}{ralign 9:{res:{sf: 6.544133}}}{space 1}{space 1}{ralign 9:{res:{sf:  39.8238}}}{space 1}{space 1}{ralign 9:{res:{sf: 15.19796}}}{space 1}
+{space 0}{space 0}{ralign 12:B}{space 1}{c |}{space 1}{ralign 9:{res:{sf:    75096}}}{space 1}{space 1}{ralign 9:{res:{sf: 2.081977}}}{space 1}{space 1}{ralign 9:{res:{sf:  12.6697}}}{space 1}{space 1}{ralign 9:{res:{sf: 15.09528}}}{space 1}
+{space 0}{space 0}{ralign 12:C}{space 1}{c |}{space 1}{ralign 9:{res:{sf:    90858}}}{space 1}{space 1}{ralign 9:{res:{sf: 2.518966}}}{space 1}{space 1}{ralign 9:{res:{sf: 15.32897}}}{space 1}{space 1}{ralign 9:{res:{sf: 15.15214}}}{space 1}
+{space 0}{space 0}{ralign 12:D}{space 1}{c |}{space 1}{ralign 9:{res:{sf:   128123}}}{space 1}{space 1}{ralign 9:{res:{sf: 3.552109}}}{space 1}{space 1}{ralign 9:{res:{sf: 21.61607}}}{space 1}{space 1}{ralign 9:{res:{sf: 23.85419}}}{space 1}
+{space 0}{space 0}{ralign 12:E}{space 1}{c |}{space 1}{ralign 9:{res:{sf:    62600}}}{space 1}{space 1}{ralign 9:{res:{sf: 1.735535}}}{space 1}{space 1}{ralign 9:{res:{sf: 10.56146}}}{space 1}{space 1}{ralign 9:{res:{sf: 14.91901}}}{space 1}
+{space 0}{space 0}{ralign 12:Total}{space 1}{c |}{space 1}{ralign 9:{res:{sf:   592721}}}{space 1}{space 1}{ralign 9:{res:{sf: 16.43272}}}{space 1}{space 1}{ralign 9:{res:{sf:      100}}}{space 1}{space 1}{ralign 9:{res:{sf: 16.43272}}}{space 1}
+{space 0}{hline 13}{c   +}{hline 11}{hline 11}{hline 11}{hline 11}
+{space 0}{res:{lalign 13:Total}}{c |}{space 11}{space 11}{space 11}{space 11}
+{space 0}{space 0}{ralign 12:A}{space 1}{c |}{space 1}{ralign 9:{res:{sf:  1553130}}}{space 1}{space 1}{ralign 9:{res:{sf:  43.0593}}}{space 1}{space 1}{ralign 9:{res:{sf:  43.0593}}}{space 1}{space 1}{ralign 9:{res:{sf:      100}}}{space 1}
+{space 0}{space 0}{ralign 12:B}{space 1}{c |}{space 1}{ralign 9:{res:{sf:   497480}}}{space 1}{space 1}{ralign 9:{res:{sf: 13.79224}}}{space 1}{space 1}{ralign 9:{res:{sf: 13.79224}}}{space 1}{space 1}{ralign 9:{res:{sf:      100}}}{space 1}
+{space 0}{space 0}{ralign 12:C}{space 1}{c |}{space 1}{ralign 9:{res:{sf:   599638}}}{space 1}{space 1}{ralign 9:{res:{sf: 16.62449}}}{space 1}{space 1}{ralign 9:{res:{sf: 16.62449}}}{space 1}{space 1}{ralign 9:{res:{sf:      100}}}{space 1}
+{space 0}{space 0}{ralign 12:D}{space 1}{c |}{space 1}{ralign 9:{res:{sf:   537109}}}{space 1}{space 1}{ralign 9:{res:{sf: 14.89092}}}{space 1}{space 1}{ralign 9:{res:{sf: 14.89092}}}{space 1}{space 1}{ralign 9:{res:{sf:      100}}}{space 1}
+{space 0}{space 0}{ralign 12:E}{space 1}{c |}{space 1}{ralign 9:{res:{sf:   419599}}}{space 1}{space 1}{ralign 9:{res:{sf: 11.63305}}}{space 1}{space 1}{ralign 9:{res:{sf: 11.63305}}}{space 1}{space 1}{ralign 9:{res:{sf:      100}}}{space 1}
+{space 0}{space 0}{ralign 12:Total}{space 1}{c |}{space 1}{ralign 9:{res:{sf:  3606956}}}{space 1}{space 1}{ralign 9:{res:{sf:      100}}}{space 1}{space 1}{ralign 9:{res:{sf:      100}}}{space 1}{space 1}{ralign 9:{res:{sf:      100}}}{space 1}
+
+{com}. esttab using "$TABLES/website_brand.tex", cell(b(fmt(%9.0fc))) unstack collabels(none) noobs nonumber nomtitle ///
+>         eqlabels(, lhs("Retailer")) varlabels(, blist(Total "\hline ")) replace  alignment(r) fragment ///
+>         title("Price Observations by Website and Brand \label{c -(}tab:website-brand{c )-}")
+{res}{txt}(note: file C:\Dropbox\Papers\016 Pricing Algorithms\replication/paper/tables/website_brand.tex not found)
+(output written to {browse  `"C:\Dropbox\Papers\016 Pricing Algorithms\replication/paper/tables/website_brand.tex"'})
+
+{com}. 
+{txt}end of do-file
+
+{com}. 
+. * 08. Analysis
+. do "$BASE/analysis/scripts/08_analysis.do"
+{txt}
+{com}. clear all
+{res}{txt}
+{com}. 
+. use "$DATA/analysis_data.dta", clear
+{txt}
+{com}. encode website, gen(website_code)
+{txt}
+{com}. 
+. assert product_id != .
+{txt}
+{com}. gen ln_price = ln(price)
+{txt}(1,604,028 missing values generated)
+
+{com}. isid product_id period_id website
+{txt}
+{com}. bysort product_id period_id (website): gen temp_count_sites = _N
+{txt}
+{com}. egen product_count_sites = max(temp_count_sites), by(product_id)
+{txt}
+{com}. 
+. 
+. reghdfe ln_price i.website_code, absorb(product_id period_id)
+{res}{txt}({browse "http://scorreia.com/research/hdfe.pdf":MWFE estimator} converged in 6 iterations)
+{res}
+{txt}HDFE Linear regression{col 51}Number of obs{col 67}= {res} 3,606,956
+{txt}Absorbing 2 HDFE groups{col 51}F({res}   4{txt},{res}3594322{txt}){col 67}= {res} 307105.12
+{txt}{col 51}Prob > F{col 67}= {res}    0.0000
+{txt}{col 51}R-squared{col 67}= {res}    0.9471
+{txt}{col 51}Adj R-squared{col 67}= {res}    0.9469
+{txt}{col 51}Within R-sq.{col 67}= {res}    0.2547
+{txt}{col 51}Root MSE{col 67}= {res}    0.1453
+
+{txt}{hline 13}{c TT}{hline 11}{hline 11}{hline 9}{hline 8}{hline 13}{hline 12}
+{col 1}    ln_price{col 14}{c |}      Coef.{col 26}   Std. Err.{col 38}      t{col 46}   P>|t|{col 54}     [95% Con{col 67}f. Interval]
+{hline 13}{c +}{hline 11}{hline 11}{hline 9}{hline 8}{hline 13}{hline 12}
+website_code {c |}
+{space 10}B  {c |}{col 14}{res}{space 2} .0641337{col 26}{space 2} .0002888{col 37}{space 1}  222.05{col 46}{space 3}0.000{col 54}{space 4} .0635676{col 67}{space 3} .0646998
+{txt}{space 10}C  {c |}{col 14}{res}{space 2}  .092039{col 26}{space 2} .0002768{col 37}{space 1}  332.46{col 46}{space 3}0.000{col 54}{space 4} .0914964{col 67}{space 3} .0925816
+{txt}{space 10}D  {c |}{col 14}{res}{space 2} .2487631{col 26}{space 2} .0002853{col 37}{space 1}  871.97{col 46}{space 3}0.000{col 54}{space 4} .2482039{col 67}{space 3} .2493222
+{txt}{space 10}E  {c |}{col 14}{res}{space 2} .2836486{col 26}{space 2} .0003078{col 37}{space 1}  921.64{col 46}{space 3}0.000{col 54}{space 4} .2830454{col 67}{space 3} .2842518
+{txt}{space 12} {c |}
+{space 7}_cons {c |}{col 14}{res}{space 2} 2.833302{col 26}{space 2} .0001448{col 37}{space 1} 2.0e+04{col 46}{space 3}0.000{col 54}{space 4} 2.833018{col 67}{space 3} 2.833586
+{txt}{hline 13}{c BT}{hline 11}{hline 11}{hline 9}{hline 8}{hline 13}{hline 12}
+{res}
+{txt}Absorbed degrees of freedom:
+{res}{col 1}{text}{hline 13}{c TT}{hline 12}{hline 12}{hline 14}{hline 1}{c TRC}
+{col 1}{text} Absorbed FE{col 14}{c |} Categories{col 27} - Redundant{col 39}  = Num. Coefs{col 54}{c |}
+{res}{col 1}{text}{hline 13}{c +}{hline 12}{hline 12}{hline 14}{hline 1}{c RT}
+{col 1}{text}  product_id{col 14}{c |}{space 1}      235{col 27}{space 1}        0{col 39}{result}{space 1}      235{col 53}{text} {col 54}{c |}
+{res}{col 1}{text}   period_id{col 14}{c |}{space 1}    12396{col 27}{space 1}        1{col 39}{result}{space 1}    12395{col 53}{text} {col 54}{c |}
+{res}{col 1}{text}{hline 13}{c BT}{hline 12}{hline 12}{hline 14}{hline 1}{c BRC}
+{res}{txt}
+{com}. estimates store a1
+{txt}
+{com}. predict ln_premium, xb
+{txt}
+{com}. replace ln_premium = ln_premium - _b[_cons]
+{txt}(5,210,984 real changes made)
+
+{com}. 
+.         * Also holds for the maximum price on a website on a given day
+.         bysort website website_id date: gen first = _n == 1
+{txt}
+{com}.         egen max_price = max(price), by(website product_id date)
+{txt}(1,407,899 missing values generated)
+
+{com}.         gen ln_max_price = ln(max_price)
+{txt}(1,407,899 missing values generated)
+
+{com}.         reghdfe ln_max_price i.website_code if first, absorb(product_id date)
+{res}{txt}({browse "http://scorreia.com/research/hdfe.pdf":MWFE estimator} converged in 6 iterations)
+{res}
+{txt}HDFE Linear regression{col 51}Number of obs{col 67}= {res}   158,585
+{txt}Absorbing 2 HDFE groups{col 51}F({res}   4{txt},{res} 157830{txt}){col 67}= {res}  12121.30
+{txt}{col 51}Prob > F{col 67}= {res}    0.0000
+{txt}{col 51}R-squared{col 67}= {res}    0.9478
+{txt}{col 51}Adj R-squared{col 67}= {res}    0.9475
+{txt}{col 51}Within R-sq.{col 67}= {res}    0.2350
+{txt}{col 51}Root MSE{col 67}= {res}    0.1444
+
+{txt}{hline 13}{c TT}{hline 11}{hline 11}{hline 9}{hline 8}{hline 13}{hline 12}
+{col 1}ln_max_price{col 14}{c |}      Coef.{col 26}   Std. Err.{col 38}      t{col 46}   P>|t|{col 54}     [95% Con{col 67}f. Interval]
+{hline 13}{c +}{hline 11}{hline 11}{hline 9}{hline 8}{hline 13}{hline 12}
+website_code {c |}
+{space 10}B  {c |}{col 14}{res}{space 2} .0447769{col 26}{space 2} .0013545{col 37}{space 1}   33.06{col 46}{space 3}0.000{col 54}{space 4} .0421221{col 67}{space 3} .0474317
+{txt}{space 10}C  {c |}{col 14}{res}{space 2} .0688063{col 26}{space 2} .0013013{col 37}{space 1}   52.87{col 46}{space 3}0.000{col 54}{space 4} .0662558{col 67}{space 3} .0713569
+{txt}{space 10}D  {c |}{col 14}{res}{space 2} .2254679{col 26}{space 2} .0013593{col 37}{space 1}  165.88{col 46}{space 3}0.000{col 54}{space 4} .2228037{col 67}{space 3}  .228132
+{txt}{space 10}E  {c |}{col 14}{res}{space 2} .2619648{col 26}{space 2} .0014446{col 37}{space 1}  181.34{col 46}{space 3}0.000{col 54}{space 4} .2591334{col 67}{space 3} .2647962
+{txt}{space 12} {c |}
+{space 7}_cons {c |}{col 14}{res}{space 2} 2.851795{col 26}{space 2} .0006889{col 37}{space 1} 4139.76{col 46}{space 3}0.000{col 54}{space 4} 2.850444{col 67}{space 3} 2.853145
+{txt}{hline 13}{c BT}{hline 11}{hline 11}{hline 9}{hline 8}{hline 13}{hline 12}
+{res}
+{txt}Absorbed degrees of freedom:
+{res}{col 1}{text}{hline 13}{c TT}{hline 12}{hline 12}{hline 14}{hline 1}{c TRC}
+{col 1}{text} Absorbed FE{col 14}{c |} Categories{col 27} - Redundant{col 39}  = Num. Coefs{col 54}{c |}
+{res}{col 1}{text}{hline 13}{c +}{hline 12}{hline 12}{hline 14}{hline 1}{c RT}
+{col 1}{text}  product_id{col 14}{c |}{space 1}      235{col 27}{space 1}        0{col 39}{result}{space 1}      235{col 53}{text} {col 54}{c |}
+{res}{col 1}{text}        date{col 14}{c |}{space 1}      517{col 27}{space 1}        1{col 39}{result}{space 1}      516{col 53}{text} {col 54}{c |}
+{res}{col 1}{text}{hline 13}{c BT}{hline 12}{hline 12}{hline 14}{hline 1}{c BRC}
+{res}{txt}
+{com}. 
+. reghdfe ln_price i.website_code if product_count_sites == 5, absorb(product_id period_id)
+{res}{txt}({browse "http://scorreia.com/research/hdfe.pdf":MWFE estimator} converged in 5 iterations)
+{res}
+{txt}HDFE Linear regression{col 51}Number of obs{col 67}= {res} 1,186,571
+{txt}Absorbing 2 HDFE groups{col 51}F({res}   4{txt},{res}1174144{txt}){col 67}= {res} 317555.53
+{txt}{col 51}Prob > F{col 67}= {res}    0.0000
+{txt}{col 51}R-squared{col 67}= {res}    0.9472
+{txt}{col 51}Adj R-squared{col 67}= {res}    0.9466
+{txt}{col 51}Within R-sq.{col 67}= {res}    0.5197
+{txt}{col 51}Root MSE{col 67}= {res}    0.1165
+
+{txt}{hline 13}{c TT}{hline 11}{hline 11}{hline 9}{hline 8}{hline 13}{hline 12}
+{col 1}    ln_price{col 14}{c |}      Coef.{col 26}   Std. Err.{col 38}      t{col 46}   P>|t|{col 54}     [95% Con{col 67}f. Interval]
+{hline 13}{c +}{hline 11}{hline 11}{hline 9}{hline 8}{hline 13}{hline 12}
+website_code {c |}
+{space 10}B  {c |}{col 14}{res}{space 2} .1462886{col 26}{space 2} .0003853{col 37}{space 1}  379.70{col 46}{space 3}0.000{col 54}{space 4} .1455335{col 67}{space 3} .1470437
+{txt}{space 10}C  {c |}{col 14}{res}{space 2} .1709249{col 26}{space 2} .0003432{col 37}{space 1}  497.97{col 46}{space 3}0.000{col 54}{space 4} .1702522{col 67}{space 3} .1715977
+{txt}{space 10}D  {c |}{col 14}{res}{space 2}  .307216{col 26}{space 2} .0003234{col 37}{space 1}  949.84{col 46}{space 3}0.000{col 54}{space 4} .3065821{col 67}{space 3} .3078499
+{txt}{space 10}E  {c |}{col 14}{res}{space 2} .3401891{col 26}{space 2} .0003542{col 37}{space 1}  960.46{col 46}{space 3}0.000{col 54}{space 4} .3394949{col 67}{space 3} .3408833
+{txt}{space 12} {c |}
+{space 7}_cons {c |}{col 14}{res}{space 2} 2.665705{col 26}{space 2} .0002455{col 37}{space 1} 1.1e+04{col 46}{space 3}0.000{col 54}{space 4} 2.665223{col 67}{space 3} 2.666186
+{txt}{hline 13}{c BT}{hline 11}{hline 11}{hline 9}{hline 8}{hline 13}{hline 12}
+{res}
+{txt}Absorbed degrees of freedom:
+{res}{col 1}{text}{hline 13}{c TT}{hline 12}{hline 12}{hline 14}{hline 1}{c TRC}
+{col 1}{text} Absorbed FE{col 14}{c |} Categories{col 27} - Redundant{col 39}  = Num. Coefs{col 54}{c |}
+{res}{col 1}{text}{hline 13}{c +}{hline 12}{hline 12}{hline 14}{hline 1}{c RT}
+{col 1}{text}  product_id{col 14}{c |}{space 1}       28{col 27}{space 1}        0{col 39}{result}{space 1}       28{col 53}{text} {col 54}{c |}
+{res}{col 1}{text}   period_id{col 14}{c |}{space 1}    12396{col 27}{space 1}        1{col 39}{result}{space 1}    12395{col 53}{text} {col 54}{c |}
+{res}{col 1}{text}{hline 13}{c BT}{hline 12}{hline 12}{hline 14}{hline 1}{c BRC}
+{res}{txt}
+{com}. predict ln_premium2, xb
+{txt}
+{com}. replace ln_premium2 = ln_premium2 - _b[_cons]
+{txt}(5,210,984 real changes made)
+
+{com}. estimates store a2
+{txt}
+{com}. 
+. reghdfe ln_price i.website_code if date >= td(01jul2019), absorb(product_id period_id)
+{res}{txt}(dropped 1 {browse "http://scorreia.com/research/singletons.pdf":singleton observations})
+{res}{txt}({browse "http://scorreia.com/research/hdfe.pdf":MWFE estimator} converged in 5 iterations)
+{res}
+{txt}HDFE Linear regression{col 51}Number of obs{col 67}= {res}   677,650
+{txt}Absorbing 2 HDFE groups{col 51}F({res}   4{txt},{res} 675236{txt}){col 67}= {res} 170537.74
+{txt}{col 51}Prob > F{col 67}= {res}    0.0000
+{txt}{col 51}R-squared{col 67}= {res}    0.9643
+{txt}{col 51}Adj R-squared{col 67}= {res}    0.9642
+{txt}{col 51}Within R-sq.{col 67}= {res}    0.5025
+{txt}{col 51}Root MSE{col 67}= {res}    0.1116
+
+{txt}{hline 13}{c TT}{hline 11}{hline 11}{hline 9}{hline 8}{hline 13}{hline 12}
+{col 1}    ln_price{col 14}{c |}      Coef.{col 26}   Std. Err.{col 38}      t{col 46}   P>|t|{col 54}     [95% Con{col 67}f. Interval]
+{hline 13}{c +}{hline 11}{hline 11}{hline 9}{hline 8}{hline 13}{hline 12}
+website_code {c |}
+{space 10}B  {c |}{col 14}{res}{space 2} .0474769{col 26}{space 2} .0005747{col 37}{space 1}   82.62{col 46}{space 3}0.000{col 54}{space 4} .0463505{col 67}{space 3} .0486032
+{txt}{space 10}C  {c |}{col 14}{res}{space 2} .1066751{col 26}{space 2} .0005138{col 37}{space 1}  207.61{col 46}{space 3}0.000{col 54}{space 4} .1056681{col 67}{space 3} .1076822
+{txt}{space 10}D  {c |}{col 14}{res}{space 2} .2892715{col 26}{space 2}  .000519{col 37}{space 1}  557.34{col 46}{space 3}0.000{col 54}{space 4} .2882543{col 67}{space 3} .2902888
+{txt}{space 10}E  {c |}{col 14}{res}{space 2} .3657108{col 26}{space 2}  .000516{col 37}{space 1}  708.76{col 46}{space 3}0.000{col 54}{space 4} .3646995{col 67}{space 3} .3667222
+{txt}{space 12} {c |}
+{space 7}_cons {c |}{col 14}{res}{space 2} 2.795545{col 26}{space 2} .0002816{col 37}{space 1} 9925.73{col 46}{space 3}0.000{col 54}{space 4} 2.794993{col 67}{space 3} 2.796097
+{txt}{hline 13}{c BT}{hline 11}{hline 11}{hline 9}{hline 8}{hline 13}{hline 12}
+{res}
+{txt}Absorbed degrees of freedom:
+{res}{col 1}{text}{hline 13}{c TT}{hline 12}{hline 12}{hline 14}{hline 1}{c TRC}
+{col 1}{text} Absorbed FE{col 14}{c |} Categories{col 27} - Redundant{col 39}  = Num. Coefs{col 54}{c |}
+{res}{col 1}{text}{hline 13}{c +}{hline 12}{hline 12}{hline 14}{hline 1}{c RT}
+{col 1}{text}  product_id{col 14}{c |}{space 1}      179{col 27}{space 1}        0{col 39}{result}{space 1}      179{col 53}{text} {col 54}{c |}
+{res}{col 1}{text}   period_id{col 14}{c |}{space 1}     2232{col 27}{space 1}        1{col 39}{result}{space 1}     2231{col 53}{text} {col 54}{c |}
+{res}{col 1}{text}{hline 13}{c BT}{hline 12}{hline 12}{hline 14}{hline 1}{c BRC}
+{res}{txt}
+{com}. predict ln_premium3, xb
+{txt}
+{com}. replace ln_premium3 = ln_premium3 - _b[_cons]
+{txt}(5,210,984 real changes made)
+
+{com}. estimates store a3
+{txt}
+{com}.         
+. reghdfe ln_price i.website_code if product_count_sites == 5 &  date >= td(01jul2019), absorb(product_id period_id)
+{res}{txt}({browse "http://scorreia.com/research/hdfe.pdf":MWFE estimator} converged in 4 iterations)
+{res}
+{txt}HDFE Linear regression{col 51}Number of obs{col 67}= {res}   234,696
+{txt}Absorbing 2 HDFE groups{col 51}F({res}   4{txt},{res} 232433{txt}){col 67}= {res} 101790.56
+{txt}{col 51}Prob > F{col 67}= {res}    0.0000
+{txt}{col 51}R-squared{col 67}= {res}    0.9485
+{txt}{col 51}Adj R-squared{col 67}= {res}    0.9480
+{txt}{col 51}Within R-sq.{col 67}= {res}    0.6366
+{txt}{col 51}Root MSE{col 67}= {res}    0.1142
+
+{txt}{hline 13}{c TT}{hline 11}{hline 11}{hline 9}{hline 8}{hline 13}{hline 12}
+{col 1}    ln_price{col 14}{c |}      Coef.{col 26}   Std. Err.{col 38}      t{col 46}   P>|t|{col 54}     [95% Con{col 67}f. Interval]
+{hline 13}{c +}{hline 11}{hline 11}{hline 9}{hline 8}{hline 13}{hline 12}
+website_code {c |}
+{space 10}B  {c |}{col 14}{res}{space 2} .1173395{col 26}{space 2}  .000902{col 37}{space 1}  130.09{col 46}{space 3}0.000{col 54}{space 4} .1155716{col 67}{space 3} .1191073
+{txt}{space 10}C  {c |}{col 14}{res}{space 2} .1865277{col 26}{space 2} .0008235{col 37}{space 1}  226.52{col 46}{space 3}0.000{col 54}{space 4} .1849137{col 67}{space 3} .1881417
+{txt}{space 10}D  {c |}{col 14}{res}{space 2} .3369621{col 26}{space 2} .0007501{col 37}{space 1}  449.22{col 46}{space 3}0.000{col 54}{space 4} .3354919{col 67}{space 3} .3384323
+{txt}{space 10}E  {c |}{col 14}{res}{space 2} .4186202{col 26}{space 2} .0007397{col 37}{space 1}  565.92{col 46}{space 3}0.000{col 54}{space 4} .4171704{col 67}{space 3}   .42007
+{txt}{space 12} {c |}
+{space 7}_cons {c |}{col 14}{res}{space 2} 2.638718{col 26}{space 2} .0005765{col 37}{space 1} 4577.28{col 46}{space 3}0.000{col 54}{space 4} 2.637588{col 67}{space 3} 2.639848
+{txt}{hline 13}{c BT}{hline 11}{hline 11}{hline 9}{hline 8}{hline 13}{hline 12}
+{res}
+{txt}Absorbed degrees of freedom:
+{res}{col 1}{text}{hline 13}{c TT}{hline 12}{hline 12}{hline 14}{hline 1}{c TRC}
+{col 1}{text} Absorbed FE{col 14}{c |} Categories{col 27} - Redundant{col 39}  = Num. Coefs{col 54}{c |}
+{res}{col 1}{text}{hline 13}{c +}{hline 12}{hline 12}{hline 14}{hline 1}{c RT}
+{col 1}{text}  product_id{col 14}{c |}{space 1}       28{col 27}{space 1}        0{col 39}{result}{space 1}       28{col 53}{text} {col 54}{c |}
+{res}{col 1}{text}   period_id{col 14}{c |}{space 1}     2232{col 27}{space 1}        1{col 39}{result}{space 1}     2231{col 53}{text} {col 54}{c |}
+{res}{col 1}{text}{hline 13}{c BT}{hline 12}{hline 12}{hline 14}{hline 1}{c BRC}
+{res}{txt}
+{com}. predict ln_premium4, xb
+{txt}
+{com}. replace ln_premium4 = ln_premium4 - _b[_cons]
+{txt}(5,210,984 real changes made)
+
+{com}. estimates store a4
+{txt}
+{com}. 
+. estadd local product_fe "Yes" : a1
+{txt}
+{com}. estadd local product_fe "Yes" : a2
+{txt}
+{com}. estadd local product_fe "Yes" : a3
+{txt}
+{com}. estadd local product_fe "Yes" : a4
+{txt}
+{com}. 
+. estadd local period_fe "Yes" : a1
+{txt}
+{com}. estadd local period_fe "Yes" : a2
+{txt}
+{com}. estadd local period_fe "Yes" : a3
+{txt}
+{com}. estadd local period_fe "Yes" : a4
+{txt}
+{com}. 
+. estadd local restricted "Yes" : a2
+{txt}
+{com}. estadd local restricted "Yes" : a4
+{txt}
+{com}. 
+. estadd local first_half "Yes" : a3
+{txt}
+{com}. estadd local first_half "Yes" : a4
+{txt}
+{com}. 
+. 
+. esttab a1 a3 a2 a4 using "$TABLES/price_diff.tex", replace booktabs nonotes ///
+>         label se(%9.3f) b(%9.3f) ///  
+>         drop(1.website_code _cons) ///
+>         coeflabels(2.website_code "Retailer B" ///
+>                 3.website_code "Retailer C" ///
+>                 4.website_code "Retailer D" ///
+>                 5.website_code "Retailer E") ///
+>         star(* 0.10 ** 0.05 *** 0.01) ///
+>         alignment(S[table-format = 4.4]) ///
+>         stats(product_fe period_fe restricted first_half N, fmt(%12s %12s %12s %12s %9.0fc) ///
+>                 layout("\multicolumn{c -(}1{c )-}{c -(}c{c )-}{c -(}@{c )-}" "\multicolumn{c -(}1{c )-}{c -(}c{c )-}{c -(}@{c )-}" "\multicolumn{c -(}1{c )-}{c -(}c{c )-}{c -(}@{c )-}" "\multicolumn{c -(}1{c )-}{c -(}c{c )-}{c -(}@{c )-}" "\multicolumn{c -(}1{c )-}{c -(}c{c )-}{c -(}@{c )-}" ) ///
+>                 labels(`"Product FEs"' `"Period FEs"' `"Sold at All Retailers"' `"On or After Jul 1 2019"' `"Observations"' )) ///
+>                 nomtitles 
+{res}{txt}(note: file C:\Dropbox\Papers\016 Pricing Algorithms\replication/paper/tables/price_diff.tex not found)
+(output written to {browse  `"C:\Dropbox\Papers\016 Pricing Algorithms\replication/paper/tables/price_diff.tex"'})
+
+{com}. 
+. * Create plot
+. 
+. preserve
+{txt}
+{com}.         bysort website: keep if _n == 1
+{txt}(5,210,979 observations deleted)
+
+{com}.         keep website ln_premium*
+{txt}
+{com}. 
+.         save "$DATA/temp_premium.dta", replace
+{txt}(note: file C:\Dropbox\Papers\016 Pricing Algorithms\replication/analysis/data/temp_premium.dta not found)
+file C:\Dropbox\Papers\016 Pricing Algorithms\replication/analysis/data/temp_premium.dta saved
+
+{com}. restore
+{txt}
+{com}. 
+. * Calculating Pricing frequency
+. assert price_change != .
+{txt}
+{com}. keep if price_change == 1
+{txt}(5,078,350 observations deleted)
+
+{com}. tab website
+
+    {txt}website {c |}      Freq.     Percent        Cum.
+{hline 12}{c +}{hline 35}
+          A {c |}{res}    125,117       94.33       94.33
+{txt}          B {c |}{res}      6,350        4.79       99.12
+{txt}          C {c |}{res}        225        0.17       99.29
+{txt}          D {c |}{res}        467        0.35       99.64
+{txt}          E {c |}{res}        475        0.36      100.00
+{txt}{hline 12}{c +}{hline 35}
+      Total {c |}{res}    132,634      100.00
+{txt}
+{com}. 
+. collapse (mean) mean_period = period_id (max) max_period = period_id (min) min_period = period_id ///
+>         (sum) count_price_change = price_change, by(website date)
+{txt}
+{com}. 
+. bysort website (date): gen hour_gap = min_period - max_period[_n-1]
+{txt}(5 missing values generated)
+
+{com}. 
+. table website [fweight=count_price_change], c(mean hour_gap median hour_gap)
+
+{txt}{hline 10}{c TT}{hline 31}
+  website {c |} mean(hour_gap)   med(hour_gap)
+{hline 10}{c +}{hline 31}
+        A {c |}       {res}1.800126               1
+        {txt}B {c |}       {res}6.536401               2
+        {txt}C {c |}       {res}74.63393              26
+        {txt}D {c |}       {res}172.7253             166
+        {txt}E {c |}       {res}132.5429             165
+{txt}{hline 10}{c BT}{hline 31}
+
+{com}. 
+. summ hour_gap if website == "A" [fweight=count_price_change], detail
+
+                          {txt}hour_gap
+{hline 61}
+      Percentiles      Smallest
+ 1%    {res}        1              1
+{txt} 5%    {res}        1              1
+{txt}10%    {res}        1              1       {txt}Obs         {res}    124,959
+{txt}25%    {res}        1              1       {txt}Sum of Wgt. {res}    124,959
+
+{txt}50%    {res}        1                      {txt}Mean          {res} 1.800126
+                        {txt}Largest       Std. Dev.     {res} 17.74827
+{txt}75%    {res}        1             77
+{txt}90%    {res}        1             94       {txt}Variance      {res} 315.0011
+{txt}95%    {res}        2            119       {txt}Skewness      {res} 30.18394
+{txt}99%    {res}        5            556       {txt}Kurtosis      {res} 937.1262
+{txt}
+{com}. summ hour_gap if website == "B" [fweight=count_price_change], detail
+
+                          {txt}hour_gap
+{hline 61}
+      Percentiles      Smallest
+ 1%    {res}        1              1
+{txt} 5%    {res}        1              1
+{txt}10%    {res}        1              1       {txt}Obs         {res}      6,346
+{txt}25%    {res}        1              1       {txt}Sum of Wgt. {res}      6,346
+
+{txt}50%    {res}        2                      {txt}Mean          {res} 6.536401
+                        {txt}Largest       Std. Dev.     {res} 36.25616
+{txt}75%    {res}        4            117
+{txt}90%    {res}        8            411       {txt}Variance      {res} 1314.509
+{txt}95%    {res}       13            554       {txt}Skewness      {res} 13.54965
+{txt}99%    {res}       40            750       {txt}Kurtosis      {res} 199.7178
+{txt}
+{com}. summ hour_gap if website == "C" [fweight=count_price_change], detail
+
+                          {txt}hour_gap
+{hline 61}
+      Percentiles      Smallest
+ 1%    {res}       20             20
+{txt} 5%    {res}       21             20
+{txt}10%    {res}       22             21       {txt}Obs         {res}        224
+{txt}25%    {res}       23             21       {txt}Sum of Wgt. {res}        224
+
+{txt}50%    {res}       26                      {txt}Mean          {res} 74.63393
+                        {txt}Largest       Std. Dev.     {res} 144.2674
+{txt}75%    {res}     71.5            552
+{txt}90%    {res}      142            936       {txt}Variance      {res} 20813.09
+{txt}95%    {res}      167           1077       {txt}Skewness      {res} 5.905588
+{txt}99%    {res}      936           1320       {txt}Kurtosis      {res} 42.99004
+{txt}
+{com}. summ hour_gap if website == "D" [fweight=count_price_change], detail
+
+                          {txt}hour_gap
+{hline 61}
+      Percentiles      Smallest
+ 1%    {res}       26              2
+{txt} 5%    {res}       47             13
+{txt}10%    {res}       69             25       {txt}Obs         {res}        466
+{txt}25%    {res}      158             26       {txt}Sum of Wgt. {res}        466
+
+{txt}50%    {res}      166                      {txt}Mean          {res} 172.7253
+                        {txt}Largest       Std. Dev.     {res}  108.448
+{txt}75%    {res}      168            336
+{txt}90%    {res}      238            356       {txt}Variance      {res} 11760.97
+{txt}95%    {res}      336            648       {txt}Skewness      {res}  2.83654
+{txt}99%    {res}      669            669       {txt}Kurtosis      {res} 13.29379
+{txt}
+{com}. summ hour_gap if website == "E" [fweight=count_price_change], detail
+
+                          {txt}hour_gap
+{hline 61}
+      Percentiles      Smallest
+ 1%    {res}       24              5
+{txt} 5%    {res}       30             18
+{txt}10%    {res}       46             20       {txt}Obs         {res}        455
+{txt}25%    {res}       80             24       {txt}Sum of Wgt. {res}        455
+
+{txt}50%    {res}      165                      {txt}Mean          {res} 132.5429
+                        {txt}Largest       Std. Dev.     {res} 82.20072
+{txt}75%    {res}      168            336
+{txt}90%    {res}      168            477       {txt}Variance      {res} 6756.958
+{txt}95%    {res}      168            673       {txt}Skewness      {res} 3.622388
+{txt}99%    {res}      477            778       {txt}Kurtosis      {res} 27.14358
+{txt}
+{com}. 
+. collapse (median) hour_gap [fweight=count_price_change], by(website)
+{txt}
+{com}. 
+. merge 1:1 website using "$DATA/temp_premium.dta"
+{res}
+{txt}{col 5}Result{col 38}# of obs.
+{col 5}{hline 41}
+{col 5}not matched{col 30}{res}               0
+{txt}{col 5}matched{col 30}{res}               5{txt}  (_merge==3)
+{col 5}{hline 41}
+
+{com}. assert _merge == 3
+{txt}
+{com}. drop _merge
+{txt}
+{com}. scatter ln_premium hour_gap
+{res}{txt}
+{com}. gen price_index = exp(ln_premium)*100
+{txt}
+{com}. save "$DATA/temp_premium2.dta", replace
+{txt}(note: file C:\Dropbox\Papers\016 Pricing Algorithms\replication/analysis/data/temp_premium2.dta not found)
+file C:\Dropbox\Papers\016 Pricing Algorithms\replication/analysis/data/temp_premium2.dta saved
+
+{com}. 
+. 
+. use "$DATA/temp_premium2.dta", clear
+{txt}
+{com}. scatter price_index hour_gap, ///
+>         ylabel(100(10)140, tposition(inside) angle(horizontal) format(%4.0f))  ///
+>         xlabel(1 2 24 168, tposition(inside)) /// 
+>         xsc(reverse) xscale(log)  xscale(r(0.5 200)) yscale(r(95 130)) mlabel(website) mlabposition(12) mlabcolor(black*0.8) mcolor(black) mlabsize(medlarge) msize(2.5) ///
+>         ytitle("Price Index") xtitle("Pricing Frequency: Median Hours Between Updates (Log Scale)") plotregion(margin(l+3))
+{res}{txt}
+{com}. graph export "$FIGURES/plot_technology_premium.pdf", replace
+{txt}(file C:\Dropbox\Papers\016 Pricing Algorithms\replication/paper/figures/plot_technology_premium.pdf written in PDF format)
+
+{com}. 
+. 
+. * Export prices and shares for simulation
+. import delimited using "$DATA/google_search_shares.csv", clear
+{res}{text}(4 vars, 5 obs)
+
+{com}. rename average share
+{res}{txt}
+{com}. merge 1:1 website using "$DATA/temp_premium2.dta"
+{res}
+{txt}{col 5}Result{col 38}# of obs.
+{col 5}{hline 41}
+{col 5}not matched{col 30}{res}               0
+{txt}{col 5}matched{col 30}{res}               5{txt}  (_merge==3)
+{col 5}{hline 41}
+
+{com}. assert _merge == 3
+{txt}
+{com}. drop _merge
+{txt}
+{com}. keep website share price_index
+{txt}
+{com}. order website price_index share
+{txt}
+{com}. export delimited using "$SIM/prices_shares.csv", replace
+{res}{txt}(note: file C:\Dropbox\Papers\016 Pricing Algorithms\replication/analysis/simulation/prices_shares.csv not found)
+{txt}file C:\Dropbox\Papers\016 Pricing Algorithms\replication/analysis/simulation/prices_shares.csv saved
+
+{com}.                 
+.                 
+. * Identify price changes by hour of week
+. use "$DATA/analysis_data.dta", clear
+{txt}
+{com}. gen hour_eastern = mod(hour + 24 - 4, 24) // Convert to EDT
+{txt}
+{com}. gen dow = dow(date)
+{txt}
+{com}. 
+. replace dow = -1 if dow==6 // Start Saturday morning at midnight
+{txt}(742,723 real changes made)
+
+{com}. gen hourofweek = 24 + dow*24 + hour_eastern
+{txt}
+{com}. 
+. collapse (sum) is_observed price_change, by(website hourofweek) fast
+{txt}
+{com}. 
+. egen total_price_change = sum(price_change), by(website)
+{txt}
+{com}. gen hourly_dist = price_change/total_price_change * 100
+{txt}
+{com}. gen hourly_freq = price_change/is_observed
+{txt}
+{com}. 
+. twoway (line hourly_dist hourofweek if website == "A", lcolor(black)), ///
+>                 ytitle("Percent of Price Changes", size(huge)) xtitle("Hour of Week", size(huge)) ///
+>                 ylabel(0(0.2)1, tposition(inside) angle(horizontal) format(%4.1f) labsize(large)) ///
+>                 xlabel(0(24)168, tposition(inside) labsize(large)) scheme(s1mono) ///
+>                 xline(24, lp(dash) lc(black%40)) xline(48, lp(dash) lc(black%40)) xline(72, lp(dash) lc(black%40)) xline(96, lp(dash) lc(black%40)) xline(120, lp(dash) lc(black%40)) xline(144, lp(dash) lc(black%40)) ///
+>                 text(0 12 "Sat", place(s) size(vlarge)) text(0 36 "Sun", place(s) size(vlarge)) text(0 60 "Mon", place(s) size(vlarge)) text(0 84 "Tue", place(s) size(vlarge)) text(0 108 "Wed", place(s) size(vlarge)) text(0 132 "Thu", place(s) size(vlarge)) text(0 156 "Fri", place(s) size(vlarge)) ///
+>                 ysize(2) graphregion(margin(t=0)) plotregion(margin(l+1 b+4))
+{res}{txt}
+{com}. graph export "$FIGURES/price_change_fraction_hourofweek_A.pdf", replace
+{txt}(file C:\Dropbox\Papers\016 Pricing Algorithms\replication/paper/figures/price_change_fraction_hourofweek_A.pdf written in PDF format)
+
+{com}. 
+. twoway (line hourly_dist hourofweek if website == "B", lcolor(black)), ///
+>                 ytitle("Percent of Price Changes", size(huge)) xtitle("Hour of Week", size(huge)) ///
+>                 ylabel(0(0.2)1, tposition(inside) angle(horizontal) format(%4.1f) labsize(large)) ///
+>                 xlabel(0(24)168, tposition(inside) labsize(large)) scheme(s1mono) ///
+>                 xline(24, lp(dash) lc(black%40)) xline(48, lp(dash) lc(black%40)) xline(72, lp(dash) lc(black%40)) xline(96, lp(dash) lc(black%40)) xline(120, lp(dash) lc(black%40)) xline(144, lp(dash) lc(black%40)) ///
+>                 text(0 12 "Sat", place(s) size(vlarge)) text(0 36 "Sun", place(s) size(vlarge)) text(0 60 "Mon", place(s) size(vlarge)) text(0 84 "Tue", place(s) size(vlarge)) text(0 108 "Wed", place(s) size(vlarge)) text(0 132 "Thu", place(s) size(vlarge)) text(0 156 "Fri", place(s) size(vlarge)) ///
+>                 ysize(2) graphregion(margin(t=0)) plotregion(margin(l+1 b+4))
+{res}{txt}
+{com}. graph export "$FIGURES/price_change_fraction_hourofweek_B.pdf", replace
+{txt}(file C:\Dropbox\Papers\016 Pricing Algorithms\replication/paper/figures/price_change_fraction_hourofweek_B.pdf written in PDF format)
+
+{com}. 
+. twoway (line hourly_dist hourofweek if website == "C", lcolor(black)), ///
+>                 ytitle("Percent of Price Changes", size(huge)) xtitle("Hour of Week", size(huge)) ///
+>                 ylabel(0(2)8, tposition(inside) angle(horizontal) format(%4.0f) labsize(large)) ///
+>                 xlabel(0(24)168, tposition(inside) labsize(large)) scheme(s1mono) ///
+>                 xline(24, lp(dash) lc(black%40)) xline(48, lp(dash) lc(black%40)) xline(72, lp(dash) lc(black%40)) xline(96, lp(dash) lc(black%40)) xline(120, lp(dash) lc(black%40)) xline(144, lp(dash) lc(black%40)) ///
+>                 text(0 12 "Sat", place(s) size(vlarge)) text(0 36 "Sun", place(s) size(vlarge)) text(0 60 "Mon", place(s) size(vlarge)) text(0 84 "Tue", place(s) size(vlarge)) text(0 108 "Wed", place(s) size(vlarge)) text(0 132 "Thu", place(s) size(vlarge)) text(0 156 "Fri", place(s) size(vlarge)) ///
+>                 ysize(2) graphregion(margin(t=0)) plotregion(margin(l+1 b+4))
+{res}{txt}
+{com}. graph export "$FIGURES/price_change_fraction_hourofweek_C.pdf", replace
+{txt}(file C:\Dropbox\Papers\016 Pricing Algorithms\replication/paper/figures/price_change_fraction_hourofweek_C.pdf written in PDF format)
+
+{com}. 
+. twoway (line hourly_dist hourofweek if website == "D", lcolor(black)), ///
+>                 ytitle("Percent of Price Changes", size(huge)) xtitle("Hour of Week", size(huge)) ///
+>                 ylabel(0(5)25, tposition(inside) angle(horizontal) format(%4.0f) labsize(large)) ///
+>                 xlabel(0(24)168, tposition(inside) labsize(large)) scheme(s1mono) ///
+>                 xline(24, lp(dash) lc(black%40)) xline(48, lp(dash) lc(black%40)) xline(72, lp(dash) lc(black%40)) xline(96, lp(dash) lc(black%40)) xline(120, lp(dash) lc(black%40)) xline(144, lp(dash) lc(black%40)) ///
+>                 text(0 12 "Sat", place(s) size(vlarge)) text(0 36 "Sun", place(s) size(vlarge)) text(0 60 "Mon", place(s) size(vlarge)) text(0 84 "Tue", place(s) size(vlarge)) text(0 108 "Wed", place(s) size(vlarge)) text(0 132 "Thu", place(s) size(vlarge)) text(0 156 "Fri", place(s) size(vlarge)) ///
+>                 ysize(2) graphregion(margin(t=0)) plotregion(margin(l+1 b+4))
+{res}{txt}
+{com}. graph export "$FIGURES/price_change_fraction_hourofweek_D.pdf", replace
+{txt}(file C:\Dropbox\Papers\016 Pricing Algorithms\replication/paper/figures/price_change_fraction_hourofweek_D.pdf written in PDF format)
+
+{com}. 
+. 
+. twoway (line hourly_dist hourofweek if website == "E", lcolor(black)), ///
+>                 ytitle("Percent of Price Changes", size(huge)) xtitle("Hour of Week", size(huge)) ///
+>                 ylabel(0(10)60, tposition(inside) angle(horizontal) format(%4.0f) labsize(large)) ///
+>                 xlabel(0(24)168, tposition(inside) labsize(large)) scheme(s1mono) ///
+>                 xline(24, lp(dash) lc(black%40)) xline(48, lp(dash) lc(black%40)) xline(72, lp(dash) lc(black%40)) xline(96, lp(dash) lc(black%40)) xline(120, lp(dash) lc(black%40)) xline(144, lp(dash) lc(black%40)) ///
+>                 text(0 12 "Sat", place(s) size(vlarge)) text(0 36 "Sun", place(s) size(vlarge)) text(0 60 "Mon", place(s) size(vlarge)) text(0 84 "Tue", place(s) size(vlarge)) text(0 108 "Wed", place(s) size(vlarge)) text(0 132 "Thu", place(s) size(vlarge)) text(0 156 "Fri", place(s) size(vlarge)) ///
+>                 ysize(2) graphregion(margin(t=0)) plotregion(margin(l+1 b+4))
+{res}{txt}
+{com}. graph export "$FIGURES/price_change_fraction_hourofweek_E.pdf", replace
+{txt}(file C:\Dropbox\Papers\016 Pricing Algorithms\replication/paper/figures/price_change_fraction_hourofweek_E.pdf written in PDF format)
+
+{com}. 
+. /*
+> * Slides: Make combined charts for A/B and E/D
+> twoway (line hourly_dist hourofweek if website == "A", lcolor(black%80)) (line hourly_dist hourofweek if website == "B", lcolor(sienna%80)),  ///
+>                 ytitle("Percent of Price Changes", size(huge)) xtitle("Hour of Week", size(huge)) ///
+>                 ylabel(0(0.2)1, tposition(inside) angle(horizontal) format(%4.1f) labsize(large)) ///
+>                 xlabel(0(24)168, tposition(inside) labsize(large)) scheme(s1mono) ///
+>                 xline(24, lp(dash) lc(black%40)) xline(48, lp(dash) lc(black%40)) xline(72, lp(dash) lc(black%40)) xline(96, lp(dash) lc(black%40)) xline(120, lp(dash) lc(black%40)) xline(144, lp(dash) lc(black%40)) ///
+>                 text(0 12 "Sat", place(s) size(vlarge)) text(0 36 "Sun", place(s) size(vlarge)) text(0 60 "Mon", place(s) size(vlarge)) text(0 84 "Tue", place(s) size(vlarge)) text(0 108 "Wed", place(s) size(vlarge)) text(0 132 "Thu", place(s) size(vlarge)) text(0 156 "Fri", place(s) size(vlarge)) ///
+>                 ysize(2) graphregion(margin(t=0)) plotregion(margin(l+1 b+4)) legend(off)
+> graph export "$FIGURES/price_change_fraction_hourofweek_AB.pdf", replace
+> 
+> 
+> twoway (line hourly_dist hourofweek if website == "D", lcolor(black%80)) (line hourly_dist hourofweek if website == "E", lcolor(sienna%80)),  ///
+>                 ytitle("Percent of Price Changes", size(huge)) xtitle("Hour of Week", size(huge)) ///
+>                 ylabel(0(10)50, tposition(inside) angle(horizontal) format(%4.0f) labsize(large)) ///
+>                 xlabel(0(24)168, tposition(inside) labsize(large)) scheme(s1mono) ///
+>                 xline(24, lp(dash) lc(black%40)) xline(48, lp(dash) lc(black%40)) xline(72, lp(dash) lc(black%40)) xline(96, lp(dash) lc(black%40)) xline(120, lp(dash) lc(black%40)) xline(144, lp(dash) lc(black%40)) ///
+>                 text(0 12 "Sat", place(s) size(vlarge)) text(0 36 "Sun", place(s) size(vlarge)) text(0 60 "Mon", place(s) size(vlarge)) text(0 84 "Tue", place(s) size(vlarge)) text(0 108 "Wed", place(s) size(vlarge)) text(0 132 "Thu", place(s) size(vlarge)) text(0 156 "Fri", place(s) size(vlarge)) ///
+>                 ysize(2) graphregion(margin(t=0)) plotregion(margin(l+1 b+4)) legend(off)
+> graph export "$FIGURES/price_change_fraction_hourofweek_DE.pdf", replace
+> */
+. 
+{txt}end of do-file
+
+{com}. 
+. * 09. Price response to slower rivals
+. do "$BASE/analysis/scripts/09_price_response.do"
+{txt}
+{com}. 
+. 
+. // 1. Response to Retailer D
+. 
+. use "$DATA/analysis_data.dta", clear
+{txt}
+{com}. assert price_change != .
+{txt}
+{com}. drop if price == .
+{txt}(1,604,028 observations deleted)
+
+{com}. encode website, gen(website_code)
+{txt}
+{com}. 
+. // drop if price == .
+. 
+. isid website_code product_id period_id
+{txt}
+{com}. keep product_id website_code product_id period_id price price_change
+{txt}
+{com}. 
+. gen hour_of_week = mod(period_id, 168)
+{txt}
+{com}. tab hour_of_week if price_change == 1 & website_code == 4 // Between 5 and 9 on Sunday
+
+{txt}hour_of_wee {c |}
+          k {c |}      Freq.     Percent        Cum.
+{hline 12}{c +}{hline 35}
+          6 {c |}{res}         59       12.63       12.63
+{txt}          7 {c |}{res}         69       14.78       27.41
+{txt}          8 {c |}{res}         97       20.77       48.18
+{txt}          9 {c |}{res}         77       16.49       64.67
+{txt}         10 {c |}{res}         46        9.85       74.52
+{txt}         11 {c |}{res}         19        4.07       78.59
+{txt}         12 {c |}{res}          5        1.07       79.66
+{txt}         13 {c |}{res}         13        2.78       82.44
+{txt}         14 {c |}{res}          1        0.21       82.66
+{txt}         15 {c |}{res}          2        0.43       83.08
+{txt}         16 {c |}{res}          7        1.50       84.58
+{txt}         17 {c |}{res}          5        1.07       85.65
+{txt}         18 {c |}{res}          4        0.86       86.51
+{txt}         19 {c |}{res}          2        0.43       86.94
+{txt}         21 {c |}{res}          1        0.21       87.15
+{txt}         22 {c |}{res}          2        0.43       87.58
+{txt}         24 {c |}{res}          3        0.64       88.22
+{txt}         30 {c |}{res}          1        0.21       88.44
+{txt}         31 {c |}{res}          5        1.07       89.51
+{txt}         32 {c |}{res}          6        1.28       90.79
+{txt}         35 {c |}{res}          1        0.21       91.01
+{txt}         56 {c |}{res}          1        0.21       91.22
+{txt}         58 {c |}{res}          5        1.07       92.29
+{txt}         66 {c |}{res}          1        0.21       92.51
+{txt}         80 {c |}{res}          1        0.21       92.72
+{txt}         82 {c |}{res}          3        0.64       93.36
+{txt}         83 {c |}{res}          7        1.50       94.86
+{txt}         96 {c |}{res}          1        0.21       95.07
+{txt}         98 {c |}{res}          1        0.21       95.29
+{txt}        104 {c |}{res}         12        2.57       97.86
+{txt}        105 {c |}{res}          2        0.43       98.29
+{txt}        108 {c |}{res}          1        0.21       98.50
+{txt}        131 {c |}{res}          2        0.43       98.93
+{txt}        134 {c |}{res}          1        0.21       99.14
+{txt}        136 {c |}{res}          1        0.21       99.36
+{txt}        140 {c |}{res}          1        0.21       99.57
+{txt}        149 {c |}{res}          1        0.21       99.79
+{txt}        151 {c |}{res}          1        0.21      100.00
+{txt}{hline 12}{c +}{hline 35}
+      Total {c |}{res}        467      100.00
+{txt}
+{com}. 
+. * Shift hour of week to 0 = 5am 
+. local pre_period = 48
+{txt}
+{com}. gen did_time = mod(period_id + `pre_period' - 5, 168) - `pre_period'
+{txt}
+{com}. tab did_time if price_change == 1 & website_code == 4
+
+   {txt}did_time {c |}      Freq.     Percent        Cum.
+{hline 12}{c +}{hline 35}
+        -42 {c |}{res}          2        0.43        0.43
+{txt}        -39 {c |}{res}          1        0.21        0.64
+{txt}        -37 {c |}{res}          1        0.21        0.86
+{txt}        -33 {c |}{res}          1        0.21        1.07
+{txt}        -24 {c |}{res}          1        0.21        1.28
+{txt}        -22 {c |}{res}          1        0.21        1.50
+{txt}          1 {c |}{res}         59       12.63       14.13
+{txt}          2 {c |}{res}         69       14.78       28.91
+{txt}          3 {c |}{res}         97       20.77       49.68
+{txt}          4 {c |}{res}         77       16.49       66.17
+{txt}          5 {c |}{res}         46        9.85       76.02
+{txt}          6 {c |}{res}         19        4.07       80.09
+{txt}          7 {c |}{res}          5        1.07       81.16
+{txt}          8 {c |}{res}         13        2.78       83.94
+{txt}          9 {c |}{res}          1        0.21       84.15
+{txt}         10 {c |}{res}          2        0.43       84.58
+{txt}         11 {c |}{res}          7        1.50       86.08
+{txt}         12 {c |}{res}          5        1.07       87.15
+{txt}         13 {c |}{res}          4        0.86       88.01
+{txt}         14 {c |}{res}          2        0.43       88.44
+{txt}         16 {c |}{res}          1        0.21       88.65
+{txt}         17 {c |}{res}          2        0.43       89.08
+{txt}         19 {c |}{res}          3        0.64       89.72
+{txt}         25 {c |}{res}          1        0.21       89.94
+{txt}         26 {c |}{res}          5        1.07       91.01
+{txt}         27 {c |}{res}          6        1.28       92.29
+{txt}         30 {c |}{res}          1        0.21       92.51
+{txt}         51 {c |}{res}          1        0.21       92.72
+{txt}         53 {c |}{res}          5        1.07       93.79
+{txt}         61 {c |}{res}          1        0.21       94.00
+{txt}         75 {c |}{res}          1        0.21       94.22
+{txt}         77 {c |}{res}          3        0.64       94.86
+{txt}         78 {c |}{res}          7        1.50       96.36
+{txt}         91 {c |}{res}          1        0.21       96.57
+{txt}         93 {c |}{res}          1        0.21       96.79
+{txt}         99 {c |}{res}         12        2.57       99.36
+{txt}        100 {c |}{res}          2        0.43       99.79
+{txt}        103 {c |}{res}          1        0.21      100.00
+{txt}{hline 12}{c +}{hline 35}
+      Total {c |}{res}        467      100.00
+{txt}
+{com}. 
+. gen did_week = floor((period_id + `pre_period' - 5)/168)
+{txt}
+{com}. sort product_id period_id
+{txt}
+{com}. 
+. egen max_price = max(price), by(website_code product_id did_week)
+{txt}
+{com}. drop if max_price == .
+{txt}(0 observations deleted)
+
+{com}. 
+. egen has_change = max(price_change*(did_time >= 0 & did_time <= 5)*website_code == 4), by(product_id did_week)
+{txt}
+{com}. tab has_change, mi
+
+ {txt}has_change {c |}      Freq.     Percent        Cum.
+{hline 12}{c +}{hline 35}
+          0 {c |}{res}  3,415,798       94.70       94.70
+{txt}          1 {c |}{res}    191,158        5.30      100.00
+{txt}{hline 12}{c +}{hline 35}
+      Total {c |}{res}  3,606,956      100.00
+{txt}
+{com}. tab has_change if did_time == 0 & website_code == 4, mi
+
+ {txt}has_change {c |}      Freq.     Percent        Cum.
+{hline 12}{c +}{hline 35}
+          0 {c |}{res}      2,828       89.13       89.13
+{txt}          1 {c |}{res}        345       10.87      100.00
+{txt}{hline 12}{c +}{hline 35}
+      Total {c |}{res}      3,173      100.00
+{txt}
+{com}. assert has_change != .
+{txt}
+{com}. drop if has_change == .
+{txt}(0 observations deleted)
+
+{com}. 
+. isid website_code product_id did_week did_time
+{txt}
+{com}. 
+. * Plots
+. preserve
+{txt}
+{com}.         * Collapse to calculate average change by website and did_time
+.         collapse (mean) price_change, by(did_time has_change website_code)
+{txt}
+{com}.         reshape wide price_change, i(website_code did_time) j(has_change)
+{txt}(note: j = 0 1)
+
+Data{col 36}long{col 43}->{col 48}wide
+{hline 77}
+Number of obs.                 {res}    1680   {txt}->{res}     840
+{txt}Number of variables            {res}       4   {txt}->{res}       4
+{txt}j variable (2 values)        {res}has_change   {txt}->   (dropped)
+xij variables:
+                           {res}price_change   {txt}->   {res}price_change0 price_change1
+{txt}{hline 77}
+
+{com}.         
+.         * Mean difference in rates in pre-period
+.         gen coef_pr = price_change1 - price_change0
+{txt}
+{com}.         egen temp_pre_pr = mean(coef_pr) if did_time <= -1, by(website_code) // Use all in the pre-period because cumulative
+{txt}(600 missing values generated)
+
+{com}.         egen pre_pr = max(temp_pre_pr), by(website_code)
+{txt}
+{com}.         
+.         * Construct cumulative probability, netting out mean differences in rates
+.         bysort website_code (did_time): gen baseline_pr = sum(price_change0)
+{txt}
+{com}.         bysort website_code (did_time): gen treatment_pr = sum(price_change1 - pre_pr)
+{txt}
+{com}.         
+.         export delimited using "$RESULTS/price_response_figure_data_D.csv" if inlist(did_time, -48, -1, 0, 23, 47, 71, 95, 119), replace
+{res}{txt}(note: file C:\Dropbox\Papers\016 Pricing Algorithms\replication/analysis/results/price_response_figure_data_D.csv not found)
+{txt}file C:\Dropbox\Papers\016 Pricing Algorithms\replication/analysis/results/price_response_figure_data_D.csv saved
+
+{com}. 
+.         forvalues i = 1/5 {c -(}
+{txt}  2{com}.                 twoway (line treatment_pr did_time if website_code == `i', lcolor(black)) ///
+>                         (line baseline_pr did_time if website_code == `i', lcolor(black*.6) lpattern("--")), ///
+>                         xline(0, lcolor(gray) lpattern(dash))  ///
+>                         ylabel(, tposition(inside) angle(horizontal) labsize(large)) ///
+>                         xlabel(-48(24)120, tposition(inside) labsize(large)) scheme(s1mono) ///
+>                         ytitle("Cumulative Price Changes", size(large)) xtitle("Hours After Price Change Opportunity for D", size(large))  xlabel(-48(24)120) ///
+>                         legend(region(lcolor(white))  order(1 "Price Change by D" 2 "No Price Change by D (Control)") cols(1) size(large))  
+{txt}  3{com}.                 graph export "$FIGURES/pr_price_response_D_`i'.pdf", replace
+{txt}  4{com}.         {c )-}
+{res}{txt}(file C:\Dropbox\Papers\016 Pricing Algorithms\replication/paper/figures/pr_price_response_D_1.pdf written in PDF format)
+{res}{txt}(file C:\Dropbox\Papers\016 Pricing Algorithms\replication/paper/figures/pr_price_response_D_2.pdf written in PDF format)
+{res}{txt}(file C:\Dropbox\Papers\016 Pricing Algorithms\replication/paper/figures/pr_price_response_D_3.pdf written in PDF format)
+{res}{txt}(file C:\Dropbox\Papers\016 Pricing Algorithms\replication/paper/figures/pr_price_response_D_4.pdf written in PDF format)
+{res}{txt}(file C:\Dropbox\Papers\016 Pricing Algorithms\replication/paper/figures/pr_price_response_D_5.pdf written in PDF format)
+
+{com}. restore
+{txt}
+{com}. 
+. * Regressions
+. gen post = did_time >= 0
+{txt}
+{com}. gen post_has_change = post*has_change
+{txt}
+{com}. egen product_week = group(product_id did_week)
+{res}{txt}
+{com}. 
+. local cutoff = 72
+{txt}
+{com}. preserve
+{txt}
+{com}.         replace price_change = price_change*72 // Scale to 72 hours
+{txt}(132,634 real changes made)
+
+{com}.         keep if did_time < `cutoff'
+{txt}(1,026,798 observations deleted)
+
+{com}.         reghdfe price_change post_has_change if website_code == 1, absorb(product_week did_time)
+{res}{txt}(dropped 65 {browse "http://scorreia.com/research/singletons.pdf":singleton observations})
+{res}{txt}({browse "http://scorreia.com/research/hdfe.pdf":MWFE estimator} converged in 5 iterations)
+{res}
+{txt}HDFE Linear regression{col 51}Number of obs{col 67}= {res} 1,115,035
+{txt}Absorbing 2 HDFE groups{col 51}F({res}   1{txt},{res}1104261{txt}){col 67}= {res}     13.91
+{txt}{col 51}Prob > F{col 67}= {res}    0.0002
+{txt}{col 51}R-squared{col 67}= {res}    0.2538
+{txt}{col 51}Adj R-squared{col 67}= {res}    0.2465
+{txt}{col 51}Within R-sq.{col 67}= {res}    0.0000
+{txt}{col 51}Root MSE{col 67}= {res}   16.8865
+
+{txt}{hline 13}{c TT}{hline 11}{hline 11}{hline 9}{hline 8}{hline 13}{hline 12}
+{col 1}price_change{col 14}{c |}      Coef.{col 26}   Std. Err.{col 38}      t{col 46}   P>|t|{col 54}     [95% Con{col 67}f. Interval]
+{hline 13}{c +}{hline 11}{hline 11}{hline 9}{hline 8}{hline 13}{hline 12}
+post_has_c~e {c |}{col 14}{res}{space 2} .7701881{col 26}{space 2} .2065339{col 37}{space 1}    3.73{col 46}{space 3}0.000{col 54}{space 4} .3653887{col 67}{space 3} 1.174987
+{txt}{space 7}_cons {c |}{col 14}{res}{space 2} 5.696702{col 26}{space 2} .0163213{col 37}{space 1}  349.03{col 46}{space 3}0.000{col 54}{space 4} 5.664713{col 67}{space 3} 5.728691
+{txt}{hline 13}{c BT}{hline 11}{hline 11}{hline 9}{hline 8}{hline 13}{hline 12}
+{res}
+{txt}Absorbed degrees of freedom:
+{res}{col 1}{text}{hline 14}{c TT}{hline 12}{hline 12}{hline 14}{hline 1}{c TRC}
+{col 1}{text}  Absorbed FE{col 15}{c |} Categories{col 28} - Redundant{col 40}  = Num. Coefs{col 55}{c |}
+{res}{col 1}{text}{hline 14}{c +}{hline 12}{hline 12}{hline 14}{hline 1}{c RT}
+{col 1}{text} product_week{col 15}{c |}{space 1}    10654{col 28}{space 1}        0{col 40}{result}{space 1}    10654{col 54}{text} {col 55}{c |}
+{res}{col 1}{text}     did_time{col 15}{c |}{space 1}      120{col 28}{space 1}        1{col 40}{result}{space 1}      119{col 54}{text} {col 55}{c |}
+{res}{col 1}{text}{hline 14}{c BT}{hline 12}{hline 12}{hline 14}{hline 1}{c BRC}
+{res}{txt}
+{com}.         summ price_change if e(sample)==1, meanonly
+{txt}
+{com}.         estadd scalar ymean = r(mean), replace
+
+{txt}added scalar:
+              e(ymean) =  {res}5.7088719
+{txt}
+{com}.         eststo a3d
+{txt}
+{com}.         reghdfe price_change post_has_change if website_code == 2, absorb(product_week did_time)
+{res}{txt}(dropped 46 {browse "http://scorreia.com/research/singletons.pdf":singleton observations})
+{res}{txt}({browse "http://scorreia.com/research/hdfe.pdf":MWFE estimator} converged in 5 iterations)
+{res}
+{txt}HDFE Linear regression{col 51}Number of obs{col 67}= {res}   353,873
+{txt}Absorbing 2 HDFE groups{col 51}F({res}   1{txt},{res} 350194{txt}){col 67}= {res}      8.53
+{txt}{col 51}Prob > F{col 67}= {res}    0.0035
+{txt}{col 51}R-squared{col 67}= {res}    0.2336
+{txt}{col 51}Adj R-squared{col 67}= {res}    0.2255
+{txt}{col 51}Within R-sq.{col 67}= {res}    0.0000
+{txt}{col 51}Root MSE{col 67}= {res}    7.1417
+
+{txt}{hline 13}{c TT}{hline 11}{hline 11}{hline 9}{hline 8}{hline 13}{hline 12}
+{col 1}price_change{col 14}{c |}      Coef.{col 26}   Std. Err.{col 38}      t{col 46}   P>|t|{col 54}     [95% Con{col 67}f. Interval]
+{hline 13}{c +}{hline 11}{hline 11}{hline 9}{hline 8}{hline 13}{hline 12}
+post_has_c~e {c |}{col 14}{res}{space 2} .3191089{col 26}{space 2} .1092481{col 37}{space 1}    2.92{col 46}{space 3}0.003{col 54}{space 4} .1049858{col 67}{space 3}  .533232
+{txt}{space 7}_cons {c |}{col 14}{res}{space 2} .9160534{col 26}{space 2} .0125337{col 37}{space 1}   73.09{col 46}{space 3}0.000{col 54}{space 4} .8914877{col 67}{space 3}  .940619
+{txt}{hline 13}{c BT}{hline 11}{hline 11}{hline 9}{hline 8}{hline 13}{hline 12}
+{res}
+{txt}Absorbed degrees of freedom:
+{res}{col 1}{text}{hline 14}{c TT}{hline 12}{hline 12}{hline 14}{hline 1}{c TRC}
+{col 1}{text}  Absorbed FE{col 15}{c |} Categories{col 28} - Redundant{col 40}  = Num. Coefs{col 55}{c |}
+{res}{col 1}{text}{hline 14}{c +}{hline 12}{hline 12}{hline 14}{hline 1}{c RT}
+{col 1}{text} product_week{col 15}{c |}{space 1}     3559{col 28}{space 1}        0{col 40}{result}{space 1}     3559{col 54}{text} {col 55}{c |}
+{res}{col 1}{text}     did_time{col 15}{c |}{space 1}      120{col 28}{space 1}        1{col 40}{result}{space 1}      119{col 54}{text} {col 55}{c |}
+{res}{col 1}{text}{hline 14}{c BT}{hline 12}{hline 12}{hline 14}{hline 1}{c BRC}
+{res}{txt}
+{com}.         summ price_change if e(sample)==1, meanonly
+{txt}
+{com}.         estadd scalar ymean = r(mean), replace
+
+{txt}added scalar:
+              e(ymean) =  {res}.9265697
+{txt}
+{com}.         eststo b3d
+{txt}
+{com}.         reghdfe price_change post_has_change if website_code == 3, absorb(product_week did_time)
+{res}{txt}(dropped 19 {browse "http://scorreia.com/research/singletons.pdf":singleton observations})
+{res}{txt}({browse "http://scorreia.com/research/hdfe.pdf":MWFE estimator} converged in 5 iterations)
+{res}
+{txt}HDFE Linear regression{col 51}Number of obs{col 67}= {res}   426,905
+{txt}Absorbing 2 HDFE groups{col 51}F({res}   1{txt},{res} 422673{txt}){col 67}= {res}      0.08
+{txt}{col 51}Prob > F{col 67}= {res}    0.7752
+{txt}{col 51}R-squared{col 67}= {res}    0.0201
+{txt}{col 51}Adj R-squared{col 67}= {res}    0.0103
+{txt}{col 51}Within R-sq.{col 67}= {res}    0.0000
+{txt}{col 51}Root MSE{col 67}= {res}    1.3777
+
+{txt}{hline 13}{c TT}{hline 11}{hline 11}{hline 9}{hline 8}{hline 13}{hline 12}
+{col 1}price_change{col 14}{c |}      Coef.{col 26}   Std. Err.{col 38}      t{col 46}   P>|t|{col 54}     [95% Con{col 67}f. Interval]
+{hline 13}{c +}{hline 11}{hline 11}{hline 9}{hline 8}{hline 13}{hline 12}
+post_has_c~e {c |}{col 14}{res}{space 2}-.0049706{col 26}{space 2} .0174074{col 37}{space 1}   -0.29{col 46}{space 3}0.775{col 54}{space 4}-.0390885{col 67}{space 3} .0291474
+{txt}{space 7}_cons {c |}{col 14}{res}{space 2} .0268459{col 26}{space 2}   .00222{col 37}{space 1}   12.09{col 46}{space 3}0.000{col 54}{space 4} .0224948{col 67}{space 3} .0311969
+{txt}{hline 13}{c BT}{hline 11}{hline 11}{hline 9}{hline 8}{hline 13}{hline 12}
+{res}
+{txt}Absorbed degrees of freedom:
+{res}{col 1}{text}{hline 14}{c TT}{hline 12}{hline 12}{hline 14}{hline 1}{c TRC}
+{col 1}{text}  Absorbed FE{col 15}{c |} Categories{col 28} - Redundant{col 40}  = Num. Coefs{col 55}{c |}
+{res}{col 1}{text}{hline 14}{c +}{hline 12}{hline 12}{hline 14}{hline 1}{c RT}
+{col 1}{text} product_week{col 15}{c |}{space 1}     4112{col 28}{space 1}        0{col 40}{result}{space 1}     4112{col 54}{text} {col 55}{c |}
+{res}{col 1}{text}     did_time{col 15}{c |}{space 1}      120{col 28}{space 1}        1{col 40}{result}{space 1}      119{col 54}{text} {col 55}{c |}
+{res}{col 1}{text}{hline 14}{c BT}{hline 12}{hline 12}{hline 14}{hline 1}{c BRC}
+{res}{txt}
+{com}.         summ price_change if e(sample)==1, meanonly
+{txt}
+{com}.         estadd scalar ymean = r(mean), replace
+
+{txt}added scalar:
+              e(ymean) =  {res}.02664761
+{txt}
+{com}.         eststo c3d
+{txt}
+{com}.         reghdfe price_change post_has_change if website_code == 4, absorb(product_week did_time)
+{res}{txt}(dropped 2 {browse "http://scorreia.com/research/singletons.pdf":singleton observations})
+{res}{txt}({browse "http://scorreia.com/research/hdfe.pdf":MWFE estimator} converged in 5 iterations)
+{res}
+{txt}HDFE Linear regression{col 51}Number of obs{col 67}= {res}   383,385
+{txt}Absorbing 2 HDFE groups{col 51}F({res}   1{txt},{res} 379797{txt}){col 67}= {res}   1517.04
+{txt}{col 51}Prob > F{col 67}= {res}    0.0000
+{txt}{col 51}R-squared{col 67}= {res}    0.0308
+{txt}{col 51}Adj R-squared{col 67}= {res}    0.0216
+{txt}{col 51}Within R-sq.{col 67}= {res}    0.0040
+{txt}{col 51}Root MSE{col 67}= {res}    2.4085
+
+{txt}{hline 13}{c TT}{hline 11}{hline 11}{hline 9}{hline 8}{hline 13}{hline 12}
+{col 1}price_change{col 14}{c |}      Coef.{col 26}   Std. Err.{col 38}      t{col 46}   P>|t|{col 54}     [95% Con{col 67}f. Interval]
+{hline 13}{c +}{hline 11}{hline 11}{hline 9}{hline 8}{hline 13}{hline 12}
+post_has_c~e {c |}{col 14}{res}{space 2}   1.0101{col 26}{space 2} .0259338{col 37}{space 1}   38.95{col 46}{space 3}0.000{col 54}{space 4} .9592702{col 67}{space 3} 1.060929
+{txt}{space 7}_cons {c |}{col 14}{res}{space 2} .0184743{col 26}{space 2} .0042223{col 37}{space 1}    4.38{col 46}{space 3}0.000{col 54}{space 4} .0101987{col 67}{space 3}   .02675
+{txt}{hline 13}{c BT}{hline 11}{hline 11}{hline 9}{hline 8}{hline 13}{hline 12}
+{res}
+{txt}Absorbed degrees of freedom:
+{res}{col 1}{text}{hline 14}{c TT}{hline 12}{hline 12}{hline 14}{hline 1}{c TRC}
+{col 1}{text}  Absorbed FE{col 15}{c |} Categories{col 28} - Redundant{col 40}  = Num. Coefs{col 55}{c |}
+{res}{col 1}{text}{hline 14}{c +}{hline 12}{hline 12}{hline 14}{hline 1}{c RT}
+{col 1}{text} product_week{col 15}{c |}{space 1}     3468{col 28}{space 1}        0{col 40}{result}{space 1}     3468{col 54}{text} {col 55}{c |}
+{res}{col 1}{text}     did_time{col 15}{c |}{space 1}      120{col 28}{space 1}        1{col 40}{result}{space 1}      119{col 54}{text} {col 55}{c |}
+{res}{col 1}{text}{hline 14}{c BT}{hline 12}{hline 12}{hline 14}{hline 1}{c BRC}
+{res}{txt}
+{com}.         summ price_change if e(sample)==1, meanonly
+{txt}
+{com}.         estadd scalar ymean = r(mean), replace
+
+{txt}added scalar:
+              e(ymean) =  {res}.08244454
+{txt}
+{com}.         eststo d3d
+{txt}
+{com}. restore
+{txt}
+{com}. 
+. 
+. // 2. Response to Retailer E
+. 
+. use "$DATA/analysis_data.dta", clear
+{txt}
+{com}. drop if price == .
+{txt}(1,604,028 observations deleted)
+
+{com}. assert price_change != .
+{txt}
+{com}. encode website, gen(website_code)
+{txt}
+{com}. 
+. isid website_code product_id period_id
+{txt}
+{com}. keep product_id website_code product_id period_id price price_change
+{txt}
+{com}. 
+. gen hour_of_week = mod(period_id, 168)
+{txt}
+{com}. tab hour_of_week if price_change == 1 & website_code == 5 // Between 5 and 9 on Sunday
+
+{txt}hour_of_wee {c |}
+          k {c |}      Freq.     Percent        Cum.
+{hline 12}{c +}{hline 35}
+          2 {c |}{res}          3        0.63        0.63
+{txt}          5 {c |}{res}        237       49.89       50.53
+{txt}          6 {c |}{res}         97       20.42       70.95
+{txt}          7 {c |}{res}         26        5.47       76.42
+{txt}          8 {c |}{res}         13        2.74       79.16
+{txt}          9 {c |}{res}         12        2.53       81.68
+{txt}         12 {c |}{res}          7        1.47       83.16
+{txt}         13 {c |}{res}          1        0.21       83.37
+{txt}         14 {c |}{res}          1        0.21       83.58
+{txt}         16 {c |}{res}          4        0.84       84.42
+{txt}         33 {c |}{res}          1        0.21       84.63
+{txt}         35 {c |}{res}          3        0.63       85.26
+{txt}         36 {c |}{res}          6        1.26       86.53
+{txt}         48 {c |}{res}          1        0.21       86.74
+{txt}         53 {c |}{res}          1        0.21       86.95
+{txt}         54 {c |}{res}          1        0.21       87.16
+{txt}         56 {c |}{res}          1        0.21       87.37
+{txt}         59 {c |}{res}          1        0.21       87.58
+{txt}         60 {c |}{res}          2        0.42       88.00
+{txt}         67 {c |}{res}          1        0.21       88.21
+{txt}         68 {c |}{res}          1        0.21       88.42
+{txt}         69 {c |}{res}          1        0.21       88.63
+{txt}         74 {c |}{res}          1        0.21       88.84
+{txt}         75 {c |}{res}          1        0.21       89.05
+{txt}         77 {c |}{res}          2        0.42       89.47
+{txt}         78 {c |}{res}          3        0.63       90.11
+{txt}         81 {c |}{res}          2        0.42       90.53
+{txt}         85 {c |}{res}          5        1.05       91.58
+{txt}         87 {c |}{res}          2        0.42       92.00
+{txt}         90 {c |}{res}          1        0.21       92.21
+{txt}         91 {c |}{res}          1        0.21       92.42
+{txt}         92 {c |}{res}          1        0.21       92.63
+{txt}        102 {c |}{res}          1        0.21       92.84
+{txt}        105 {c |}{res}          2        0.42       93.26
+{txt}        109 {c |}{res}         10        2.11       95.37
+{txt}        110 {c |}{res}          1        0.21       95.58
+{txt}        112 {c |}{res}          1        0.21       95.79
+{txt}        123 {c |}{res}          2        0.42       96.21
+{txt}        124 {c |}{res}          1        0.21       96.42
+{txt}        126 {c |}{res}          2        0.42       96.84
+{txt}        127 {c |}{res}          1        0.21       97.05
+{txt}        129 {c |}{res}          1        0.21       97.26
+{txt}        131 {c |}{res}          4        0.84       98.11
+{txt}        132 {c |}{res}          5        1.05       99.16
+{txt}        137 {c |}{res}          1        0.21       99.37
+{txt}        147 {c |}{res}          3        0.63      100.00
+{txt}{hline 12}{c +}{hline 35}
+      Total {c |}{res}        475      100.00
+{txt}
+{com}. 
+. * Shift hour of week to 0 = 5am 
+. local pre_period = 48
+{txt}
+{com}. gen did_time = mod(period_id + `pre_period' - 5, 168) - `pre_period'
+{txt}
+{com}. tab did_time if price_change == 1 & website_code == 5
+
+   {txt}did_time {c |}      Freq.     Percent        Cum.
+{hline 12}{c +}{hline 35}
+        -47 {c |}{res}          2        0.42        0.42
+{txt}        -46 {c |}{res}          1        0.21        0.63
+{txt}        -44 {c |}{res}          1        0.21        0.84
+{txt}        -42 {c |}{res}          4        0.84        1.68
+{txt}        -41 {c |}{res}          5        1.05        2.74
+{txt}        -36 {c |}{res}          1        0.21        2.95
+{txt}        -26 {c |}{res}          3        0.63        3.58
+{txt}         -3 {c |}{res}          3        0.63        4.21
+{txt}          0 {c |}{res}        237       49.89       54.11
+{txt}          1 {c |}{res}         97       20.42       74.53
+{txt}          2 {c |}{res}         26        5.47       80.00
+{txt}          3 {c |}{res}         13        2.74       82.74
+{txt}          4 {c |}{res}         12        2.53       85.26
+{txt}          7 {c |}{res}          7        1.47       86.74
+{txt}          8 {c |}{res}          1        0.21       86.95
+{txt}          9 {c |}{res}          1        0.21       87.16
+{txt}         11 {c |}{res}          4        0.84       88.00
+{txt}         28 {c |}{res}          1        0.21       88.21
+{txt}         30 {c |}{res}          3        0.63       88.84
+{txt}         31 {c |}{res}          6        1.26       90.11
+{txt}         43 {c |}{res}          1        0.21       90.32
+{txt}         48 {c |}{res}          1        0.21       90.53
+{txt}         49 {c |}{res}          1        0.21       90.74
+{txt}         51 {c |}{res}          1        0.21       90.95
+{txt}         54 {c |}{res}          1        0.21       91.16
+{txt}         55 {c |}{res}          2        0.42       91.58
+{txt}         62 {c |}{res}          1        0.21       91.79
+{txt}         63 {c |}{res}          1        0.21       92.00
+{txt}         64 {c |}{res}          1        0.21       92.21
+{txt}         69 {c |}{res}          1        0.21       92.42
+{txt}         70 {c |}{res}          1        0.21       92.63
+{txt}         72 {c |}{res}          2        0.42       93.05
+{txt}         73 {c |}{res}          3        0.63       93.68
+{txt}         76 {c |}{res}          2        0.42       94.11
+{txt}         80 {c |}{res}          5        1.05       95.16
+{txt}         82 {c |}{res}          2        0.42       95.58
+{txt}         85 {c |}{res}          1        0.21       95.79
+{txt}         86 {c |}{res}          1        0.21       96.00
+{txt}         87 {c |}{res}          1        0.21       96.21
+{txt}         97 {c |}{res}          1        0.21       96.42
+{txt}        100 {c |}{res}          2        0.42       96.84
+{txt}        104 {c |}{res}         10        2.11       98.95
+{txt}        105 {c |}{res}          1        0.21       99.16
+{txt}        107 {c |}{res}          1        0.21       99.37
+{txt}        118 {c |}{res}          2        0.42       99.79
+{txt}        119 {c |}{res}          1        0.21      100.00
+{txt}{hline 12}{c +}{hline 35}
+      Total {c |}{res}        475      100.00
+{txt}
+{com}. 
+. gen did_week = floor((period_id + `pre_period' - 5)/168)
+{txt}
+{com}. sort product_id period_id
+{txt}
+{com}. 
+. egen max_price = max(price), by(website_code product_id did_week)
+{txt}
+{com}. drop if max_price == .
+{txt}(0 observations deleted)
+
+{com}. 
+. egen has_change = max(price_change*(did_time >= 0 & did_time <= 5)*website_code == 5), by(product_id did_week)
+{txt}
+{com}. tab has_change, mi
+
+ {txt}has_change {c |}      Freq.     Percent        Cum.
+{hline 12}{c +}{hline 35}
+          0 {c |}{res}  3,391,523       94.03       94.03
+{txt}          1 {c |}{res}    215,433        5.97      100.00
+{txt}{hline 12}{c +}{hline 35}
+      Total {c |}{res}  3,606,956      100.00
+{txt}
+{com}. tab has_change if did_time == 0 & website_code == 5, mi
+
+ {txt}has_change {c |}      Freq.     Percent        Cum.
+{hline 12}{c +}{hline 35}
+          0 {c |}{res}      2,117       85.09       85.09
+{txt}          1 {c |}{res}        371       14.91      100.00
+{txt}{hline 12}{c +}{hline 35}
+      Total {c |}{res}      2,488      100.00
+{txt}
+{com}. assert has_change != .
+{txt}
+{com}. drop if has_change == .
+{txt}(0 observations deleted)
+
+{com}. 
+. isid website_code product_id did_week did_time
+{txt}
+{com}. 
+. * Plots
+. preserve
+{txt}
+{com}.         * Collapse to calculate average change by website and did_time
+.         collapse (mean) price_change, by(did_time has_change website_code)
+{txt}
+{com}.         reshape wide price_change, i(website_code did_time) j(has_change)
+{txt}(note: j = 0 1)
+
+Data{col 36}long{col 43}->{col 48}wide
+{hline 77}
+Number of obs.                 {res}    1680   {txt}->{res}     840
+{txt}Number of variables            {res}       4   {txt}->{res}       4
+{txt}j variable (2 values)        {res}has_change   {txt}->   (dropped)
+xij variables:
+                           {res}price_change   {txt}->   {res}price_change0 price_change1
+{txt}{hline 77}
+
+{com}.         
+.         * Mean difference in rates in pre-period
+.         gen coef_pr = price_change1 - price_change0
+{txt}
+{com}.         egen temp_pre_pr = mean(coef_pr) if did_time <= -1, by(website_code) // Use all in the pre-period because cumulative
+{txt}(600 missing values generated)
+
+{com}.         egen pre_pr = max(temp_pre_pr), by(website_code)
+{txt}
+{com}.         
+.         * Construct cumulative probability, netting out mean differences in rates
+.         bysort website_code (did_time): gen baseline_pr = sum(price_change0)
+{txt}
+{com}.         bysort website_code (did_time): gen treatment_pr = sum(price_change1 - pre_pr)
+{txt}
+{com}.         
+.         export delimited using "$RESULTS/price_response_figure_data_E.csv" if inlist(did_time, -48, -1, 0, 23, 47, 71, 95, 119), replace
+{res}{txt}(note: file C:\Dropbox\Papers\016 Pricing Algorithms\replication/analysis/results/price_response_figure_data_E.csv not found)
+{txt}file C:\Dropbox\Papers\016 Pricing Algorithms\replication/analysis/results/price_response_figure_data_E.csv saved
+
+{com}. 
+.         forvalues i = 1/5 {c -(}
+{txt}  2{com}.                 twoway (line treatment_pr did_time if website_code == `i', lcolor(black)) ///
+>                         (line baseline_pr did_time if website_code == `i', lcolor(black*.6) lpattern("--")), ///
+>                         xline(0, lcolor(gray) lpattern(dash))  ///
+>                         ylabel(, tposition(inside) angle(horizontal) labsize(large)) ///
+>                         xlabel(-48(24)120, tposition(inside) labsize(large)) scheme(s1mono) ///
+>                         ytitle("Cumulative Price Changes", size(large)) xtitle("Hours After Price Change Opportunity for E", size(large))  xlabel(-48(24)120) ///
+>                         legend(region(lcolor(white))  order(1 "Price Change by E" 2 "No Price Change by E (Control)") cols(1) size(large))  
+{txt}  3{com}.                 graph export "$FIGURES/pr_price_response_E_`i'.pdf", replace
+{txt}  4{com}.         {c )-}
+{res}{txt}(file C:\Dropbox\Papers\016 Pricing Algorithms\replication/paper/figures/pr_price_response_E_1.pdf written in PDF format)
+{res}{txt}(file C:\Dropbox\Papers\016 Pricing Algorithms\replication/paper/figures/pr_price_response_E_2.pdf written in PDF format)
+{res}{txt}(file C:\Dropbox\Papers\016 Pricing Algorithms\replication/paper/figures/pr_price_response_E_3.pdf written in PDF format)
+{res}{txt}(file C:\Dropbox\Papers\016 Pricing Algorithms\replication/paper/figures/pr_price_response_E_4.pdf written in PDF format)
+{res}{txt}(file C:\Dropbox\Papers\016 Pricing Algorithms\replication/paper/figures/pr_price_response_E_5.pdf written in PDF format)
+
+{com}. restore
+{txt}
+{com}. 
+. 
+. 
+. * Regressions
+. gen post = did_time >= 0
+{txt}
+{com}. gen post_has_change = post*has_change
+{txt}
+{com}. 
+. egen product_week = group(product_id did_week)
+{res}{txt}
+{com}. 
+. local cutoff = 72
+{txt}
+{com}. preserve
+{txt}
+{com}.         replace price_change = price_change*72 // Scale to 72 hours
+{txt}(132,634 real changes made)
+
+{com}.         keep if did_time < `cutoff'
+{txt}(1,026,798 observations deleted)
+
+{com}.         reghdfe price_change post_has_change if website_code == 1, absorb(product_week did_time)
+{res}{txt}(dropped 65 {browse "http://scorreia.com/research/singletons.pdf":singleton observations})
+{res}{txt}({browse "http://scorreia.com/research/hdfe.pdf":MWFE estimator} converged in 5 iterations)
+{res}
+{txt}HDFE Linear regression{col 51}Number of obs{col 67}= {res} 1,115,035
+{txt}Absorbing 2 HDFE groups{col 51}F({res}   1{txt},{res}1104261{txt}){col 67}= {res}     12.44
+{txt}{col 51}Prob > F{col 67}= {res}    0.0004
+{txt}{col 51}R-squared{col 67}= {res}    0.2538
+{txt}{col 51}Adj R-squared{col 67}= {res}    0.2465
+{txt}{col 51}Within R-sq.{col 67}= {res}    0.0000
+{txt}{col 51}Root MSE{col 67}= {res}   16.8865
+
+{txt}{hline 13}{c TT}{hline 11}{hline 11}{hline 9}{hline 8}{hline 13}{hline 12}
+{col 1}price_change{col 14}{c |}      Coef.{col 26}   Std. Err.{col 38}      t{col 46}   P>|t|{col 54}     [95% Con{col 67}f. Interval]
+{hline 13}{c +}{hline 11}{hline 11}{hline 9}{hline 8}{hline 13}{hline 12}
+post_has_c~e {c |}{col 14}{res}{space 2}  .666914{col 26}{space 2}  .189104{col 37}{space 1}    3.53{col 46}{space 3}0.000{col 54}{space 4} .2962766{col 67}{space 3} 1.037551
+{txt}{space 7}_cons {c |}{col 14}{res}{space 2} 5.696164{col 26}{space 2} .0163926{col 37}{space 1}  347.48{col 46}{space 3}0.000{col 54}{space 4} 5.664035{col 67}{space 3} 5.728293
+{txt}{hline 13}{c BT}{hline 11}{hline 11}{hline 9}{hline 8}{hline 13}{hline 12}
+{res}
+{txt}Absorbed degrees of freedom:
+{res}{col 1}{text}{hline 14}{c TT}{hline 12}{hline 12}{hline 14}{hline 1}{c TRC}
+{col 1}{text}  Absorbed FE{col 15}{c |} Categories{col 28} - Redundant{col 40}  = Num. Coefs{col 55}{c |}
+{res}{col 1}{text}{hline 14}{c +}{hline 12}{hline 12}{hline 14}{hline 1}{c RT}
+{col 1}{text} product_week{col 15}{c |}{space 1}    10654{col 28}{space 1}        0{col 40}{result}{space 1}    10654{col 54}{text} {col 55}{c |}
+{res}{col 1}{text}     did_time{col 15}{c |}{space 1}      120{col 28}{space 1}        1{col 40}{result}{space 1}      119{col 54}{text} {col 55}{c |}
+{res}{col 1}{text}{hline 14}{c BT}{hline 12}{hline 12}{hline 14}{hline 1}{c BRC}
+{res}{txt}
+{com}.         summ price_change if e(sample)==1, meanonly
+{txt}
+{com}.         estadd scalar ymean = r(mean), replace
+
+{txt}added scalar:
+              e(ymean) =  {res}5.7088719
+{txt}
+{com}.         eststo a3
+{txt}
+{com}.         reghdfe price_change post_has_change if website_code == 2, absorb(product_week did_time)
+{res}{txt}(dropped 46 {browse "http://scorreia.com/research/singletons.pdf":singleton observations})
+{res}{txt}({browse "http://scorreia.com/research/hdfe.pdf":MWFE estimator} converged in 5 iterations)
+{res}
+{txt}HDFE Linear regression{col 51}Number of obs{col 67}= {res}   353,873
+{txt}Absorbing 2 HDFE groups{col 51}F({res}   1{txt},{res} 350194{txt}){col 67}= {res}      5.22
+{txt}{col 51}Prob > F{col 67}= {res}    0.0223
+{txt}{col 51}R-squared{col 67}= {res}    0.2335
+{txt}{col 51}Adj R-squared{col 67}= {res}    0.2255
+{txt}{col 51}Within R-sq.{col 67}= {res}    0.0000
+{txt}{col 51}Root MSE{col 67}= {res}    7.1418
+
+{txt}{hline 13}{c TT}{hline 11}{hline 11}{hline 9}{hline 8}{hline 13}{hline 12}
+{col 1}price_change{col 14}{c |}      Coef.{col 26}   Std. Err.{col 38}      t{col 46}   P>|t|{col 54}     [95% Con{col 67}f. Interval]
+{hline 13}{c +}{hline 11}{hline 11}{hline 9}{hline 8}{hline 13}{hline 12}
+post_has_c~e {c |}{col 14}{res}{space 2} .2905618{col 26}{space 2} .1271218{col 37}{space 1}    2.29{col 46}{space 3}0.022{col 54}{space 4} .0414068{col 67}{space 3} .5397168
+{txt}{space 7}_cons {c |}{col 14}{res}{space 2} .9196257{col 26}{space 2} .0123839{col 37}{space 1}   74.26{col 46}{space 3}0.000{col 54}{space 4} .8953536{col 67}{space 3} .9438979
+{txt}{hline 13}{c BT}{hline 11}{hline 11}{hline 9}{hline 8}{hline 13}{hline 12}
+{res}
+{txt}Absorbed degrees of freedom:
+{res}{col 1}{text}{hline 14}{c TT}{hline 12}{hline 12}{hline 14}{hline 1}{c TRC}
+{col 1}{text}  Absorbed FE{col 15}{c |} Categories{col 28} - Redundant{col 40}  = Num. Coefs{col 55}{c |}
+{res}{col 1}{text}{hline 14}{c +}{hline 12}{hline 12}{hline 14}{hline 1}{c RT}
+{col 1}{text} product_week{col 15}{c |}{space 1}     3559{col 28}{space 1}        0{col 40}{result}{space 1}     3559{col 54}{text} {col 55}{c |}
+{res}{col 1}{text}     did_time{col 15}{c |}{space 1}      120{col 28}{space 1}        1{col 40}{result}{space 1}      119{col 54}{text} {col 55}{c |}
+{res}{col 1}{text}{hline 14}{c BT}{hline 12}{hline 12}{hline 14}{hline 1}{c BRC}
+{res}{txt}
+{com}.         summ price_change if e(sample)==1, meanonly
+{txt}
+{com}.         estadd scalar ymean = r(mean), replace
+
+{txt}added scalar:
+              e(ymean) =  {res}.9265697
+{txt}
+{com}.         eststo b3
+{txt}
+{com}.         reghdfe price_change post_has_change if website_code == 3, absorb(product_week did_time)
+{res}{txt}(dropped 19 {browse "http://scorreia.com/research/singletons.pdf":singleton observations})
+{res}{txt}({browse "http://scorreia.com/research/hdfe.pdf":MWFE estimator} converged in 5 iterations)
+{res}
+{txt}HDFE Linear regression{col 51}Number of obs{col 67}= {res}   426,905
+{txt}Absorbing 2 HDFE groups{col 51}F({res}   1{txt},{res} 422673{txt}){col 67}= {res}      0.62
+{txt}{col 51}Prob > F{col 67}= {res}    0.4299
+{txt}{col 51}R-squared{col 67}= {res}    0.0201
+{txt}{col 51}Adj R-squared{col 67}= {res}    0.0103
+{txt}{col 51}Within R-sq.{col 67}= {res}    0.0000
+{txt}{col 51}Root MSE{col 67}= {res}    1.3777
+
+{txt}{hline 13}{c TT}{hline 11}{hline 11}{hline 9}{hline 8}{hline 13}{hline 12}
+{col 1}price_change{col 14}{c |}      Coef.{col 26}   Std. Err.{col 38}      t{col 46}   P>|t|{col 54}     [95% Con{col 67}f. Interval]
+{hline 13}{c +}{hline 11}{hline 11}{hline 9}{hline 8}{hline 13}{hline 12}
+post_has_c~e {c |}{col 14}{res}{space 2}-.0134775{col 26}{space 2} .0170731{col 37}{space 1}   -0.79{col 46}{space 3}0.430{col 54}{space 4}-.0469403{col 67}{space 3} .0199852
+{txt}{space 7}_cons {c |}{col 14}{res}{space 2} .0272388{col 26}{space 2} .0022377{col 37}{space 1}   12.17{col 46}{space 3}0.000{col 54}{space 4} .0228531{col 67}{space 3} .0316245
+{txt}{hline 13}{c BT}{hline 11}{hline 11}{hline 9}{hline 8}{hline 13}{hline 12}
+{res}
+{txt}Absorbed degrees of freedom:
+{res}{col 1}{text}{hline 14}{c TT}{hline 12}{hline 12}{hline 14}{hline 1}{c TRC}
+{col 1}{text}  Absorbed FE{col 15}{c |} Categories{col 28} - Redundant{col 40}  = Num. Coefs{col 55}{c |}
+{res}{col 1}{text}{hline 14}{c +}{hline 12}{hline 12}{hline 14}{hline 1}{c RT}
+{col 1}{text} product_week{col 15}{c |}{space 1}     4112{col 28}{space 1}        0{col 40}{result}{space 1}     4112{col 54}{text} {col 55}{c |}
+{res}{col 1}{text}     did_time{col 15}{c |}{space 1}      120{col 28}{space 1}        1{col 40}{result}{space 1}      119{col 54}{text} {col 55}{c |}
+{res}{col 1}{text}{hline 14}{c BT}{hline 12}{hline 12}{hline 14}{hline 1}{c BRC}
+{res}{txt}
+{com}.         summ price_change if e(sample)==1, meanonly
+{txt}
+{com}.         estadd scalar ymean = r(mean), replace
+
+{txt}added scalar:
+              e(ymean) =  {res}.02664761
+{txt}
+{com}.         eststo c3
+{txt}
+{com}.         reghdfe price_change post_has_change if website_code == 4, absorb(product_week did_time)
+{res}{txt}(dropped 2 {browse "http://scorreia.com/research/singletons.pdf":singleton observations})
+{res}{txt}({browse "http://scorreia.com/research/hdfe.pdf":MWFE estimator} converged in 5 iterations)
+{res}
+{txt}HDFE Linear regression{col 51}Number of obs{col 67}= {res}   383,385
+{txt}Absorbing 2 HDFE groups{col 51}F({res}   1{txt},{res} 379797{txt}){col 67}= {res}     13.34
+{txt}{col 51}Prob > F{col 67}= {res}    0.0003
+{txt}{col 51}R-squared{col 67}= {res}    0.0270
+{txt}{col 51}Adj R-squared{col 67}= {res}    0.0178
+{txt}{col 51}Within R-sq.{col 67}= {res}    0.0000
+{txt}{col 51}Root MSE{col 67}= {res}    2.4133
+
+{txt}{hline 13}{c TT}{hline 11}{hline 11}{hline 9}{hline 8}{hline 13}{hline 12}
+{col 1}price_change{col 14}{c |}      Coef.{col 26}   Std. Err.{col 38}      t{col 46}   P>|t|{col 54}     [95% Con{col 67}f. Interval]
+{hline 13}{c +}{hline 11}{hline 11}{hline 9}{hline 8}{hline 13}{hline 12}
+post_has_c~e {c |}{col 14}{res}{space 2} .1038501{col 26}{space 2} .0284301{col 37}{space 1}    3.65{col 46}{space 3}0.000{col 54}{space 4}  .048128{col 67}{space 3} .1595723
+{txt}{space 7}_cons {c |}{col 14}{res}{space 2} .0770403{col 26}{space 2} .0041689{col 37}{space 1}   18.48{col 46}{space 3}0.000{col 54}{space 4} .0688694{col 67}{space 3} .0852111
+{txt}{hline 13}{c BT}{hline 11}{hline 11}{hline 9}{hline 8}{hline 13}{hline 12}
+{res}
+{txt}Absorbed degrees of freedom:
+{res}{col 1}{text}{hline 14}{c TT}{hline 12}{hline 12}{hline 14}{hline 1}{c TRC}
+{col 1}{text}  Absorbed FE{col 15}{c |} Categories{col 28} - Redundant{col 40}  = Num. Coefs{col 55}{c |}
+{res}{col 1}{text}{hline 14}{c +}{hline 12}{hline 12}{hline 14}{hline 1}{c RT}
+{col 1}{text} product_week{col 15}{c |}{space 1}     3468{col 28}{space 1}        0{col 40}{result}{space 1}     3468{col 54}{text} {col 55}{c |}
+{res}{col 1}{text}     did_time{col 15}{c |}{space 1}      120{col 28}{space 1}        1{col 40}{result}{space 1}      119{col 54}{text} {col 55}{c |}
+{res}{col 1}{text}{hline 14}{c BT}{hline 12}{hline 12}{hline 14}{hline 1}{c BRC}
+{res}{txt}
+{com}.         summ price_change if e(sample)==1, meanonly
+{txt}
+{com}.         estadd scalar ymean = r(mean), replace
+
+{txt}added scalar:
+              e(ymean) =  {res}.08244454
+{txt}
+{com}.         eststo d3
+{txt}
+{com}. restore
+{txt}
+{com}. 
+. 
+. // 3. Output regression table
+. 
+. * Display results
+. estout a3d b3d c3d a3 b3 c3, cells(b(fmt(3) star) se(fmt(3) par)) stats(ymean ar2 N, fmt(1 3 %12.0fc) labels("Outcome Mean" "Adjusted R2" "Observations")) starlevels(* 0.1 ** 0.05 *** 0.01)
+{res}
+{txt}{hline 108}
+{txt}                      a3d             b3d             c3d              a3              b3              c3   
+{txt}                     b/se            b/se            b/se            b/se            b/se            b/se   
+{txt}{hline 108}
+{txt}post_has_c~e{res}        0.770***        0.319***       -0.005           0.667***        0.291**        -0.013   {txt}
+            {res}      (0.207)         (0.109)         (0.017)         (0.189)         (0.127)         (0.017)   {txt}
+{txt}_cons       {res}        5.697***        0.916***        0.027***        5.696***        0.920***        0.027***{txt}
+            {res}      (0.016)         (0.013)         (0.002)         (0.016)         (0.012)         (0.002)   {txt}
+{txt}{hline 108}
+{txt}Outcome Mean{res}          5.7             0.9             0.0             5.7             0.9             0.0   {txt}
+{txt}Adjusted R2 {res}                                                                                                {txt}
+{txt}Observations{res}    1,115,035         353,873         426,905       1,115,035         353,873         426,905   {txt}
+{txt}{hline 108}
+
+{com}. 
+. * Output for latex with results for retailers A & B
+. label var post_has_change "Post\textsubscript{c -(}h(t){c )-}$\times$ PriceChange\textsubscript{c -(}w(t){c )-}"
+{txt}
+{com}. 
+. esttab a3d b3d a3 b3 using "$TABLES/price_response_72_a.tex", frag cells(b(fmt(3) star) se(fmt(3) par)) ///
+>         stats() keep(post_has_change) ///
+>         starlevels(`"\sym{c -(}*{c )-}"' 0.1 `"\sym{c -(}**{c )-}"' 0.05 `"\sym{c -(}***{c )-}"' 0.01, label(" \(p<@\)")) ///
+>         varwidth(20) modelwidth(12) delimiter(&) end(\\) ///
+>         noobs collabels(none) booktabs gaps nonumber label  nonote replace nomtitles nodepvars 
+{res}{txt}(note: file C:\Dropbox\Papers\016 Pricing Algorithms\replication/paper/tables/price_response_72_a.tex not found)
+(output written to {browse  `"C:\Dropbox\Papers\016 Pricing Algorithms\replication/paper/tables/price_response_72_a.tex"'})
+
+{com}. 
+. esttab a3d b3d a3 b3 using "$TABLES/price_response_72_b.tex", frag      cells(b(fmt(3) star)) ///
+>         drop(*)  stats(ymean N, fmt(3 %12.0fc) labels("Outcome Mean" "Observations") ///
+>         layout("\multicolumn{c -(}1{c )-}{c -(}c{c )-}{c -(}@{c )-}" "\multicolumn{c -(}1{c )-}{c -(}c{c )-}{c -(}@{c )-}")) ///
+>         varwidth(20) modelwidth(12) delimiter(&) end(\\) collabels(none) nolines ///
+>         nonumber label  nonote replace nomtitles nodepvars noisily 
+{txt}estout a3d b3d a3 b3 using `"C:\Dropbox\Papers\016 Pricing Algorithms\replication/paper/tables/price_response_72_b.tex"' ,
+ cells(b(fmt(3) star))
+ drop(*)
+ stats(ymean N, fmt(3 %12.0fc) labels("Outcome Mean" "Observations")         layout("\multicolumn{c -(}1{c )-}{c -(}c{c )-}{c -(}@{c )-}" "\multicolumn{c -(}1{c )-}{c -(}c{c )-}{c -(}@{c )-}"))
+ starlevels(\sym{c -(}*{c )-} 0.05 \sym{c -(}**{c )-} 0.01 \sym{c -(}***{c )-} 0.001, label(" \(p<@\)"))
+ varwidth(20)
+ modelwidth(12)
+ delimiter(&)
+ end(\\)
+ label
+ varlabels(_cons Constant)
+ mlabels(none)
+ nonumbers
+ collabels(none)
+ substitute(_ \_ "\_cons " \_cons)
+ interaction(" $\times$ ")
+ notype
+ level(95)
+ style(esttab)
+ replace
+{res}{txt}(note: file C:\Dropbox\Papers\016 Pricing Algorithms\replication/paper/tables/price_response_72_b.tex not found)
+(output written to {browse  `"C:\Dropbox\Papers\016 Pricing Algorithms\replication/paper/tables/price_response_72_b.tex"'})
+
+{com}.                 
+. 
+. 
+{txt}end of do-file
+
+{com}. 
+. ********************************************************************************
+. *** Learning simulation
+. ********************************************************************************
+. 
+. * 10. Asymmetric learning simulations [R]
+. shell "$R_PATH\Rscript.exe" "$BASE/analysis/scripts/10_simple_learning_simulation_asymmetric.R" "$BASE" > "$BASE/analysis/logs/log_10.txt"
+{txt}
+{com}. 
+. * 11. Symmetric learning simulation [R]
+. shell "$R_PATH\Rscript.exe" "$BASE/analysis/scripts/11_simple_learning_simulation_symmetric.R" "$BASE" > "$BASE/analysis/logs/log_11.txt"
+{txt}
+{com}. 
+. * 12. Learning simulation plots
+. do "$BASE/analysis/scripts/12_learning_simulation_plots.do"
+{txt}
+{com}. clear all
+{res}{txt}
+{com}. 
+. use "$BASE/analysis/results/learning_asymmetric.dta", clear
+{txt}(Written by R.              )
+
+{com}. assert b1 == 0
+{txt}
+{com}. summ stable1 stable2
+
+{txt}    Variable {c |}        Obs        Mean    Std. Dev.       Min        Max
+{hline 13}{c +}{hline 57}
+{space 5}stable1 {c |}{res}        500    .0015864    .0100189          0   .1526014
+{txt}{space 5}stable2 {c |}{res}        500    .0008253    .0053914          0   .0852601
+{txt}
+{com}. gen x1 = _n/_N*2
+{txt}
+{com}. gen x2 = _n/_N + .5
+{txt}
+{com}. gen r1 = 1/2 + 1/2*x1
+{txt}
+{com}. gen r2 = -1 + 2*x2
+{txt}
+{com}. 
+. twoway (scatter price2 price1, mlcolor(maroon%06) mfcolor(maroon%03)) ///
+>         (pci .5 0 1.333 1.667, lcolor(black%10)) ///
+>         (pci 0 .5 1.667 1.333, lcolor(black%10)) ///
+>         , ytitle("Price (Firm 2)") xtitle("Price (Firm 1)") ///
+>         xlabel(0(0.25)2) ylabel(0(0.25)2) ysize(3) xsize(3) legend(off)
+{res}{txt}
+{com}. graph export "$FIGURES/equilibrium_selection_asymmetric.pdf", replace
+{txt}(file C:\Dropbox\Papers\016 Pricing Algorithms\replication/paper/figures/equilibrium_selection_asymmetric.pdf written in PDF format)
+
+{com}. 
+. use "$BASE/analysis/results/learning_symmetric.dta", clear
+{txt}(Written by R.              )
+
+{com}. summ stable1 stable2
+
+{txt}    Variable {c |}        Obs        Mean    Std. Dev.       Min        Max
+{hline 13}{c +}{hline 57}
+{space 5}stable1 {c |}{res}        500    .0001054    .0020755          0   .0461514
+{txt}{space 5}stable2 {c |}{res}        500    .0001182     .002047          0   .0442184
+{txt}
+{com}. gen x1 = _n/_N*2
+{txt}
+{com}. gen x2 = _n/_N + .5
+{txt}
+{com}. gen r1 = 1/2 + 1/2*x1
+{txt}
+{com}. gen r2 = -1 + 2*x2
+{txt}
+{com}. twoway (scatter price2 price1, mlcolor(maroon%06) mfcolor(maroon%03)) ///
+>         (pci .5 0 1.333 1.667, lcolor(black%10)) ///
+>         (pci 0 .5 1.667 1.333, lcolor(black%10)) ///
+>         , ytitle("Price (Firm 2)") xtitle("Price (Firm 1)") ///
+>         xlabel(0(0.25)2) ylabel(0(0.25)2) ysize(3) xsize(3) legend(off)
+{res}{txt}
+{com}. graph export "$FIGURES/equilibrium_selection_symmetric.pdf", replace
+{txt}(file C:\Dropbox\Papers\016 Pricing Algorithms\replication/paper/figures/equilibrium_selection_symmetric.pdf written in PDF format)
+
+{com}.         
+. 
+. 
+{txt}end of do-file
+
+{com}. 
+. 
+. ********************************************************************************
+. *** Calibration
+. ********************************************************************************
+. 
+. cd "$SIM" // Change to directory so Matlab code can run
+{res}C:\Dropbox\Papers\016 Pricing Algorithms\replication\analysis\simulation
+{txt}
+{com}. 
+. * 13. Run calibration [MATLAB]
+. shell "$M_PATH/matlab.exe" -nosplash -nodesktop -wait -r "run 'run_calibration.m'; quit" -logfile "$BASE/analysis/logs/log_13.txt"
+{txt}
+{com}. 
+. * 14. Run merger simulation [MATLAB]
+. shell "$M_PATH/matlab.exe" -nosplash -nodesktop -wait -r "run 'run_merger_sim.m'; quit" -logfile "$BASE/analysis/logs/log_14.txt"
+{txt}
+{com}. 
+. * 15. Plots for numerical oligopoly example
+. do "$BASE/analysis/scripts/15_plot_simulated_technology_premium.do"
+{txt}
+{com}. ********************************************************************************
+. *** Figure 7
+. ********************************************************************************
+. 
+. // Assume demand takes the following form (and constant marginal cost c)
+. //  p1 = a - bp1 - p2 -p3
+. //  p2 = a - bp2 - p1 -p3
+. //  p3 = a - bp3 - p1 -p2
+. 
+. clear all
+{res}{txt}
+{com}. set obs 3
+{txt}{p}
+number of observations (_N)  was 0,
+now 3
+{p_end}
+
+{com}. gen pricing_tech = _n
+{txt}
+{com}. 
+. gen pricing_tech_name = "Firm 1" if pricing_tech==1
+{txt}(2 missing values generated)
+
+{com}. replace pricing_tech_name = "Firm 2" if pricing_tech==2
+{txt}(1 real change made)
+
+{com}. replace pricing_tech_name = "Firm 3" if pricing_tech==3
+{txt}(1 real change made)
+
+{com}. 
+. gen pricing_tech2 = `"{c -(}fontface "Palatino": {c -(}&gamma{c )-}{c -(}sub:1{c )-}{c )-}"' if pricing_tech==1
+{txt}(2 missing values generated)
+
+{com}. replace pricing_tech2 = `"{c -(}fontface "Palatino": {c -(}&gamma{c )-}{c -(}sub:2{c )-}{c )-}"' if pricing_tech==2
+{txt}(1 real change made)
+
+{com}. replace pricing_tech2 = `"{c -(}fontface "Palatino": {c -(}&gamma{c )-}{c -(}sub:3{c )-}{c )-}"' if pricing_tech==3
+{txt}(1 real change made)
+
+{com}. encode pricing_tech2, gen(pricing_tech_lbl)
+{txt}
+{com}. 
+. 
+. * Parameters
+. gen a = 1/2
+{txt}
+{com}. gen c = 0
+{txt}
+{com}. 
+. // Bertrand Nash
+. gen price_bn = (2 - 2*a)^(-1)
+{txt}
+{com}. 
+. // Pricing Algorithms
+. gen price_pa = (8 + 8*a - a^3)/(16 - 24*a^2 - 8*a^3 + 2*a^4) if pricing_tech == 1
+{txt}(2 missing values generated)
+
+{com}. replace price_pa =  -1/2*((2 + a)*(1 + (a*(8 + 8*a - a^3))/(16 - 24*a^2 - 8*a^3 + 2*a^4)))/(-2 + a^2) if pricing_tech == 2
+{txt}(1 real change made)
+
+{com}. replace price_pa = (1 + a*((8 + 8*a - a^3)/(16 - 24*a^2 - 8*a^3 + 2*a^4) - ((2 + a)*(1 + (a*(8 + 8*a - a^3))/(16 - 24*a^2 - 8*a^3 + 2*a^4)))/(2*(-2 + a^2))))/2 if pricing_tech == 3
+{txt}(1 real change made)
+
+{com}. 
+. // Merger under BN
+. gen price_bn_m12 = (2 + a)/(4 - 4*a - 2*a^2) if pricing_tech == 1 | pricing_tech == 2
+{txt}(1 missing value generated)
+
+{com}. replace price_bn_m12 = (2 - 2*a - a^2)^(-1) if pricing_tech == 3
+{txt}(1 real change made)
+
+{com}. 
+. // Merger 1/2 under pricing algos
+. gen price_pa_m12 = -1/4*(2 + a)/(-1 + a + a^2) if pricing_tech == 1 | pricing_tech == 2
+{txt}(1 missing value generated)
+
+{com}. egen temp_price = max(price_pa_m12)
+{txt}
+{com}. replace price_pa_m12 = (1 + a*(temp_price + temp_price))/2 if pricing_tech == 3
+{txt}(1 real change made)
+
+{com}. drop temp_price
+{txt}
+{com}. 
+. gen price_pa_m23 =  -1/2*1/(-1 + a + a^2) if pricing_tech == 1 
+{txt}(2 missing values generated)
+
+{com}. egen temp_price = max(price_pa_m23)
+{txt}
+{com}. replace price_pa_m23 = (1 + a*temp_price)/(2 - 2*a) if pricing_tech == 3 | pricing_tech == 2
+{txt}(2 real changes made)
+
+{com}. drop temp_price
+{txt}
+{com}. 
+. label var price_pa "Algorithmic Pricing"
+{txt}
+{com}. label var price_bn "Bertrand"
+{txt}
+{com}. 
+. label var price_bn_m12 "Bertrand Merger (1-2)"
+{txt}
+{com}. label var price_pa_m12 "Slow Merger (1-2)"
+{txt}
+{com}. label var price_pa_m23 "Fast Merger (2-3)"
+{txt}
+{com}. 
+. scatter price_pa price_bn pricing_tech_lbl, mcolor(black gs11) msymbol(O O) connect(l l) lpattern(solid dot) ///
+>         xscale(r(.75 3.25)) yscale(r(.9 1.5)) ylabel(.9(.1)1.5, tposition(inside) angle(horizontal) format(%4.1f))  ///
+>         xlabel(1(1)3, tposition(inside)) ytitle("Price", size(large)) xtitle("Firm", size(large) margin(small)) scheme(s1mono) ///
+>                 legend(cols(2) region(lstyle(none)) size(large))
+{res}{txt}
+{com}. graph export "$FIGURES/price_3firm.pdf", replace
+{txt}(file C:\Dropbox\Papers\016 Pricing Algorithms\replication/paper/figures/price_3firm.pdf written in PDF format)
+
+{com}. 
+. scatter price_pa_m12 price_pa_m23 price_bn_m12 pricing_tech_lbl, mcolor(black gs6 gs11) msymbol(O O 0) connect(l l l) lpattern(solid dash dot) /// 
+>         xscale(r(.75 3.25)) yscale(r(.9 2.6)) ylabel(1(.3)2.5, tposition(inside) angle(horizontal) format(%4.1f))  ///
+>         xlabel(1(1)3, tposition(inside)) ytitle("Price", size(large)) xtitle("Firm", size(large) margin(small)) scheme(s1mono) ///
+>                 legend(cols(2) order(1 3 2) region(lstyle(none)) size(large))
+{res}{p 0 4 2}
+{txt}(note:  named style
+0 not found in class
+symbol,  default attributes used)
+{p_end}
+{res}{txt}
+{com}. graph export "$FIGURES/price_3firm_merger.pdf", replace
+{txt}(file C:\Dropbox\Papers\016 Pricing Algorithms\replication/paper/figures/price_3firm_merger.pdf written in PDF format)
+
+{com}. 
+. 
+. 
+. ********************************************************************************
+. *** Table 9
+. ********************************************************************************
+. 
+. clear all
+{res}{txt}
+{com}. set obs 3
+{txt}{p}
+number of observations (_N)  was 0,
+now 3
+{p_end}
+
+{com}. 
+. * Demand parameter
+. gen a = 0.3 if _n==1
+{txt}(2 missing values generated)
+
+{com}. replace a = 0.4 if _n==2
+{txt}(1 real change made)
+
+{com}. replace a = 0.5 if _n==3
+{txt}(1 real change made)
+
+{com}. 
+. gen c = 0
+{txt}
+{com}. 
+. // Bertrand Nash
+. gen price_bn = (2 - 2*a)^(-1)
+{txt}
+{com}. label var price_bn "Bertrand Nash"
+{txt}
+{com}. 
+. gen q_bn = 1 - price_bn + a*(price_bn + price_bn)
+{txt}
+{com}. gen profit_bn = price_bn*q_bn
+{txt}
+{com}. 
+. // Collusive Equilibrium
+. gen price_collus = (3 + c - 2*a*c)/(6 - 12*a)
+{txt}(1 missing value generated)
+
+{com}. label var price_collus "Collusive"
+{txt}
+{com}. 
+. gen q_collus = 1 - price_collus + a*(price_collus + price_collus)
+{txt}(1 missing value generated)
+
+{com}. 
+. // Pricing Algorithms
+. gen price_pa_1 = (8 + 8*a - a^3)/(16 - 24*a^2 - 8*a^3 + 2*a^4)
+{txt}
+{com}. gen price_pa_2 = -1/2*((2 + a)*(1 + (a*(8 + 8*a - a^3))/(16 - 24*a^2 - 8*a^3 + 2*a^4)))/(-2 + a^2)
+{txt}
+{com}. gen price_pa_3 = (1 + a*((8 + 8*a - a^3)/(16 - 24*a^2 - 8*a^3 + 2*a^4) - ((2 + a)*(1 + (a*(8 + 8*a - a^3))/(16 - 24*a^2 - 8*a^3 + 2*a^4)))/(2*(-2 + a^2))))/2
+{txt}
+{com}. label var price_pa_1 "Firm 1 (slowest)"
+{txt}
+{com}. label var price_pa_2 "Firm 2"
+{txt}
+{com}. label var price_pa_3 "Firm 3 (fastest)"
+{txt}
+{com}. 
+. gen q_pa_1 = 1 - price_pa_1 + a*(price_pa_2 + price_pa_3)
+{txt}
+{com}. gen q_pa_2 = 1 - price_pa_2 + a*(price_pa_1 + price_pa_3)
+{txt}
+{com}. gen q_pa_3 = 1 - price_pa_3 + a*(price_pa_1 + price_pa_2)
+{txt}
+{com}. 
+. gen profit_pa_1 = price_pa_1*q_pa_1
+{txt}
+{com}. gen profit_pa_2 = price_pa_2*q_pa_2
+{txt}
+{com}. gen profit_pa_3 = price_pa_3*q_pa_3
+{txt}
+{com}. summ profit_pa_1 profit_pa_2 profit_pa_3
+
+{txt}    Variable {c |}        Obs        Mean    Std. Dev.       Min        Max
+{hline 13}{c +}{hline 57}
+{space 1}profit_pa_1 {c |}{res}          3    .7800662    .2983467   .5162554    1.10384
+{txt}{space 1}profit_pa_2 {c |}{res}          3    .8282019    .3543343    .522191   1.216411
+{txt}{space 1}profit_pa_3 {c |}{res}          3    .8459891    .3724457   .5256097   1.254641
+{txt}
+{com}. summ profit_pa_1 profit_pa_2 profit_pa_3 if a==0.25
+
+{txt}    Variable {c |}        Obs        Mean    Std. Dev.       Min        Max
+{hline 13}{c +}{hline 57}
+{space 1}profit_pa_1 {c |}{res}          0
+{txt}{space 1}profit_pa_2 {c |}{res}          0
+{txt}{space 1}profit_pa_3 {c |}{res}          0
+{txt}
+{com}. 
+. // Merger under BN
+. gen price_12_bnmerger12 = (2 + a)/(4 - 4*a - 2*a^2)
+{txt}
+{com}. gen price_3_bnmerger12 = (2 - 2*a - a^2)^(-1)
+{txt}
+{com}. gen q_12_bnmerger12 = 1 - price_12_bnmerger12 + a*(price_12_bnmerger12 + price_3_bnmerger12)
+{txt}
+{com}. gen q_3_bnmerger12 = 1 - price_3_bnmerger12 + a*(price_12_bnmerger12 + price_12_bnmerger12)
+{txt}
+{com}. gen profit_12_bnmerger12 = 2*price_12_bnmerger12*q_12_bnmerger12
+{txt}
+{com}. gen profit_3_bnmerger12 = price_3_bnmerger12*q_3_bnmerger12
+{txt}
+{com}. 
+. // Merger 1/2 under pricing algos
+. gen price_12_pamerger12 = -1/4*(2 + a)/(-1 + a + a^2)
+{txt}
+{com}. label var price_12_pamerger12 "Firm 1/2 Post-Merger"
+{txt}
+{com}. gen price_3_pamerger12 = (1 + a*(price_12_pamerger12 + price_12_pamerger12))/2
+{txt}
+{com}. label var price_3_pamerger12 "Firm 3 Post-Merger"
+{txt}
+{com}. gen q_12_pamerger12 = 1 - price_12_pamerger12 + a*(price_12_pamerger12 + price_3_bnmerger12)
+{txt}
+{com}. gen q_3_pamerger12 = 1 - price_3_pamerger12 + a*(price_12_pamerger12 + price_12_pamerger12)
+{txt}
+{com}. 
+. gen profit_12_pamerger12 = 2*price_12_pamerger12*q_12_pamerger12
+{txt}
+{com}. gen profit_3_pamerger12 = price_3_pamerger12*q_3_pamerger12
+{txt}
+{com}. 
+. gen price_shareweighted_pamerger12 = (2*price_12_pamerger12*q_12_pamerger12 + price_3_pamerger12*q_3_pamerger12)/ (2*q_12_pamerger12+q_3_pamerger12)
+{txt}
+{com}. label var price_shareweighted_pamerger12 "1/2 Merger Under Algorithmic Pricing"
+{txt}
+{com}. summ price_12_pamerger12 price_3_pamerger12 price_shareweighted_pamerger12
+
+{txt}    Variable {c |}        Obs        Mean    Std. Dev.       Min        Max
+{hline 13}{c +}{hline 57}
+price_12_p~2 {c |}{res}          3    1.602086    .8056051    .942623        2.5
+{txt}price_3_p~12 {c |}{res}          3    1.192747    .5001466   .7827869       1.75
+{txt}price_sha~12 {c |}{res}          3     1.36012    .5720029   .8774959   1.991935
+{txt}
+{com}. 
+. // Merger 2/3 under pricing algos
+. gen price_1_pamerger23 = -1/2*1/(-1 + a + a^2)
+{txt}
+{com}. label var price_1_pamerger23 "Firm 1 Post-Merger"
+{txt}
+{com}. gen price_23_pamerger23 = (1 + a*price_1_pamerger23)/(2 - 2*a)
+{txt}
+{com}. label var price_23_pamerger23 "Firm 2/3 Post-Merger"
+{txt}
+{com}. gen q_1_pamerger23 = 1 - price_1_pamerger23 + a*(price_23_pamerger23 + price_23_pamerger23)
+{txt}
+{com}. gen q_23_pamerger23 = 1 - price_23_pamerger23 + a*(price_1_pamerger23 + price_23_pamerger23)
+{txt}
+{com}. 
+. gen profit_1_pamerger23 = price_1_pamerger23*q_1_pamerger23
+{txt}
+{com}. gen profit_23_pamerger23 = 2*price_23_pamerger23*q_23_pamerger23
+{txt}
+{com}. 
+. gen price_shareweighted_pamerger23 = (price_1_pamerger23*q_1_pamerger23 + 2*price_23_pamerger23*q_23_pamerger23)/ (q_1_pamerger23+2*q_23_pamerger23)
+{txt}
+{com}. label var price_shareweighted_pamerger23 "2/3 Merger Under Algorithmic Pricing"
+{txt}
+{com}. 
+. summ price_1_pamerger23 price_23_pamerger23 price_shareweighted_pamerger23
+
+{txt}    Variable {c |}        Obs        Mean    Std. Dev.       Min        Max
+{hline 13}{c +}{hline 57}
+price_1_p~23 {c |}{res}          3    1.318679    .6109194   .8196722          2
+{txt}price_23_~23 {c |}{res}          3     1.36735    .5710832   .8899298          2
+{txt}price_sha~23 {c |}{res}          3    1.349619    .5855587   .8643281          2
+{txt}
+{com}. 
+. gen profit_pa_12 = profit_pa_1+profit_pa_2
+{txt}
+{com}. 
+. * Fast firm merger (2/3)
+. label var price_pa_1 "Firm 1 Pre-Merger"
+{txt}
+{com}. gen profit_pa_23 = profit_pa_2+profit_pa_3
+{txt}
+{com}. 
+. 
+. * Bertrand Panel 
+. eststo clear
+{txt}
+{com}. quietly estpost tabstat price_bn price_bn price_bn profit_bn profit_bn profit_bn price_3_bnmerger12 price_12_bnmerger12 profit_3_bnmerger12 profit_12_bnmerger12, by(a)
+{txt}
+{com}. esttab using "$TABLES/table_3firm_bn.tex", frag cells("price_bn(fmt(2)) price_bn(fmt(2)) price_bn(fmt(2)) profit_bn(fmt(2)) profit_bn(fmt(2)) profit_bn(fmt(2)) price_3_bnmerger12(fmt(2)) price_12_bnmerger12(fmt(2)) profit_3_bnmerger12(fmt(2)) profit_12_bnmerger12(fmt(2))" ) noobs nomtitle nonumber nodep nomti nolines varlabels(1 "0.3" 2 "0.4" 3 "0.5") collabels(none) varwidth(4) drop(Total) tex replace
+{res}{txt}(note: file C:\Dropbox\Papers\016 Pricing Algorithms\replication/paper/tables/table_3firm_bn.tex not found)
+(output written to {browse  `"C:\Dropbox\Papers\016 Pricing Algorithms\replication/paper/tables/table_3firm_bn.tex"'})
+
+{com}. 
+. * Algorithmic Competition Panel
+. eststo clear
+{txt}
+{com}. quietly estpost tabstat price_pa_1 price_pa_2 price_pa_3 profit_pa_1 profit_pa_2 profit_pa_3 price_1_pamerger23 price_23_pamerger23 profit_1_pamerger23 profit_23_pamerger23 price_12_pamerger12 price_3_pamerger12 profit_12_pamerger12 profit_3_pamerger12, by(a)
+{txt}
+{com}. esttab using "$TABLES/table_3firm_pa.tex", frag cells("price_pa_1(fmt(2)) price_pa_2(fmt(2)) price_pa_3(fmt(2)) profit_pa_1(fmt(2)) profit_pa_2(fmt(2)) profit_pa_3(fmt(2)) price_1_pamerger23(fmt(2)) price_23_pamerger23(fmt(2)) profit_1_pamerger23(fmt(2)) profit_23_pamerger23(fmt(2)) price_12_pamerger12(fmt(2)) price_3_pamerger12(fmt(2)) profit_12_pamerger12(fmt(2)) profit_3_pamerger12(fmt(2))" ) noobs nomtitle nonumber nodep nomti  nolines varlabels(1 "0.3" 2 "0.4" 3 "0.5") collabels(none) varwidth(4) drop(Total) tex replace
+{res}{txt}(note: file C:\Dropbox\Papers\016 Pricing Algorithms\replication/paper/tables/table_3firm_pa.tex not found)
+(output written to {browse  `"C:\Dropbox\Papers\016 Pricing Algorithms\replication/paper/tables/table_3firm_pa.tex"'})
+
+{com}. 
+. 
+. ********************************************************************************
+. *** Figure 11 (Appendix)
+. ********************************************************************************
+. clear all
+{res}{txt}
+{com}. set obs 100
+{txt}{p}
+number of observations (_N)  was 0,
+now 100
+{p_end}
+
+{com}. 
+. * Demand parameter
+. gen a = (_n-1) / (_N)
+{txt}
+{com}. replace a = 1/2 - a/2
+{txt}(100 real changes made)
+
+{com}. keep if inrange(a,0.25,0.5)
+{txt}(49 observations deleted)
+
+{com}. 
+. gen c = 0
+{txt}
+{com}. 
+. 
+. 
+. // Bertrand Nash
+. gen price_bn = (2 - 2*a)^(-1)
+{txt}
+{com}. label var price_bn "Bertrand-Nash"
+{txt}
+{com}. 
+. gen q_bn = 1 - price_bn + a*(price_bn + price_bn)
+{txt}
+{com}. gen profit_bn = price_bn*q_bn
+{txt}
+{com}. 
+. // Collusive Equilibrium
+. gen price_collus = (3 + c - 2*a*c)/(6 - 12*a)
+{txt}(1 missing value generated)
+
+{com}. label var price_collus "Collusive"
+{txt}
+{com}. 
+. gen q_collus = 1 - price_collus + a*(price_collus + price_collus)
+{txt}(1 missing value generated)
+
+{com}. 
+. 
+. // Pricing Algorithms
+. gen price_pa_1 = (8 + 8*a - a^3)/(16 - 24*a^2 - 8*a^3 + 2*a^4)
+{txt}
+{com}. gen price_pa_2 = -1/2*((2 + a)*(1 + (a*(8 + 8*a - a^3))/(16 - 24*a^2 - 8*a^3 + 2*a^4)))/(-2 + a^2)
+{txt}
+{com}. gen price_pa_3 = (1 + a*((8 + 8*a - a^3)/(16 - 24*a^2 - 8*a^3 + 2*a^4) - ((2 + a)*(1 + (a*(8 + 8*a - a^3))/(16 - 24*a^2 - 8*a^3 + 2*a^4)))/(2*(-2 + a^2))))/2
+{txt}
+{com}. label var price_pa_1 "Firm 1 (Slowest)"
+{txt}
+{com}. label var price_pa_2 "Firm 2"
+{txt}
+{com}. label var price_pa_3 "Firm 3 (Fastest)"
+{txt}
+{com}. 
+. gen q_pa_1 = 1 - price_pa_1 + a*(price_pa_2 + price_pa_3)
+{txt}
+{com}. gen q_pa_2 = 1 - price_pa_2 + a*(price_pa_1 + price_pa_3)
+{txt}
+{com}. gen q_pa_3 = 1 - price_pa_3 + a*(price_pa_1 + price_pa_2)
+{txt}
+{com}. 
+. gen profit_pa_1 = price_pa_1*q_pa_1
+{txt}
+{com}. gen profit_pa_2 = price_pa_2*q_pa_2
+{txt}
+{com}. gen profit_pa_3 = price_pa_3*q_pa_3
+{txt}
+{com}. summ profit_pa_1 profit_pa_2 profit_pa_3
+
+{txt}    Variable {c |}        Obs        Mean    Std. Dev.       Min        Max
+{hline 13}{c +}{hline 57}
+{space 1}profit_pa_1 {c |}{res}         51    .6968934    .1893259   .4471634    1.10384
+{txt}{space 1}profit_pa_2 {c |}{res}         51    .7271356    .2185181   .4498154   1.216411
+{txt}{space 1}profit_pa_3 {c |}{res}         51    .7394418    .2286652   .4515172   1.254641
+{txt}
+{com}. summ profit_pa_1 profit_pa_2 profit_pa_3 if a==0.25
+
+{txt}    Variable {c |}        Obs        Mean    Std. Dev.       Min        Max
+{hline 13}{c +}{hline 57}
+{space 1}profit_pa_1 {c |}{res}          1    .4471634           .   .4471634   .4471634
+{txt}{space 1}profit_pa_2 {c |}{res}          1    .4498154           .   .4498154   .4498154
+{txt}{space 1}profit_pa_3 {c |}{res}          1    .4515172           .   .4515172   .4515172
+{txt}
+{com}. 
+. 
+. gen price_shareweighted_pa_12 = (price_pa_1*q_pa_1 + price_pa_2*q_pa_2)/ (q_pa_1 + q_pa_2)
+{txt}
+{com}. label var price_shareweighted_pa_12 "Firm 1/2 Pre-Merger"
+{txt}
+{com}. gen price_shareweighted_pa_23 = (price_pa_3*q_pa_3 + price_pa_2*q_pa_2)/ (q_pa_3 + q_pa_2)
+{txt}
+{com}. label var price_shareweighted_pa_23 "Firm 2/3 Pre-Merger"
+{txt}
+{com}. 
+. 
+. gen price_shareweighted_pa = (price_pa_1*q_pa_1 + price_pa_2*q_pa_2 + price_pa_3*q_pa_3)/ (q_pa_1 + q_pa_2 + q_pa_3)
+{txt}
+{com}. label var price_shareweighted_pa "Pre-Merger Under Algorithmic Pricing"
+{txt}
+{com}. 
+. 
+. twoway (line price_bn a, lp("-") color(gs11) ) ///
+>         (line price_pa_1 a, color(gs12) lp(medthick) ) ///
+>         (line price_pa_2 a, color(gs10) lw(medthick)) ///
+>         (line price_pa_3 a, color(black) lp(solid) lw(medthick ) ) , ///
+>                 ytitle("Price", size(medium)) xtitle("Inverse Product Differentiation ({c -(}it:b{c )-})", size(medium)) ///
+>                 ylabel(, tposition(inside) angle(horizontal) format(%4.1f) labsize(medium)) ///
+>                 xlabel(, tposition(inside) labsize(medium)) scheme(s1mono) ///
+>                 legend(cols(2) region(lstyle(none)))
+{p 0 4 2}
+{txt}(note:  named style
+medthick not found in class
+linepattern,  default attributes used)
+{p_end}
+{p 0 4 2}
+{txt}(note:  named style
+medthick not found in class
+linepattern,  default attributes used)
+{p_end}
+{res}{txt}
+{com}. 
+. graph export "$FIGURES/plot_sim_technology_premium.pdf", replace
+{txt}(file C:\Dropbox\Papers\016 Pricing Algorithms\replication/paper/figures/plot_sim_technology_premium.pdf written in PDF format)
+
+{com}. 
+. 
+. 
+. // Merger under BN
+. gen price_12_bnmerger12 = (2 + a)/(4 - 4*a - 2*a^2)
+{txt}
+{com}. gen price_3_bnmerger12 = (2 - 2*a - a^2)^(-1)
+{txt}
+{com}. gen q_12_bnmerger12 = 1 - price_12_bnmerger12 + a*(price_12_bnmerger12 + price_3_bnmerger12)
+{txt}
+{com}. gen q_3_bnmerger12 = 1 - price_3_bnmerger12 + a*(price_12_bnmerger12 + price_12_bnmerger12)
+{txt}
+{com}. 
+. gen price_shareweighted_bnmerger12 = (2*price_12_bnmerger12*q_12_bnmerger12 + price_3_bnmerger12*q_3_bnmerger12)/ (2*q_12_bnmerger12+q_3_bnmerger12)
+{txt}
+{com}. label var price_shareweighted_bnmerger12 "Merger Under Bertrand Nash"
+{txt}
+{com}. 
+. summ price_12_bnmerger12 price_3_bnmerger12 price_shareweighted_bnmerger12
+
+{txt}    Variable {c |}        Obs        Mean    Std. Dev.       Min        Max
+{hline 13}{c +}{hline 57}
+price_12_~12 {c |}{res}         51    1.121278    .2547187   .7826087   1.666667
+{txt}price_3_b~12 {c |}{res}         51    .9387037    .1837093   .6956522   1.333333
+{txt}price_sh~r12 {c |}{res}         51    1.045944    .2214874   .7502528   1.518519
+{txt}
+{com}. 
+. // Merger 1/2 under pricing algos
+. gen price_12_pamerger12 = -1/4*(2 + a)/(-1 + a + a^2)
+{txt}
+{com}. label var price_12_pamerger12 "Firm 1/2 Post-Merger"
+{txt}
+{com}. gen price_3_pamerger12 = (1 + a*(price_12_pamerger12 + price_12_pamerger12))/2
+{txt}
+{com}. label var price_3_pamerger12 "Firm 3 Post-Merger"
+{txt}
+{com}. gen q_12_pamerger12 = 1 - price_12_pamerger12 + a*(price_12_pamerger12 + price_3_bnmerger12)
+{txt}
+{com}. gen q_3_pamerger12 = 1 - price_3_pamerger12 + a*(price_12_pamerger12 + price_12_pamerger12)
+{txt}
+{com}. 
+. gen profit_12_pamerger12 = 2*price_12_pamerger12*q_12_pamerger12
+{txt}
+{com}. gen profit_3_pamerger12 = price_3_pamerger12*q_3_pamerger12
+{txt}
+{com}. 
+. gen price_shareweighted_pamerger12 = (2*price_12_pamerger12*q_12_pamerger12 + price_3_pamerger12*q_3_pamerger12)/ (2*q_12_pamerger12+q_3_pamerger12)
+{txt}
+{com}. label var price_shareweighted_pamerger12 "1/2 Merger Under Algorithmic Pricing"
+{txt}
+{com}. 
+. summ price_12_pamerger12 price_3_pamerger12 price_shareweighted_pamerger12
+
+{txt}    Variable {c |}        Obs        Mean    Std. Dev.       Min        Max
+{hline 13}{c +}{hline 57}
+price_12_p~2 {c |}{res}         51    1.359073    .4639188   .8181818        2.5
+{txt}price_3_p~12 {c |}{res}         51    1.041975    .2884143   .7045454       1.75
+{txt}price_shar.. {c |}{res}         51    1.193307    .3429702   .7743146   1.991935
+{txt}
+{com}. 
+. 
+. // Merger 2/3 under pricing algos
+. gen price_1_pamerger23 = -1/2*1/(-1 + a + a^2)
+{txt}
+{com}. label var price_1_pamerger23 "Firm 1 Post-Merger"
+{txt}
+{com}. gen price_23_pamerger23 = (1 + a*price_1_pamerger23)/(2 - 2*a)
+{txt}
+{com}. label var price_23_pamerger23 "Firm 2/3 Post-Merger"
+{txt}
+{com}. gen q_1_pamerger23 = 1 - price_1_pamerger23 + a*(price_23_pamerger23 + price_23_pamerger23)
+{txt}
+{com}. gen q_23_pamerger23 = 1 - price_23_pamerger23 + a*(price_1_pamerger23 + price_23_pamerger23)
+{txt}
+{com}. 
+. gen profit_1_pamerger23 = price_1_pamerger23*q_1_pamerger23
+{txt}
+{com}. gen profit_23_pamerger23 = 2*price_23_pamerger23*q_23_pamerger23
+{txt}
+{com}. 
+. gen price_shareweighted_pamerger23 = (price_1_pamerger23*q_1_pamerger23 + 2*price_23_pamerger23*q_23_pamerger23)/ (q_1_pamerger23+2*q_23_pamerger23)
+{txt}
+{com}. label var price_shareweighted_pamerger23 "2/3 Merger Under Algorithmic Pricing"
+{txt}
+{com}. 
+. summ price_1_pamerger23 price_23_pamerger23 price_shareweighted_pamerger23
+
+{txt}    Variable {c |}        Obs        Mean    Std. Dev.       Min        Max
+{hline 13}{c +}{hline 57}
+price_1_p~23 {c |}{res}         51    1.134196    .3510119   .7272727          2
+{txt}price_23_~23 {c |}{res}         51    1.197664    .3367179   .7878788          2
+{txt}price_sh~r23 {c |}{res}         51    1.174679    .3420561   .7660209          2
+{txt}
+{com}. 
+. 
+. * post-merger prices for Bertrand, merged firm (fast), merged firm (slow), unmerged rival (fast), unmerged rival (slow)
+. label var price_3_bnmerger12 "Unmerged Rival: Bertrand"
+{txt}
+{com}. label var price_12_bnmerger12 "Merged Firm: Bertrand"
+{txt}
+{com}. label var price_23_pamerger23 "Merged Firm: Fast Merger"
+{txt}
+{com}. label var price_12_pamerger12 "Merged Firm: Slow Merger"
+{txt}
+{com}. label var price_1_pamerger23 "Unmerged Rival: Fast Merger"
+{txt}
+{com}. label var price_3_pamerger12 "Unmerged Rival: Slow Merger"
+{txt}
+{com}. twoway (line price_12_bnmerger12 a, color(navy%40) lp(solid) ) ///
+>         (line price_3_bnmerger12 a, color(navy%40) lp("-")  ) ///
+>         (line price_23_pamerger23 a, color(maroon%60) lp(solid)) ///
+>         (line price_1_pamerger23 a, color(maroon%60) lp("-")) ///
+>         (line price_12_pamerger12 a, color(black) lp(solid)) ///
+>         (line price_3_pamerger12 a, color(black) lp("-") ) , ///
+>                         ytitle("Price", size(medium)) xtitle("Inverse Product Differentiation ({c -(}it:b{c )-})", size(medium)) ///
+>                 ylabel(, tposition(inside) angle(horizontal) format(%4.1f) labsize(medium)) ///
+>                 xlabel(, tposition(inside) labsize(medium)) scheme(s1mono) ///
+>                 legend(cols(2) size(*0.85) region(lstyle(none)))
+{res}{txt}
+{com}. graph export "$FIGURES/price_3firm_post_merger.pdf", replace
+{txt}(file C:\Dropbox\Papers\016 Pricing Algorithms\replication/paper/figures/price_3firm_post_merger.pdf written in PDF format)
+
+{com}. 
+{txt}end of do-file
+
+{com}. 
+. * 16. Plot calibration output
+. do "$BASE/analysis/scripts/16_calibration_plots.do"
+{txt}
+{com}. clear all
+{res}{txt}
+{com}. 
+. import delimited "$SIM/sim_output.csv", delim(",") varn(1)
+{res}{text}(15 vars, 5 obs)
+
+{com}. 
+. gen pricing_tech = firm - 1
+{txt}
+{com}. replace pricing_tech = 0.9 if pricing_tech==0
+{txt}(1 real change made)
+
+{com}. replace pricing_tech = 1.1 if pricing_tech==1
+{txt}(1 real change made)
+
+{com}. 
+. // Bertrand nash price index
+. gen baseprice_tmp = estprice if firm==5
+{txt}(4 missing values generated)
+
+{com}. egen baseprice = mean(baseprice_tmp)
+{txt}
+{com}. drop baseprice_tmp
+{txt}
+{com}. gen estprice_sbn_index = estpstar_sbn / baseprice
+{txt}
+{com}. 
+. label var priceindex "Actual"
+{txt}
+{com}. label var estpriceindex "Pricing Algorithm Model (Calibrated)"
+{txt}
+{com}. label var estprice_sbn_index "Simultaneous Bertrand-Nash Pricing (Counterfactual)"
+{txt}
+{com}. 
+. label var share "Actual"
+{txt}
+{com}. label var estshare "Pricing Algorithm Model (Calibrated)"
+{txt}
+{com}. label var estshare_sbn "Simultaneous Bertrand-Nash Pricing (Counterfactual)"
+{txt}
+{com}. 
+. gen website = "A" if firm == 5
+{txt}(4 missing values generated)
+
+{com}. replace website = "B" if firm == 4
+{txt}(1 real change made)
+
+{com}. replace website = "C" if firm == 3
+{txt}(1 real change made)
+
+{com}. replace website = "D" if firm == 2
+{txt}(1 real change made)
+
+{com}. replace website = "E" if firm == 1
+{txt}(1 real change made)
+
+{com}. assert website != ""
+{txt}
+{com}. 
+. summ estprice
+
+{txt}    Variable {c |}        Obs        Mean    Std. Dev.       Min        Max
+{hline 13}{c +}{hline 57}
+{space 4}estprice {c |}{res}          5     2.13718    .2595366     1.8485     2.4499
+{txt}
+{com}. gen markup_data = priceindex*`r(min)'
+{txt}
+{com}. gen markup_alg = estprice
+{txt}
+{com}. gen markup_sbn = estpstar
+{txt}
+{com}. 
+. label var markup_data "Actual"
+{txt}
+{com}. label var markup_alg "Pricing Algorithm Model (Calibrated)"
+{txt}
+{com}. label var markup_sbn "Simultaneous Bertrand-Nash Pricing (Counterfactual)"
+{txt}
+{com}. 
+. twoway (scatter markup_data pricing_tech, mcolor(black%60) msize(2) msymbol(Sh)) ///
+>         (scatter markup_alg pricing_tech, mcolor(maroon%60) msize(2) msymbol(c))  ///
+>         (scatter markup_sbn pricing_tech, mcolor(navy%80) msize(2) msymbol(t)), ///
+>         ylabel(, tposition(inside) angle(horizontal) format(%4.1f)) xscale(r(.5 3.5)) ///
+>         xlabel(, tposition(inside)) /// 
+>         ytitle("Markup", size(large)) xtitle("Pricing Frequency", size(large)) legend(region(lcolor(white)) size(large) cols(1))
+{p 0 4 2}
+{txt}(note:  named style
+c not found in class
+symbol,  default attributes used)
+{p_end}
+{res}{txt}
+{com}. graph export "$FIGURES/plot_sim_prices_by_tech.pdf", replace
+{txt}(file C:\Dropbox\Papers\016 Pricing Algorithms\replication/paper/figures/plot_sim_prices_by_tech.pdf written in PDF format)
+
+{com}. 
+. twoway (scatter share pricing_tech, mcolor(black%60) msize(2) msymbol(Sh)) ///
+>         (scatter estshare pricing_tech, mcolor(maroon%60) msize(2) msymbol(c))  ///
+>         (scatter estshare_sbn pricing_tech, mcolor(navy%80) msize(2) msymbol(t)), ///
+>         ylabel(0.1(0.05)0.35, tposition(inside) angle(horizontal) format(%4.2f)) xscale(r(.5 3.5)) ///
+>         xlabel(1(1)4, tposition(inside)) /// 
+>         ytitle("Market Share", size(large)) xtitle("Pricing Frequency", size(large)) legend(region(lcolor(white)) size(large) cols(1))
+{p 0 4 2}
+{txt}(note:  named style
+c not found in class
+symbol,  default attributes used)
+{p_end}
+{res}{txt}
+{com}. graph export "$FIGURES/plot_sim_shares_by_tech.pdf", replace
+{txt}(file C:\Dropbox\Papers\016 Pricing Algorithms\replication/paper/figures/plot_sim_shares_by_tech.pdf written in PDF format)
+
+{com}. 
+. 
+. 
+{txt}end of do-file
+
+{com}. 
+. * 17. Test for shipping costs
+. do "$BASE/analysis/scripts/17_test_shipping_costs.do"
+{txt}
+{com}. clear all
+{res}{txt}
+{com}. 
+. use "$DATA/analysis_data.dta", clear
+{txt}
+{com}. * Checking product definitions
+. 
+. egen mode_price = mode(price), by(website website_id)
+{p}{txt}Warning: at least one group contains all
+missing values or contains multiple modes.
+Generating missing values for the mode of these
+groups.  Use the {cmd: missing}, {cmd:maxmode},
+{cmd:minmode}, or {cmd:nummode()}
+options to control this behavior.{p_end}
+(3,407 missing values generated)
+
+{com}. collapse (mean) price (max) max_price = price (min) min_price = price (first) mode_price ///
+>         drug brand form variant multipack size childrens is24hour is12hour decongestant, by(website website_id)
+{txt}
+{com}. bysort drug brand form variant multipack size: gen count_sites = _N
+{txt}
+{com}. 
+. drop count_sites
+{txt}
+{com}. egen product_id = group(drug brand form variant multipack size)
+{txt}
+{com}. egen product_unit = group(drug brand form variant multipack)
+{txt}
+{com}. isid product_id website
+{txt}
+{com}. bysort product_id: gen count_sites = _N
+{txt}
+{com}. tab count_sites 
+
+{txt}count_sites {c |}      Freq.     Percent        Cum.
+{hline 12}{c +}{hline 35}
+          1 {c |}{res}        120       23.62       23.62
+{txt}          2 {c |}{res}         94       18.50       42.13
+{txt}          3 {c |}{res}         48        9.45       51.57
+{txt}          4 {c |}{res}         76       14.96       66.54
+{txt}          5 {c |}{res}        170       33.46      100.00
+{txt}{hline 12}{c +}{hline 35}
+      Total {c |}{res}        508      100.00
+{txt}
+{com}. 
+. egen website_code = group(website)
+{txt}
+{com}. gen inv_size = 1/size
+{txt}
+{com}. gen unit_price = price/size
+{txt}(2 missing values generated)
+
+{com}. 
+. gen ln_unit_price = ln(unit_price)
+{txt}(2 missing values generated)
+
+{com}. 
+. tab website, gen(i_)
+
+    {txt}website {c |}      Freq.     Percent        Cum.
+{hline 12}{c +}{hline 35}
+          A {c |}{res}        217       42.72       42.72
+{txt}          B {c |}{res}        119       23.43       66.14
+{txt}          C {c |}{res}         68       13.39       79.53
+{txt}          D {c |}{res}         54       10.63       90.16
+{txt}          E {c |}{res}         50        9.84      100.00
+{txt}{hline 12}{c +}{hline 35}
+      Total {c |}{res}        508      100.00
+{txt}
+{com}. gen i_A_inv_size = i_1*inv_size
+{txt}
+{com}. gen i_B_inv_size = i_2*inv_size
+{txt}
+{com}. gen i_C_inv_size = i_3*inv_size
+{txt}
+{com}. gen i_D_inv_size = i_4*inv_size
+{txt}
+{com}. gen i_E_inv_size = i_5*inv_size
+{txt}
+{com}. 
+. summ price if count_sites > 2
+
+{txt}    Variable {c |}        Obs        Mean    Std. Dev.       Min        Max
+{hline 13}{c +}{hline 57}
+{space 7}price {c |}{res}        294    18.66692    10.52504   4.418199   80.41505
+{txt}
+{com}. summ price if count_sites > 4
+
+{txt}    Variable {c |}        Obs        Mean    Std. Dev.       Min        Max
+{hline 13}{c +}{hline 57}
+{space 7}price {c |}{res}        170    18.90465    8.500955   4.452376   38.92901
+{txt}
+{com}. 
+. * All products sold on at least three websites
+. keep if count_sites > 2
+{txt}(214 observations deleted)
+
+{com}. 
+. areg unit_price inv_size i_2 i_3 i_4 i_5, absorb(product_unit)
+{res}
+{txt}Linear regression, absorbing indicators{col 49}Number of obs{col 67}= {res}       294
+{txt}Absorbed variable: {bf:product_unit}{col 49}No. of categories{col 67}= {res}        33
+{txt}{col 49}F({res}   5{txt},{res}    256{txt}){col 67}= {res}    203.48
+{txt}{col 49}Prob > F{col 67}= {res}    0.0000
+{txt}{col 49}R-squared{col 67}= {res}    0.9670
+{txt}{col 49}Adj R-squared{col 67}= {res}    0.9623
+{txt}{col 49}Root MSE{col 67}= {res}    0.1142
+
+{txt}{hline 13}{c TT}{hline 11}{hline 11}{hline 9}{hline 8}{hline 13}{hline 12}
+{col 1}  unit_price{col 14}{c |}      Coef.{col 26}   Std. Err.{col 38}      t{col 46}   P>|t|{col 54}     [95% Con{col 67}f. Interval]
+{hline 13}{c +}{hline 11}{hline 11}{hline 9}{hline 8}{hline 13}{hline 12}
+{space 4}inv_size {c |}{col 14}{res}{space 2} 5.040291{col 26}{space 2} .1649302{col 37}{space 1}   30.56{col 46}{space 3}0.000{col 54}{space 4} 4.715498{col 67}{space 3} 5.365084
+{txt}{space 9}i_2 {c |}{col 14}{res}{space 2} .0267915{col 26}{space 2} .0201622{col 37}{space 1}    1.33{col 46}{space 3}0.185{col 54}{space 4}-.0129134{col 67}{space 3} .0664965
+{txt}{space 9}i_3 {c |}{col 14}{res}{space 2} .0211528{col 26}{space 2} .0201268{col 37}{space 1}    1.05{col 46}{space 3}0.294{col 54}{space 4}-.0184823{col 67}{space 3} .0607879
+{txt}{space 9}i_4 {c |}{col 14}{res}{space 2} .1172588{col 26}{space 2} .0212748{col 37}{space 1}    5.51{col 46}{space 3}0.000{col 54}{space 4} .0753628{col 67}{space 3} .1591548
+{txt}{space 9}i_5 {c |}{col 14}{res}{space 2}  .154278{col 26}{space 2} .0218772{col 37}{space 1}    7.05{col 46}{space 3}0.000{col 54}{space 4} .1111958{col 67}{space 3} .1973603
+{txt}{space 7}_cons {c |}{col 14}{res}{space 2} .3915194{col 26}{space 2} .0170198{col 37}{space 1}   23.00{col 46}{space 3}0.000{col 54}{space 4} .3580028{col 67}{space 3}  .425036
+{txt}{hline 13}{c BT}{hline 11}{hline 11}{hline 9}{hline 8}{hline 13}{hline 12}
+F test of absorbed indicators: F({res}32{txt}, {res}256{txt}) = {res}57.686{col 62}{txt} Prob > F = {res}0.000
+{txt}
+{com}. estimates store a1
+{txt}
+{com}. 
+. areg unit_price i_A_inv_size i_B_inv_size i_C_inv_size i_D_inv_size i_E_inv_size i_2 i_3 i_4 i_5, absorb(product_unit)
+{res}
+{txt}Linear regression, absorbing indicators{col 49}Number of obs{col 67}= {res}       294
+{txt}Absorbed variable: {bf:product_unit}{col 49}No. of categories{col 67}= {res}        33
+{txt}{col 49}F({res}   9{txt},{res}    252{txt}){col 67}= {res}    137.92
+{txt}{col 49}Prob > F{col 67}= {res}    0.0000
+{txt}{col 49}R-squared{col 67}= {res}    0.9723
+{txt}{col 49}Adj R-squared{col 67}= {res}    0.9678
+{txt}{col 49}Root MSE{col 67}= {res}    0.1055
+
+{txt}{hline 13}{c TT}{hline 11}{hline 11}{hline 9}{hline 8}{hline 13}{hline 12}
+{col 1}  unit_price{col 14}{c |}      Coef.{col 26}   Std. Err.{col 38}      t{col 46}   P>|t|{col 54}     [95% Con{col 67}f. Interval]
+{hline 13}{c +}{hline 11}{hline 11}{hline 9}{hline 8}{hline 13}{hline 12}
+i_A_inv_size {c |}{col 14}{res}{space 2} 5.116024{col 26}{space 2} .2315085{col 37}{space 1}   22.10{col 46}{space 3}0.000{col 54}{space 4} 4.660086{col 67}{space 3} 5.571962
+{txt}i_B_inv_size {c |}{col 14}{res}{space 2} 4.358263{col 26}{space 2}  .236583{col 37}{space 1}   18.42{col 46}{space 3}0.000{col 54}{space 4} 3.892331{col 67}{space 3} 4.824195
+{txt}i_C_inv_size {c |}{col 14}{res}{space 2} 4.004273{col 26}{space 2} .2455739{col 37}{space 1}   16.31{col 46}{space 3}0.000{col 54}{space 4} 3.520634{col 67}{space 3} 4.487911
+{txt}i_D_inv_size {c |}{col 14}{res}{space 2} 5.258859{col 26}{space 2} .2638924{col 37}{space 1}   19.93{col 46}{space 3}0.000{col 54}{space 4} 4.739143{col 67}{space 3} 5.778574
+{txt}i_E_inv_size {c |}{col 14}{res}{space 2} 6.400222{col 26}{space 2} .3236952{col 37}{space 1}   19.77{col 46}{space 3}0.000{col 54}{space 4}  5.76273{col 67}{space 3} 7.037715
+{txt}{space 9}i_2 {c |}{col 14}{res}{space 2} .0776996{col 26}{space 2} .0256569{col 37}{space 1}    3.03{col 46}{space 3}0.003{col 54}{space 4} .0271703{col 67}{space 3} .1282289
+{txt}{space 9}i_3 {c |}{col 14}{res}{space 2} .0883891{col 26}{space 2} .0249404{col 37}{space 1}    3.54{col 46}{space 3}0.000{col 54}{space 4} .0392709{col 67}{space 3} .1375073
+{txt}{space 9}i_4 {c |}{col 14}{res}{space 2} .1168719{col 26}{space 2} .0263515{col 37}{space 1}    4.44{col 46}{space 3}0.000{col 54}{space 4} .0649746{col 67}{space 3} .1687692
+{txt}{space 9}i_5 {c |}{col 14}{res}{space 2}  .105433{col 26}{space 2}  .027763{col 37}{space 1}    3.80{col 46}{space 3}0.000{col 54}{space 4} .0507559{col 67}{space 3} .1601101
+{txt}{space 7}_cons {c |}{col 14}{res}{space 2} .3844053{col 26}{space 2} .0191624{col 37}{space 1}   20.06{col 46}{space 3}0.000{col 54}{space 4} .3466665{col 67}{space 3} .4221441
+{txt}{hline 13}{c BT}{hline 11}{hline 11}{hline 9}{hline 8}{hline 13}{hline 12}
+F test of absorbed indicators: F({res}32{txt}, {res}252{txt}) = {res}68.623{col 62}{txt} Prob > F = {res}0.000
+{txt}
+{com}. estimates store a2
+{txt}
+{com}. 
+. areg unit_price i_A_inv_size i_B_inv_size i_C_inv_size i_D_inv_size i_E_inv_size i_2 i_3 i_4 i_5 size, absorb(product_unit)
+{res}
+{txt}Linear regression, absorbing indicators{col 49}Number of obs{col 67}= {res}       294
+{txt}Absorbed variable: {bf:product_unit}{col 49}No. of categories{col 67}= {res}        33
+{txt}{col 49}F({res}  10{txt},{res}    251{txt}){col 67}= {res}    130.45
+{txt}{col 49}Prob > F{col 67}= {res}    0.0000
+{txt}{col 49}R-squared{col 67}= {res}    0.9735
+{txt}{col 49}Adj R-squared{col 67}= {res}    0.9691
+{txt}{col 49}Root MSE{col 67}= {res}    0.1033
+
+{txt}{hline 13}{c TT}{hline 11}{hline 11}{hline 9}{hline 8}{hline 13}{hline 12}
+{col 1}  unit_price{col 14}{c |}      Coef.{col 26}   Std. Err.{col 38}      t{col 46}   P>|t|{col 54}     [95% Con{col 67}f. Interval]
+{hline 13}{c +}{hline 11}{hline 11}{hline 9}{hline 8}{hline 13}{hline 12}
+i_A_inv_size {c |}{col 14}{res}{space 2} 4.815749{col 26}{space 2}  .243507{col 37}{space 1}   19.78{col 46}{space 3}0.000{col 54}{space 4} 4.336171{col 67}{space 3} 5.295326
+{txt}i_B_inv_size {c |}{col 14}{res}{space 2} 4.085344{col 26}{space 2} .2453815{col 37}{space 1}   16.65{col 46}{space 3}0.000{col 54}{space 4} 3.602075{col 67}{space 3} 4.568613
+{txt}i_C_inv_size {c |}{col 14}{res}{space 2} 3.693598{col 26}{space 2}  .257469{col 37}{space 1}   14.35{col 46}{space 3}0.000{col 54}{space 4} 3.186523{col 67}{space 3} 4.200673
+{txt}i_D_inv_size {c |}{col 14}{res}{space 2} 4.947172{col 26}{space 2} .2744168{col 37}{space 1}   18.03{col 46}{space 3}0.000{col 54}{space 4} 4.406719{col 67}{space 3} 5.487625
+{txt}i_E_inv_size {c |}{col 14}{res}{space 2} 6.078967{col 26}{space 2} .3310069{col 37}{space 1}   18.37{col 46}{space 3}0.000{col 54}{space 4} 5.427062{col 67}{space 3} 6.730872
+{txt}{space 9}i_2 {c |}{col 14}{res}{space 2} .0735882{col 26}{space 2} .0251679{col 37}{space 1}    2.92{col 46}{space 3}0.004{col 54}{space 4}  .024021{col 67}{space 3} .1231554
+{txt}{space 9}i_3 {c |}{col 14}{res}{space 2} .0898602{col 26}{space 2} .0244405{col 37}{space 1}    3.68{col 46}{space 3}0.000{col 54}{space 4} .0417256{col 67}{space 3} .1379949
+{txt}{space 9}i_4 {c |}{col 14}{res}{space 2} .1187758{col 26}{space 2} .0258254{col 37}{space 1}    4.60{col 46}{space 3}0.000{col 54}{space 4} .0679137{col 67}{space 3} .1696378
+{txt}{space 9}i_5 {c |}{col 14}{res}{space 2} .1057934{col 26}{space 2} .0272024{col 37}{space 1}    3.89{col 46}{space 3}0.000{col 54}{space 4} .0522193{col 67}{space 3} .1593675
+{txt}{space 8}size {c |}{col 14}{res}{space 2}-.0009525{col 26}{space 2} .0002809{col 37}{space 1}   -3.39{col 46}{space 3}0.001{col 54}{space 4}-.0015057{col 67}{space 3}-.0003992
+{txt}{space 7}_cons {c |}{col 14}{res}{space 2} .4474032{col 26}{space 2} .0264144{col 37}{space 1}   16.94{col 46}{space 3}0.000{col 54}{space 4} .3953812{col 67}{space 3} .4994253
+{txt}{hline 13}{c BT}{hline 11}{hline 11}{hline 9}{hline 8}{hline 13}{hline 12}
+F test of absorbed indicators: F({res}32{txt}, {res}251{txt}) = {res}68.782{col 62}{txt} Prob > F = {res}0.000
+{txt}
+{com}. estimates store a3
+{txt}
+{com}. 
+. * All products sold on all five websites
+. keep if count_sites > 4
+{txt}(124 observations deleted)
+
+{com}. 
+. areg unit_price inv_size i_2 i_3 i_4 i_5, absorb(product_unit)
+{res}
+{txt}Linear regression, absorbing indicators{col 49}Number of obs{col 67}= {res}       170
+{txt}Absorbed variable: {bf:product_unit}{col 49}No. of categories{col 67}= {res}        15
+{txt}{col 49}F({res}   5{txt},{res}    150{txt}){col 67}= {res}    153.35
+{txt}{col 49}Prob > F{col 67}= {res}    0.0000
+{txt}{col 49}R-squared{col 67}= {res}    0.9147
+{txt}{col 49}Adj R-squared{col 67}= {res}    0.9039
+{txt}{col 49}Root MSE{col 67}= {res}    0.1033
+
+{txt}{hline 13}{c TT}{hline 11}{hline 11}{hline 9}{hline 8}{hline 13}{hline 12}
+{col 1}  unit_price{col 14}{c |}      Coef.{col 26}   Std. Err.{col 38}      t{col 46}   P>|t|{col 54}     [95% Con{col 67}f. Interval]
+{hline 13}{c +}{hline 11}{hline 11}{hline 9}{hline 8}{hline 13}{hline 12}
+{space 4}inv_size {c |}{col 14}{res}{space 2} 5.068318{col 26}{space 2} .1919005{col 37}{space 1}   26.41{col 46}{space 3}0.000{col 54}{space 4} 4.689141{col 67}{space 3} 5.447495
+{txt}{space 9}i_2 {c |}{col 14}{res}{space 2} .0616322{col 26}{space 2}   .02505{col 37}{space 1}    2.46{col 46}{space 3}0.015{col 54}{space 4} .0121357{col 67}{space 3} .1111287
+{txt}{space 9}i_3 {c |}{col 14}{res}{space 2} .0588426{col 26}{space 2}   .02505{col 37}{space 1}    2.35{col 46}{space 3}0.020{col 54}{space 4}  .009346{col 67}{space 3} .1083391
+{txt}{space 9}i_4 {c |}{col 14}{res}{space 2} .1426855{col 26}{space 2}   .02505{col 37}{space 1}    5.70{col 46}{space 3}0.000{col 54}{space 4}  .093189{col 67}{space 3}  .192182
+{txt}{space 9}i_5 {c |}{col 14}{res}{space 2} .1851651{col 26}{space 2}   .02505{col 37}{space 1}    7.39{col 46}{space 3}0.000{col 54}{space 4} .1356686{col 67}{space 3} .2346616
+{txt}{space 7}_cons {c |}{col 14}{res}{space 2} .3154826{col 26}{space 2} .0196866{col 37}{space 1}   16.03{col 46}{space 3}0.000{col 54}{space 4} .2765838{col 67}{space 3} .3543814
+{txt}{hline 13}{c BT}{hline 11}{hline 11}{hline 9}{hline 8}{hline 13}{hline 12}
+F test of absorbed indicators: F({res}14{txt}, {res}150{txt}) = {res}28.700{col 62}{txt} Prob > F = {res}0.000
+{txt}
+{com}. estimates store a4
+{txt}
+{com}. 
+. areg unit_price i_A_inv_size i_B_inv_size i_C_inv_size i_D_inv_size i_E_inv_size i_2 i_3 i_4 i_5, absorb(product_unit)
+{res}
+{txt}Linear regression, absorbing indicators{col 49}Number of obs{col 67}= {res}       170
+{txt}Absorbed variable: {bf:product_unit}{col 49}No. of categories{col 67}= {res}        15
+{txt}{col 49}F({res}   9{txt},{res}    146{txt}){col 67}= {res}    100.74
+{txt}{col 49}Prob > F{col 67}= {res}    0.0000
+{txt}{col 49}R-squared{col 67}= {res}    0.9277
+{txt}{col 49}Adj R-squared{col 67}= {res}    0.9163
+{txt}{col 49}Root MSE{col 67}= {res}    0.0964
+
+{txt}{hline 13}{c TT}{hline 11}{hline 11}{hline 9}{hline 8}{hline 13}{hline 12}
+{col 1}  unit_price{col 14}{c |}      Coef.{col 26}   Std. Err.{col 38}      t{col 46}   P>|t|{col 54}     [95% Con{col 67}f. Interval]
+{hline 13}{c +}{hline 11}{hline 11}{hline 9}{hline 8}{hline 13}{hline 12}
+i_A_inv_size {c |}{col 14}{res}{space 2} 5.134933{col 26}{space 2} .3714243{col 37}{space 1}   13.82{col 46}{space 3}0.000{col 54}{space 4}  4.40087{col 67}{space 3} 5.868996
+{txt}i_B_inv_size {c |}{col 14}{res}{space 2} 4.784086{col 26}{space 2} .3714243{col 37}{space 1}   12.88{col 46}{space 3}0.000{col 54}{space 4} 4.050023{col 67}{space 3} 5.518149
+{txt}i_C_inv_size {c |}{col 14}{res}{space 2} 3.850049{col 26}{space 2} .3714243{col 37}{space 1}   10.37{col 46}{space 3}0.000{col 54}{space 4} 3.115986{col 67}{space 3} 4.584112
+{txt}i_D_inv_size {c |}{col 14}{res}{space 2} 5.125467{col 26}{space 2} .3714243{col 37}{space 1}   13.80{col 46}{space 3}0.000{col 54}{space 4} 4.391404{col 67}{space 3}  5.85953
+{txt}i_E_inv_size {c |}{col 14}{res}{space 2} 6.447055{col 26}{space 2} .3714243{col 37}{space 1}   17.36{col 46}{space 3}0.000{col 54}{space 4} 5.712992{col 67}{space 3} 7.181118
+{txt}{space 9}i_2 {c |}{col 14}{res}{space 2} .0773393{col 26}{space 2} .0328181{col 37}{space 1}    2.36{col 46}{space 3}0.020{col 54}{space 4} .0124794{col 67}{space 3} .1421993
+{txt}{space 9}i_3 {c |}{col 14}{res}{space 2} .1163657{col 26}{space 2} .0328181{col 37}{space 1}    3.55{col 46}{space 3}0.001{col 54}{space 4} .0515057{col 67}{space 3} .1812256
+{txt}{space 9}i_4 {c |}{col 14}{res}{space 2} .1431093{col 26}{space 2} .0328181{col 37}{space 1}    4.36{col 46}{space 3}0.000{col 54}{space 4} .0782493{col 67}{space 3} .2079692
+{txt}{space 9}i_5 {c |}{col 14}{res}{space 2} .1264226{col 26}{space 2} .0328181{col 37}{space 1}    3.85{col 46}{space 3}0.000{col 54}{space 4} .0615627{col 67}{space 3} .1912825
+{txt}{space 7}_cons {c |}{col 14}{res}{space 2} .3125003{col 26}{space 2} .0234464{col 37}{space 1}   13.33{col 46}{space 3}0.000{col 54}{space 4}  .266162{col 67}{space 3} .3588386
+{txt}{hline 13}{c BT}{hline 11}{hline 11}{hline 9}{hline 8}{hline 13}{hline 12}
+F test of absorbed indicators: F({res}14{txt}, {res}146{txt}) = {res}32.956{col 62}{txt} Prob > F = {res}0.000
+{txt}
+{com}. estimates store a5
+{txt}
+{com}. 
+. areg unit_price i_A_inv_size i_B_inv_size i_C_inv_size i_D_inv_size i_E_inv_size i_2 i_3 i_4 i_5 size, absorb(product_unit)
+{res}
+{txt}Linear regression, absorbing indicators{col 49}Number of obs{col 67}= {res}       170
+{txt}Absorbed variable: {bf:product_unit}{col 49}No. of categories{col 67}= {res}        15
+{txt}{col 49}F({res}  10{txt},{res}    145{txt}){col 67}= {res}     98.65
+{txt}{col 49}Prob > F{col 67}= {res}    0.0000
+{txt}{col 49}R-squared{col 67}= {res}    0.9332
+{txt}{col 49}Adj R-squared{col 67}= {res}    0.9221
+{txt}{col 49}Root MSE{col 67}= {res}    0.0930
+
+{txt}{hline 13}{c TT}{hline 11}{hline 11}{hline 9}{hline 8}{hline 13}{hline 12}
+{col 1}  unit_price{col 14}{c |}      Coef.{col 26}   Std. Err.{col 38}      t{col 46}   P>|t|{col 54}     [95% Con{col 67}f. Interval]
+{hline 13}{c +}{hline 11}{hline 11}{hline 9}{hline 8}{hline 13}{hline 12}
+i_A_inv_size {c |}{col 14}{res}{space 2} 4.594807{col 26}{space 2}  .390914{col 37}{space 1}   11.75{col 46}{space 3}0.000{col 54}{space 4} 3.822181{col 67}{space 3} 5.367433
+{txt}i_B_inv_size {c |}{col 14}{res}{space 2}  4.24396{col 26}{space 2}  .390914{col 37}{space 1}   10.86{col 46}{space 3}0.000{col 54}{space 4} 3.471334{col 67}{space 3} 5.016586
+{txt}i_C_inv_size {c |}{col 14}{res}{space 2} 3.309923{col 26}{space 2}  .390914{col 37}{space 1}    8.47{col 46}{space 3}0.000{col 54}{space 4} 2.537298{col 67}{space 3} 4.082549
+{txt}i_D_inv_size {c |}{col 14}{res}{space 2} 4.585341{col 26}{space 2}  .390914{col 37}{space 1}   11.73{col 46}{space 3}0.000{col 54}{space 4} 3.812716{col 67}{space 3} 5.357967
+{txt}i_E_inv_size {c |}{col 14}{res}{space 2} 5.906929{col 26}{space 2}  .390914{col 37}{space 1}   15.11{col 46}{space 3}0.000{col 54}{space 4} 5.134303{col 67}{space 3} 6.679555
+{txt}{space 9}i_2 {c |}{col 14}{res}{space 2} .0773393{col 26}{space 2}  .031655{col 37}{space 1}    2.44{col 46}{space 3}0.016{col 54}{space 4} .0147744{col 67}{space 3} .1399042
+{txt}{space 9}i_3 {c |}{col 14}{res}{space 2} .1163657{col 26}{space 2}  .031655{col 37}{space 1}    3.68{col 46}{space 3}0.000{col 54}{space 4} .0538007{col 67}{space 3} .1789306
+{txt}{space 9}i_4 {c |}{col 14}{res}{space 2} .1431093{col 26}{space 2}  .031655{col 37}{space 1}    4.52{col 46}{space 3}0.000{col 54}{space 4} .0805443{col 67}{space 3} .2056742
+{txt}{space 9}i_5 {c |}{col 14}{res}{space 2} .1264226{col 26}{space 2}  .031655{col 37}{space 1}    3.99{col 46}{space 3}0.000{col 54}{space 4} .0638577{col 67}{space 3} .1889875
+{txt}{space 8}size {c |}{col 14}{res}{space 2}-.0015804{col 26}{space 2} .0004577{col 37}{space 1}   -3.45{col 46}{space 3}0.001{col 54}{space 4} -.002485{col 67}{space 3}-.0006759
+{txt}{space 7}_cons {c |}{col 14}{res}{space 2} .4008283{col 26}{space 2} .0341418{col 37}{space 1}   11.74{col 46}{space 3}0.000{col 54}{space 4} .3333484{col 67}{space 3} .4683082
+{txt}{hline 13}{c BT}{hline 11}{hline 11}{hline 9}{hline 8}{hline 13}{hline 12}
+F test of absorbed indicators: F({res}14{txt}, {res}145{txt}) = {res}23.136{col 62}{txt} Prob > F = {res}0.000
+{txt}
+{com}. estimates store a6
+{txt}
+{com}. 
+. estadd local unit_fe "X" : a1 a2 a3 a4 a5 a6
+{txt}
+{com}. estadd local all_5 "X" : a4 a5 a6
+{txt}
+{com}. 
+. label variable i_2 "Unit Price Premium (B)"
+{txt}
+{com}. label variable i_3 "Unit Price Premium (C)"
+{txt}
+{com}. label variable i_4 "Unit Price Premium (D)"
+{txt}
+{com}. label variable i_5 "Unit Price Premium (E)"
+{txt}
+{com}. 
+. label variable inv_size "Fixed Component (All)"
+{txt}
+{com}. label variable i_A_inv_size "Fixed Component (A)"
+{txt}
+{com}. label variable i_B_inv_size "Fixed Component (B)"
+{txt}
+{com}. label variable i_C_inv_size "Fixed Component (C)"
+{txt}
+{com}. label variable i_D_inv_size "Fixed Component (D)"
+{txt}
+{com}. label variable i_E_inv_size "Fixed Component (E)"
+{txt}
+{com}. label variable size "Quantity Discount"
+{txt}
+{com}. 
+. esttab a1 a3 a4 a6 using "$TABLES/tab_shipping_costs.tex", replace booktabs frag ///
+>         label se(%9.3f) b(%9.3f) noobs ///  
+>         drop(_cons) ///
+>         order(inv_size i_A_inv_size i_B_inv_size i_C_inv_size i_D_inv_size i_E_inv_size i_2 i_3 i_4 i_5 size) ///
+>         star(* 0.10 ** 0.05 *** 0.01) ///
+>         alignment(S[table-format = 2.5]) ///
+>         stats(unit_fe all_5 N r2, fmt(%12s %12s %10.0fc %9.3f) ///
+>         layout("\multicolumn{c -(}1{c )-}{c -(}c{c )-}{c -(}@{c )-}" "\multicolumn{c -(}1{c )-}{c -(}c{c )-}{c -(}@{c )-}" "\multicolumn{c -(}1{c )-}{c -(}c{c )-}{c -(}@{c )-}") ///
+>         labels(`"Product FEs"' `"Sold at All Retailers"' `"Observations"' `"\(R^{c -(}2{c )-}\)"')) ///
+>         nomtitles 
+{res}{txt}(note: file C:\Dropbox\Papers\016 Pricing Algorithms\replication/paper/tables/tab_shipping_costs.tex not found)
+(output written to {browse  `"C:\Dropbox\Papers\016 Pricing Algorithms\replication/paper/tables/tab_shipping_costs.tex"'})
+
+{com}.         
+.         
+. reg price i.website_code, absorb(product_unit)
+
+{txt}Linear regression, absorbing indicators         Number of obs     = {res}       170
+                                                {txt}F(4, 151)         =  {res}     3.58
+                                                {txt}Prob > F          = {res}    0.0080
+                                                {txt}R-squared         = {res}    0.3288
+                                                {txt}Adj R-squared     = {res}    0.2487
+                                                {txt}Root MSE          =    {res} 7.3682
+
+{txt}{hline 13}{c TT}{hline 11}{hline 11}{hline 9}{hline 8}{hline 13}{hline 12}
+{col 1}       price{col 14}{c |}      Coef.{col 26}   Std. Err.{col 38}      t{col 46}   P>|t|{col 54}     [95% Con{col 67}f. Interval]
+{hline 13}{c +}{hline 11}{hline 11}{hline 9}{hline 8}{hline 13}{hline 12}
+website_code {c |}
+{space 10}2  {c |}{col 14}{res}{space 2} 1.940274{col 26}{space 2} 1.787047{col 37}{space 1}    1.09{col 46}{space 3}0.279{col 54}{space 4}-1.590572{col 67}{space 3}  5.47112
+{txt}{space 10}3  {c |}{col 14}{res}{space 2} 2.925219{col 26}{space 2} 1.787047{col 37}{space 1}    1.64{col 46}{space 3}0.104{col 54}{space 4}-.6056269{col 67}{space 3} 6.456064
+{txt}{space 10}4  {c |}{col 14}{res}{space 2} 5.173012{col 26}{space 2} 1.787047{col 37}{space 1}    2.89{col 46}{space 3}0.004{col 54}{space 4} 1.642166{col 67}{space 3} 8.703857
+{txt}{space 10}5  {c |}{col 14}{res}{space 2} 5.863897{col 26}{space 2} 1.787047{col 37}{space 1}    3.28{col 46}{space 3}0.001{col 54}{space 4} 2.333052{col 67}{space 3} 9.394743
+{txt}{space 12} {c |}
+{space 7}_cons {c |}{col 14}{res}{space 2} 15.72417{col 26}{space 2} 1.263633{col 37}{space 1}   12.44{col 46}{space 3}0.000{col 54}{space 4} 13.22748{col 67}{space 3} 18.22085
+{txt}{hline 13}{c BT}{hline 11}{hline 11}{hline 9}{hline 8}{hline 13}{hline 12}
+{res}{txt}
+{com}. 
+{txt}end of do-file
+
+{com}. 
+. ***
+. * End log
+. ***
+. di "End date and time: $S_DATE $S_TIME"
+{res}End date and time:  4 Oct 2021 15:14:50
+{txt}
+{com}. log close
+      {txt}name:  {res}<unnamed>
+       {txt}log:  {res}C:\Dropbox\Papers\016 Pricing Algorithms\replication/analysis/logs/_log_all_2021.10.04_14.32.56.smcl
+  {txt}log type:  {res}smcl
+ {txt}closed on:  {res} 4 Oct 2021, 15:14:50
+{txt}{.-}
+{smcl}
+{txt}{sf}{ul off}

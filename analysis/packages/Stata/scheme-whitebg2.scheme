@@ -1,0 +1,6 @@
+#include s1mono
+color background white 
+color plotregion white  
+gsize axis_title vlarge
+gsize key_label large
+gsize tick_label large

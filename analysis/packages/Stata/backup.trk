@@ -1,0 +1,457 @@
+* 00000012
+*! version 1.0.0
+* Do not erase or edit this file
+* It is used by Stata to track the ado and help
+* files you have installed.
+
+S http://fmwww.bc.edu/RePEc/bocode/e
+N egenmore.pkg
+D 17 Nov 2020
+U 1
+d 'EGENMORE': modules to extend the generate function
+d 
+d  This package includes various -egen- functions. For full
+d details, please read the help file (ssc type egenmore.sthlp).
+d Some of these routines are updates of those published in STB-50.
+d _gfilter, _ggroup2, _gegroup and _gcorr require Stata 7.
+d _gminutes, _grepeat and _gseconds require Stata 8.  _gcorr and
+d _gnoccur were written by Nick Winter
+d (nwinter@policystudies.com). _grsum2 was written by Steven
+d Stillman (s.stillman@verizon.net). _gdhms, _gelap, _gelap2,
+d _ghms, _gtod and _gtruncdig were written by Kit Baum
+d (baum@bc.edu).
+d 
+d KW: egen
+d KW: grouping
+d KW: graphing
+d KW: strings
+d KW: dates
+d KW: first
+d KW: last
+d KW: random
+d KW: row
+d 
+d Requires: Stata version 6.0 (7.0 for _gfilter7, _ggroup2, _gegroup, _gsieve, _gnoccur; 8.2 for _gcorr, _grepeat, _gminutes, _gseconds, _gfilter, _gaxis, _gdensity, _gxtile, _gtotal0, _gmixnorm, _gw
+d 
+d 
+d Author: Nicholas J. Cox, University of Durham
+d Support: email N.J.Cox@@durham.ac.uk
+d 
+d Distribution-Date: 20190124
+d 
+f e\egenmore.sthlp
+f _\_gclsst.ado
+f _\_gnmiss.ado
+f _\_ggmean.ado
+f _\_ghmean.ado
+f _\_grall.ado
+f _\_grany.ado
+f _\_grcount.ado
+f _\_grndsub.ado
+f _\_grndint.ado
+f _\_gfilter.ado
+f _\_gifirst.ado
+f _\_gilast.ado
+f _\_gncyear.ado
+f _\_ghmm.ado
+f _\_ghmmss.ado
+f _\_gincss.ado
+f _\_gfirst.ado
+f _\_glastnm.ado
+f _\_gnss.ado
+f _\_gbom.ado
+f _\_gbomd.ado
+f _\_geom.ado
+f _\_geomd.ado
+f _\_gnwords.ado
+f _\_gwordof.ado
+f _\_gnvals.ado
+f _\_gridit.ado
+f _\_gsemean.ado
+f _\_gmsub.ado
+f _\_gston.ado
+f _\_gntos.ado
+f _\_gewma.ado
+f _\_grecord.ado
+f _\_gbase.ado
+f _\_gdecimal.ado
+f _\_ggroup2.ado
+f _\_gsumoth.ado
+f _\_gegroup.ado
+f _\_gcorr.ado
+f _\_grsum2.ado
+f _\_gsieve.ado
+f _\_gdhms.ado
+f _\_ghms.ado
+f _\_gtod.ado
+f _\_gelap.ado
+f _\_gelap2.ado
+f _\_gnoccur.ado
+f _\_gwtfreq.ado
+f _\_gvar.ado
+f _\_gminutes.ado
+f _\_gseconds.ado
+f _\_grepeat.ado
+f _\_gaxis.ado
+f _\_gdensity.ado
+f _\_gxtile.ado
+f _\_gtotal0.ado
+f _\_gmixnorm.ado
+f _\_gadjl.ado
+f _\_gadju.ado
+f _\_gdayofyear.ado
+f _\_gfoy.ado
+f _\_goutside.ado
+f _\_gmlabvpos.ado
+f _\_giso3166.ado
+f _\_growmedian.ado
+f _\_gwpctile.ado
+f _\_gd2.ado
+f _\_grownvals.ado
+f _\_growsvals.ado
+f _\_gtruncdig.ado
+e
+S https://raw.githubusercontent.com/reifjulian/autorename/master
+N autorename.pkg
+D 17 Nov 2020
+U 2
+d autorename. Rename variables using a row of data.
+d Julian Reif, University of Illinois (jreif@illinois.edu)
+f a\autorename.ado
+f a\autorename.hlp
+e
+S http://www.stata-journal.com/software/sj14-2
+N st0085_2.pkg
+D 17 Nov 2020
+U 3
+d SJ14-2 st0085_2. Update: Making regression...
+d Update: Making regression tables from stored
+d   estimates
+d by Ben Jann, University of Bern
+d Support:  jann@@soz.unibe.ch
+d After installation, type help ^estout^,
+d   ^esttab^, ^eststo^, ^estadd^, and ^estpost^
+f _\_eststo.ado
+f _\_eststo.hlp
+f e\esttab.ado
+f e\esttab.hlp
+f e\estadd.ado
+f e\estadd.hlp
+f e\eststo.ado
+f e\eststo.hlp
+f e\estout.ado
+f e\estout.hlp
+f e\estpost.ado
+f e\estpost.hlp
+e
+S http://www.stata-journal.com/software/sj8-2
+N gr0034.pkg
+D 17 Nov 2020
+U 4
+d SJ8-2 gr0034.  Assign values to variables
+d Assign values to variables
+d by Nicholas J. Cox, Durham University, Durham City, UK
+d Support:  n.j.cox@@durham.ac.uk
+d After installation, type help ^labmask^ and ^seqvar^
+f l\labmask.ado
+f l\labmask.hlp
+f s\seqvar.ado
+f s\seqvar.hlp
+e
+S http://fmwww.bc.edu/RePEc/bocode/t
+N tabout.pkg
+D 17 Nov 2020
+U 5
+d 'TABOUT': module to export publication quality cross-tabulations
+d 
+d  tabout is a table building program for oneway and twoway
+d tables of frequencies and percentages, and for summary tables. It
+d produces publication quality tables for export to a text file.
+d These tables can then be used with spreadsheets, word processors,
+d web browsers or compilers like LaTeX. The tables produced by
+d tabout allow multiple panels so that a number of variables can be
+d included in the one table. tabout also provides standard errors
+d and confidence intervals, as well as a range of table statistics
+d (chi2 etc). The output from tabout matches Stata's tabulate, most
+d of tabstat and some of table.
+d 
+d KW: tables
+d KW: latex
+d KW: html
+d KW: delimited text
+d 
+d Requires: Stata version 9.2
+d 
+d Distribution-Date: 20190316
+d 
+d Author: Ian Watson , Macquarie University, Australia
+d Support: email mail@@ianwatson.com.au
+d 
+f t\tabout.ado
+f t\tabstatout.ado
+f t\tabout.hlp
+f f\figout.ado
+f f\figout.hlp
+e
+S http://fmwww.bc.edu/RePEc/bocode/r
+N reghdfe.pkg
+D 17 Nov 2020
+U 6
+d 'REGHDFE': module to perform linear or instrumental-variable regression absorbing any number of high-dimensional fixed effects
+d 
+d  reghdfe fits a linear or instrumental-variable regression
+d absorbing an arbitrary number of categorical factors and
+d factorial interactions Optionally, it saves the estimated fixed
+d effects.
+d 
+d KW: regression
+d KW: instrumental variables
+d KW: fixed effects
+d KW: high dimension fixed effects
+d 
+d Requires: Stata version 11.2
+d 
+d Distribution-Date: 20191118
+d 
+d Author: Sergio Correia, Board of Governors of the Federal Reserve System
+d Support: email sergio.correia@@gmail.com
+d 
+f r\reghdfe.ado
+f r\reghdfe.mata
+f r\reghdfe_old.ado
+f r\reghdfe_p.ado
+f r\reghdfe_old_p.ado
+f r\reghdfe_estat.ado
+f r\reghdfe_parse.ado
+f r\reghdfe_footnote.ado
+f r\reghdfe_old_estat.ado
+f r\reghdfe_old_footnote.ado
+f e\estfe.ado
+f r\reghdfe_header.ado
+f r\reghdfe_store_alphas.ado
+f r\reghdfe.sthlp
+f r\reghdfe_old.sthlp
+f r\reghdfe_accelerations.mata
+f r\reghdfe_bipartite.mata
+f r\reghdfe_class.mata
+f r\reghdfe_common.mata
+f r\reghdfe_constructor.mata
+f r\reghdfe_lsmr.mata
+f r\reghdfe_projections.mata
+f r\reghdfe_transforms.mata
+f r\reghdfe_mata.sthlp
+e
+S https://raw.githubusercontent.com/reifjulian/texsave/master
+N texsave.pkg
+D 17 Nov 2020
+U 7
+d texsave. Save dataset in LaTeX format.
+d Julian Reif, University of Illinois (jreif@illinois.edu)
+f t\texsave.ado
+f t\texsave.sthlp
+f a\appendfile.ado
+f a\appendfile.hlp
+e
+S http://fmwww.bc.edu/RePEc/bocode/f
+N ftools.pkg
+D 17 Nov 2020
+U 8
+d 'FTOOLS': module to provide alternatives to common Stata commands optimized for large datasets
+d 
+d  ftools consists of a Mata file and several Stata commands: The
+d Mata file creates identifiers (factors) from variables by using
+d hash functions instead of sorting the data, so it runs in time
+d O(N) and not in O(N log N). The Stata commands exploit this to
+d avoid sort operations,  at the cost of being slower for small
+d datasets (mainly because of the cost involved in moving data from
+d Stata to Mata). Implemented commands are fcollapse, fegen group,
+d and fsort. Note that most of the capabilities of levels and
+d contract are already supported by these commands. Possible
+d commands include more egen functions and merge and reshape
+d alternatives.
+d 
+d KW: levels
+d KW: collapse
+d KW: contract
+d KW: egen
+d KW: sort
+d KW: factor variables
+d KW: Mata
+d 
+d Requires: Stata version 11.2
+d 
+d Distribution-Date: 20191118
+d 
+d Author: Sergio Correia, Board of Governors of the Federal Reserve System
+d Support: email sergio.correia@@gmail.com
+d 
+f f\ftools.ado
+f f\ftools.mata
+f f\ftools.sthlp
+f f\fcollapse.ado
+f f\fcollapse.sthlp
+f f\fegen.ado
+f f\fegen_group.ado
+f f\fegen.sthlp
+f f\fisid.ado
+f f\fisid.sthlp
+f f\flevelsof.ado
+f f\flevelsof.sthlp
+f f\fmerge.ado
+f f\fmerge.sthlp
+f f\freshape.ado
+f f\fsort.ado
+f f\fsort.sthlp
+f f\ftab.ado
+f j\join.ado
+f j\join.sthlp
+f l\local_inlist.ado
+f l\local_inlist.sthlp
+f f\fcollapse_functions.mata
+f f\fcollapse_main.mata
+f f\ftools_type_aliases.mata
+f f\ftools.mata
+f f\ftools_common.mata
+f f\ftools_hash1.mata
+f f\ftools_main.mata
+f f\ftools_experimental.mata
+f f\ftools_plugin.mata
+f f\ftools_type_aliases.mata
+f m\ms_compile_mata.ado
+f m\ms_expand_varlist.ado
+f m\ms_fvstrip.ado
+f m\ms_fvstrip.sthlp
+f m\ms_fvunab.ado
+f m\ms_get_version.ado
+f m\ms_parse_absvars.ado
+f m\ms_parse_varlist.ado
+f m\ms_parse_vce.ado
+f m\ms_add_comma.ado
+e
+S http://fmwww.bc.edu/repec/bocode/s
+N subsetplot.pkg
+D 25 Nov 2020
+U 9
+d 'SUBSETPLOT': module for plots for each subset with rest of the data as backdrop
+d 
+d  subsetplot produces an array of scatter or other twoway plots
+d for yvarlist versus xvar according to a further variable byvar.
+d There is one plot for observations for each distinct subset of
+d byvar in which data for that subset are highlighted and the rest
+d of the data shown as backdrop.  Graphs are drawn individually and
+d then combined with graph combine.
+d 
+d KW:  graphics
+d KW: scatter
+d KW: line
+d KW: small multiples
+d KW: trellis
+d 
+d Requires: Stata version 8
+d 
+d Distribution-Date: 20141003
+d 
+d Author: Nicholas J. Cox, Durham University
+d Support: email N.J.Cox@@durham.ac.uk
+d 
+f s/subsetplot.ado
+f s/subsetplot.sthlp
+e
+S http://fmwww.bc.edu/RePEc/bocode/r
+N regsave.pkg
+D 27 Nov 2020
+U 10
+d 'REGSAVE': module to save regression results to a Stata-formatted dataset
+d 
+d  regsave fetches output from Stata's e() macros, scalars, and
+d matrices and stores them in  a Stata-formatted dataset. This
+d command provides a user-friendly way to manipulate a large number
+d  of regression results by allowing the user to apply Stata's data
+d manipulation commands to those  results. When combined with the
+d table option and the outsheet command, it also provides an easy
+d way to create tables that can be opened by, or copy and pasted
+d into, other programs such as MS Excel.
+d 
+d KW: regression
+d KW: output
+d KW: tables
+d KW: formatting
+d KW: outsheet
+d 
+d Requires: Stata version 8
+d 
+d Distribution-Date: 20200412
+d 
+d Author: Julian Reif , University of Illinois
+d Support: email jreif@@illinois.edu
+d 
+f r\regsave.ado
+f r\regsave_tbl.ado
+f r\regsave.hlp
+f r\regsave_tbl.hlp
+e
+S http://fmwww.bc.edu/repec/bocode/g
+N gzsave.pkg
+D  1 Dec 2020
+U 11
+d 'GZSAVE': module to save and use datasets compressed by gzip
+d 
+d  these routines to save and use datasets compressed by gzip  in
+d order to save disk space and network load. They share syntax with
+d Stata's save, saveold and use commands.
+d 
+d KW: gzip
+d KW: compression
+d KW: save
+d KW: use
+d 
+d Requires: Stata version 9.2 and  gzip
+d 
+d Distribution-Date: 20110913
+d 
+d Author: Henrik Stovring, Department of Biostatistics, University of Aarhus
+d Support: email stovring@@biostat.au.dk
+d 
+f g\gzsave.ado
+f g\gzsave.hlp
+f g\gzsaveold.ado
+f g\gzsaveold.hlp
+f g\gzuse.ado
+f g\gzuse.hlp
+f g\gzappend.ado
+f g\gzappend.hlp
+f g\gzmerge.ado
+f g\gzmerge.hlp
+e
+S http://fmwww.bc.edu/RePEc/bocode/c
+N carryforward.pkg
+D  1 Dec 2020
+U 12
+d 'CARRYFORWARD': module to carry forward previous observations
+d 
+d  carryforward will carry values forward from one observation to
+d the next, filling in missing values with the previous value. This
+d is not intended for imputing missing values; it is regarded as a
+d bad choice for missing-value imputation. The intent is, rather,
+d to fill in "holes", where a value should  naturally prevail from
+d one observation to the next. The holes may be artifacts of data
+d management operations such as merging.
+d 
+d KW: carryforward
+d KW: carry
+d KW: forward
+d KW: missing
+d KW: fill
+d KW: replace
+d KW: cascade
+d 
+d Requires: Stata version 8.2
+d 
+d Distribution-Date: 20160212
+d 
+d Author: David Kantor
+d Support: email  kantor.d@@att.net
+d 
+f c\carryforward.ado
+f c\carryforward.hlp
+e

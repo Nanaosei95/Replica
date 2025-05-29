@@ -1,0 +1,7 @@
+#include s1mono
+color background white 
+color plotregion white  
+linestyle legend none
+gsize axis_title medlarge
+gsize key_label medium
+gsize tick_label medium
