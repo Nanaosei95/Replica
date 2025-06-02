@@ -1,0 +1,22 @@
+---
+title: "Pencil"
+editor: visual
+bibliography: MyRef.bib
+csl: https://www.zotero.org/styles/apa
+format:
+  pdf:
+    documentclass: scrartcl
+    papersize: letter
+---
+
+*Pens*
+
+**Pencils**
+
+[@huber2016]
+
+***Ruler***
+
+superscript^2^ / subscript~2~
+
+![Pentip](More/Pentip.png){width="30%"}
