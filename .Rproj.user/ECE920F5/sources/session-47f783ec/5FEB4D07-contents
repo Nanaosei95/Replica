@@ -1,7 +1,0 @@
-# Ignore all Stata .dta files
-*.dta
-
-# Ignore other data files too if needed
-*.xlsx
-*.csv
-/analysis/data/

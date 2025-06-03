@@ -1,3 +1,4 @@
+library(haven)
 library(data.table)
 library(dplyr)
 library(ggplot2)
@@ -116,82 +117,164 @@ df_hourly[, total_price_change := sum(price_change), by = website]
 df_hourly[, hourly_dist := (price_change / total_price_change) * 100]
 
 
-ggplot(df_hourly[website == "A"], aes(x = hourofweek, y = hourly_dist)) +
-  geom_line(color = "red") +
+# Filter for Retailer A
+retailer_A <- df_hourly[website == "A"]
+
+ggplot(retailer_A, aes(x = hourofweek, y = hourly_dist)) +
+  geom_line(color = "black", linewidth = 1) +
+  
+  # X-axis: tick every 24 hours (no labels)
   scale_x_continuous(
     breaks = seq(0, 168, by = 24),
-    labels = c("Sat", "Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat")
+    limits = c(0, 168),
+    expand = c(0, 0)
   ) +
+  
+  # Y-axis: 0% to 1% for Retailer A
+  scale_y_continuous(
+    limits = c(0, 1),
+    breaks = seq(0, 1, by = 0.2),
+    labels = function(x) sprintf("%.1f", x)
+  ) +
+  
+  # Vertical dashed lines at day boundaries
+  geom_vline(xintercept = seq(24, 144, by = 24), linetype = "dashed", color = "gray60") +
+  
+  # Add day labels as text (not tick labels)
+  annotate("text", x = 12, y = 0, label = "Sat", vjust = 1.5, size = 4) +
+  annotate("text", x = 36, y = 0, label = "Sun", vjust = 1.5, size = 4) +
+  annotate("text", x = 60, y = 0, label = "Mon", vjust = 1.5, size = 4) +
+  annotate("text", x = 84, y = 0, label = "Tue", vjust = 1.5, size = 4) +
+  annotate("text", x = 108, y = 0, label = "Wed", vjust = 1.5, size = 4) +
+  annotate("text", x = 132, y = 0, label = "Thu", vjust = 1.5, size = 4) +
+  annotate("text", x = 156, y = 0, label = "Fri", vjust = 1.5, size = 4) +
+  
   labs(
+    title = "Panel A. Retailer A",
     x = "Hour of Week",
     y = "Percent of Price Changes"
   ) +
-  theme_minimal(base_size = 14)
-
-ggsave("C:/Users/attef/OneDrive/Documents/Replicaproject/Replica/price_change_fraction_hourofweek_A.pdf")
-
-
-unique_websites <- unique(df_hourly$website)
-
-for (retailer in unique(df_hourly$website)) {
-  plot_data <- df_hourly[website == retailer]
-  
-  p <- ggplot(plot_data, aes(x = hourofweek, y = hourly_dist)) +
-    geom_line(color = "red") +
-    scale_x_continuous(
-      breaks = seq(0, 168, by = 24),
-      labels = c("Sat", "Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat")
-    ) +
-    labs(
-      title = paste("Retailer", retailer),
-      x = "Hour of Week",
-      y = "Percent of Price Changes"
-    ) +
-    theme_minimal(base_size = 14)
-  
-  ggsave(paste0("price_change_fraction_hourofweek_", retailer, ".pdf"),
-         plot = p, width = 8, height = 5)
-}
+  theme_minimal(base_size = 14) +
+  theme(
+    panel.grid.minor = element_blank(),
+    axis.text.x = element_blank(),   # Hide tick labels
+    axis.ticks.x = element_blank(),
+    plot.title = element_text(hjust = 0.5)
+  )
 
 
-# Filter data for retailers A and B
-plot_ab <- df_hourly[website %in% c("A", "B")]
-
-ggplot(plot_ab, aes(x = hourofweek, y = hourly_dist, color = website)) +
-  geom_line(size = 1) +
-  scale_color_manual(values = c("A" = "black", "B" = "sienna")) +
+ggplot(df_hourly[website == "B"], aes(x = hourofweek, y = hourly_dist)) +
+  geom_line(color = "black", linewidth = 1) +
   scale_x_continuous(
     breaks = seq(0, 168, by = 24),
-    labels = c("Sat", "Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat")
+    limits = c(0, 168),
+    expand = c(0, 0)
   ) +
+  scale_y_continuous(
+    limits = c(0, 1),
+    breaks = seq(0, 1, by = 0.2),
+    labels = function(x) sprintf("%.1f", x)
+  ) +
+  geom_vline(xintercept = seq(24, 144, by = 24), linetype = "dashed", color = "gray60") +
+  annotate("text", x = seq(12, 156, by = 24), y = 0, label = c("Sat", "Sun", "Mon", "Tue", "Wed", "Thu", "Fri"), vjust = 1.5, size = 4) +
   labs(
+    title = "Panel B. Retailer B",
     x = "Hour of Week",
-    y = "Percent of Price Changes",
-    title = "Retailers A and B"
+    y = "Percent of Price Changes"
   ) +
   theme_minimal(base_size = 14) +
-  theme(legend.position = "top")
+  theme(
+    axis.text.x = element_blank(),
+    axis.ticks.x = element_blank(),
+    axis.text.y = element_text(size = 10),
+    plot.title = element_text(hjust = 0.5),
+  )
 
-ggsave("price_change_fraction_hourofweek_AB.pdf", width = 8, height = 5)
 
-
-# Filter data for retailers D and E
-plot_de <- df_hourly[website %in% c("D", "E")]
-
-ggplot(plot_de, aes(x = hourofweek, y = hourly_dist, color = website)) +
-  geom_line(size = 1) +
-  scale_color_manual(values = c("D" = "black", "E" = "sienna")) +
+ggplot(df_hourly[website == "C"], aes(x = hourofweek, y = hourly_dist)) +
+  geom_line(color = "black", linewidth = 1) +
   scale_x_continuous(
     breaks = seq(0, 168, by = 24),
-    labels = c("Sat", "Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat")
+    limits = c(0, 168),
+    expand = c(0, 0)
   ) +
+  scale_y_continuous(
+    limits = c(0, 8),
+    breaks = seq(0, 8, by = 2),
+    labels = function(x) sprintf("%.0f", x)
+  ) +
+  geom_vline(xintercept = seq(24, 144, by = 24), linetype = "dashed", color = "gray60") +
+  annotate("text", x = seq(12, 156, by = 24), y = 0, label = c("Sat", "Sun", "Mon", "Tue", "Wed", "Thu", "Fri"), vjust = 1.5, size = 4) +
   labs(
+    title = "Panel C. Retailer C",
     x = "Hour of Week",
-    y = "Percent of Price Changes",
-    title = "Retailers D and E"
+    y = "Percent of Price Changes"
   ) +
   theme_minimal(base_size = 14) +
-  theme(legend.position = "top")
+  theme(
+    axis.text.x = element_blank(),
+    axis.ticks.x = element_blank(),
+    axis.text.y = element_text(size = 10),
+    plot.title = element_text(hjust = 0.5),
+  )
 
-ggsave("price_change_fraction_hourofweek_DE.pdf", width = 8, height = 5)
+ggplot(df_hourly[website == "D"], aes(x = hourofweek, y = hourly_dist)) +
+  geom_line(color = "black", linewidth = 1) +
+  scale_x_continuous(
+    breaks = seq(0, 168, by = 24),
+    limits = c(0, 168),
+    expand = c(0, 0)
+  ) +
+  scale_y_continuous(
+    limits = c(0, 25),
+    breaks = seq(0, 25, by = 5),
+    labels = function(x) sprintf("%.0f", x)
+  ) +
+  geom_vline(xintercept = seq(24, 144, by = 24), linetype = "dashed", color = "gray60") +
+  annotate("text", x = seq(12, 156, by = 24), y = 0, label = c("Sat", "Sun", "Mon", "Tue", "Wed", "Thu", "Fri"), vjust = 1.5, size = 4) +
+  labs(
+    title = "Panel D. Retailer D",
+    x = "Hour of Week",
+    y = "Percent of Price Changes"
+  ) +
+  theme_minimal(base_size = 14) +
+  theme(
+    axis.text.x = element_blank(),
+    axis.ticks.x = element_blank(),
+    axis.text.y = element_text(size = 10),
+    plot.title = element_text(hjust = 0.5),
+  )
+
+
+ggplot(df_hourly[website == "E"], aes(x = hourofweek, y = hourly_dist)) +
+  geom_line(color = "black", linewidth = 1) +
+  scale_x_continuous(
+    breaks = seq(0, 168, by = 24),
+    limits = c(0, 168),
+    expand = c(0, 0)
+  ) +
+  scale_y_continuous(
+    limits = c(0, 60),
+    breaks = seq(0, 60, by = 10),
+    labels = function(x) sprintf("%.0f", x)
+  ) +
+  geom_vline(xintercept = seq(24, 144, by = 24), linetype = "dashed", color = "gray60") +
+  annotate("text", x = seq(12, 156, by = 24), y = 0, label = c("Sat", "Sun", "Mon", "Tue", "Wed", "Thu", "Fri"), vjust = 1.5, size = 4) +
+  labs(
+    title = "Panel E. Retailer E",
+    x = "Hour of Week",
+    y = "Percent of Price Changes"
+  ) +
+  theme_minimal(base_size = 14) +
+  theme(
+    axis.text.x = element_blank(),
+    axis.ticks.x = element_blank(),
+    axis.text.y = element_text(size = 10),
+    plot.title = element_text(hjust = 0.5),
+  )
+
+
+
+
+
 

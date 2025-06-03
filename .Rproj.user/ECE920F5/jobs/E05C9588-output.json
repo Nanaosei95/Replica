@@ -1,5 +1,0 @@
-[1,"==> quarto preview Pens.qmd --to pdf --no-watch-inputs --no-browse\n\n"]
-[1,"pandoc \n  to: latex\n  output-file: Pens.tex\n  standalone: true\n  pdf-engine: xelatex\n  variables:\n    graphics: true\n    tables: true\n  default-image-extension: pdf\n  \nmetadata\n  documentclass: scrartcl\n  classoption:\n    - DIV=11\n    - numbers=noendperiod\n  papersize: letter\n  header-includes:\n    - \\KOMAoption{captions}{tableheading}\n  block-headings: true\n  title: Pencil\n  editor: visual\n  bibliography:\n    - MyRef.bib\n  csl: https://www.zotero.org/styles/apa\n  \n"]
-[1,"\nRendering PDF\nrunning xelatex - 1\n"]
-[1,"  This is XeTeX, Version 3.141592653-2.6-0.999997 (TeX Live 2025) (preloaded format=xelatex)\n   restricted \\write18 enabled.\n  entering extended mode\n  \nrunning xelatex - 2\n"]
-[1,"  This is XeTeX, Version 3.141592653-2.6-0.999997 (TeX Live 2025) (preloaded format=xelatex)\n   restricted \\write18 enabled.\n  entering extended mode\n  \n\nOutput created: Pens.pdf\n\nWatching files for changes\nBrowse at http://localhost:6825/web/viewer.html\n"]

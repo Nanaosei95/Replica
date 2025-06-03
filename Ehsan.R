@@ -9,8 +9,8 @@ library(ggplot2)
 theme_set(theme_minimal()) 
 
 list.files(DATA)
-colnames(retailer1)
-glimpse(retailer1)
+colnames(excel_data)
+
 
 
 rlang::last_trace()
@@ -92,6 +92,9 @@ df %>%
 excel_data <- read_excel(file.path(DATA, "ecommerce_revenue_data.xlsx"))
 # Check structure
 glimpse(excel_data)
+excel_data <- excel_data %>%
+
+    
 
 
 print(google_data)
