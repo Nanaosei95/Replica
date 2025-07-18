@@ -1,0 +1,1560 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.7.29">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>APA Style via Markdown – APA Style Documents with apaquarto</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+/* CSS for citations */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+  margin-bottom: 0em;
+}
+.hanging-indent div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}</style>
+
+
+<script src="site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="site_libs/quarto-nav/headroom.min.js"></script>
+<script src="site_libs/clipboard/clipboard.min.js"></script>
+<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="site_libs/quarto-search/fuse.min.js"></script>
+<script src="site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="./">
+<script src="site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="site_libs/quarto-html/popper.min.js"></script>
+<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
+<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-0815c480559380816a4d1ea211a47e91.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="site_libs/bootstrap/bootstrap-1f41107236bd320b13bcc3cd74ed15d5.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<script src="site_libs/quarto-contrib/kbd/kbd.js"></script>
+<link href="site_libs/quarto-contrib/kbd/kbd.css" rel="stylesheet">
+<script src="site_libs/quarto-contrib/glightbox/glightbox.min.js"></script>
+<link href="site_libs/quarto-contrib/glightbox/glightbox.min.css" rel="stylesheet">
+<link href="site_libs/quarto-contrib/glightbox/lightbox.css" rel="stylesheet">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+<link href="site_libs/tabwid-1.1.3/tabwid.css" rel="stylesheet">
+
+<script src="site_libs/tabwid-1.1.3/tabwid.js"></script>
+
+
+
+</head>
+
+<body class="floating nav-fixed slimcontent quarto-light">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container mx-auto">
+    <a class="navbar-brand" href="./index.html">
+    <span class="navbar-title">APA Style Documents with apaquarto</span>
+    </a>
+  </div>
+            <div id="quarto-search" class="" title="Search"></div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" role="menu" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll me-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="./index.html"> 
+<span class="menu-text">Introduction</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="./installation.html"> 
+<span class="menu-text">Installation</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="./options.html"> 
+<span class="menu-text">Template Options</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link active" href="./writing.html" aria-current="page"> 
+<span class="menu-text">APA Style via Markdown</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="./resources.html"> 
+<span class="menu-text">Resources</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="./changelog.html"> 
+<span class="menu-text">Changelog</span></a>
+  </li>  
+</ul>
+            <ul class="navbar-nav navbar-nav-scroll ms-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="https://github.com/wjschne/apaquarto"> <i class="bi bi-github" role="img">
+</i> 
+<span class="menu-text">Source</span></a>
+  </li>  
+</ul>
+          </div> <!-- /navcollapse -->
+            <div class="quarto-navbar-tools">
+</div>
+      </div> <!-- /container-fluid -->
+    </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
+    <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#create-a-quarto-document" id="toc-create-a-quarto-document" class="nav-link active" data-scroll-target="#create-a-quarto-document">Create a Quarto Document</a></li>
+  <li><a href="#basic-styling" id="toc-basic-styling" class="nav-link" data-scroll-target="#basic-styling">Basic Styling</a></li>
+  <li><a href="#headings-in-apa-style" id="toc-headings-in-apa-style" class="nav-link" data-scroll-target="#headings-in-apa-style">Headings in APA Style</a>
+  <ul class="collapse">
+  <li><a href="#level-1-headings" id="toc-level-1-headings" class="nav-link" data-scroll-target="#level-1-headings">Level 1 Headings</a></li>
+  <li><a href="#levels-25" id="toc-levels-25" class="nav-link" data-scroll-target="#levels-25">Levels 2–5</a></li>
+  <li><a href="#what-can-follow-a-heading" id="toc-what-can-follow-a-heading" class="nav-link" data-scroll-target="#what-can-follow-a-heading">What Can Follow a Heading</a></li>
+  </ul></li>
+  <li><a href="#block-quotes-and-suppressing-indentation" id="toc-block-quotes-and-suppressing-indentation" class="nav-link" data-scroll-target="#block-quotes-and-suppressing-indentation">Block Quotes and Suppressing Indentation</a></li>
+  <li><a href="#figures" id="toc-figures" class="nav-link" data-scroll-target="#figures">Figures</a>
+  <ul class="collapse">
+  <li><a href="#figures-in-code-chunks" id="toc-figures-in-code-chunks" class="nav-link" data-scroll-target="#figures-in-code-chunks">Figures in Code Chunks</a></li>
+  <li><a href="#notes-below-figures-and-tables" id="toc-notes-below-figures-and-tables" class="nav-link" data-scroll-target="#notes-below-figures-and-tables">Notes below Figures and Tables</a>
+  <ul class="collapse">
+  <li><a href="#omit-note-prefix-in-apa-note" id="toc-omit-note-prefix-in-apa-note" class="nav-link" data-scroll-target="#omit-note-prefix-in-apa-note">Omit “Note” Prefix in apa-note</a></li>
+  <li><a href="#multi-paragraph-notes" id="toc-multi-paragraph-notes" class="nav-link" data-scroll-target="#multi-paragraph-notes">Multi-Paragraph Notes</a></li>
+  </ul></li>
+  <li><a href="#importing-figures-with-markdown" id="toc-importing-figures-with-markdown" class="nav-link" data-scroll-target="#importing-figures-with-markdown">Importing Figures with Markdown</a></li>
+  <li><a href="#figure-references" id="toc-figure-references" class="nav-link" data-scroll-target="#figure-references">Figure References</a></li>
+  </ul></li>
+  <li><a href="#tables" id="toc-tables" class="nav-link" data-scroll-target="#tables">Tables</a>
+  <ul class="collapse">
+  <li><a href="#tables-in-code-chunks" id="toc-tables-in-code-chunks" class="nav-link" data-scroll-target="#tables-in-code-chunks">Tables in Code Chunks</a></li>
+  <li><a href="#tables-made-directly-with-markdown" id="toc-tables-made-directly-with-markdown" class="nav-link" data-scroll-target="#tables-made-directly-with-markdown">Tables Made Directly with Markdown</a></li>
+  <li><a href="#tables-and-figures-spanning-two-columns-in-journal-mode-.pdf" id="toc-tables-and-figures-spanning-two-columns-in-journal-mode-.pdf" class="nav-link" data-scroll-target="#tables-and-figures-spanning-two-columns-in-journal-mode-.pdf">Tables and Figures Spanning Two Columns in Journal Mode (.pdf)</a></li>
+  <li><a href="#disable-apaquarto-processing-.pdf-only" id="toc-disable-apaquarto-processing-.pdf-only" class="nav-link" data-scroll-target="#disable-apaquarto-processing-.pdf-only">Disable apaquarto processing (.pdf only)</a></li>
+  </ul></li>
+  <li><a href="#citations" id="toc-citations" class="nav-link" data-scroll-target="#citations">Citations</a>
+  <ul class="collapse">
+  <li><a href="#parenthetical-citations" id="toc-parenthetical-citations" class="nav-link" data-scroll-target="#parenthetical-citations">Parenthetical Citations</a>
+  <ul class="collapse">
+  <li><a href="#with-multiple-citations" id="toc-with-multiple-citations" class="nav-link" data-scroll-target="#with-multiple-citations">With Multiple Citations</a></li>
+  <li><a href="#with-page-numbers" id="toc-with-page-numbers" class="nav-link" data-scroll-target="#with-page-numbers">With Page Numbers</a></li>
+  <li><a href="#with-prefixes" id="toc-with-prefixes" class="nav-link" data-scroll-target="#with-prefixes">With Prefixes</a></li>
+  </ul></li>
+  <li><a href="#in-text-citations" id="toc-in-text-citations" class="nav-link" data-scroll-target="#in-text-citations">In-Text Citations</a>
+  <ul class="collapse">
+  <li><a href="#with-page-numbers-1" id="toc-with-page-numbers-1" class="nav-link" data-scroll-target="#with-page-numbers-1">With Page Numbers</a></li>
+  <li><a href="#possessive-citations" id="toc-possessive-citations" class="nav-link" data-scroll-target="#possessive-citations">Possessive Citations</a></li>
+  </ul></li>
+  <li><a href="#citations-for-articles-included-in-a-meta-analysis" id="toc-citations-for-articles-included-in-a-meta-analysis" class="nav-link" data-scroll-target="#citations-for-articles-included-in-a-meta-analysis">Citations for Articles Included in a Meta-Analysis</a></li>
+  <li><a href="#masked-citations-for-anonymous-peer-review" id="toc-masked-citations-for-anonymous-peer-review" class="nav-link" data-scroll-target="#masked-citations-for-anonymous-peer-review">Masked Citations for Anonymous Peer Review</a></li>
+  </ul></li>
+  <li><a href="#appendices" id="toc-appendices" class="nav-link" data-scroll-target="#appendices">Appendices</a></li>
+  <li><a href="#references" id="toc-references" class="nav-link" data-scroll-target="#references">References</a></li>
+  </ul>
+</nav>
+</nav>
+<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar zindex-bottom">
+    </div>
+<!-- main -->
+<main class="content page-columns page-full" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">APA Style via Markdown</h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<div class="cell">
+<style type="text/css">
+.FigureTitle {color:black; font-weight: bold; font-size: 12pt; text-align: left}
+.Caption {color:black; font-style: italic; font-size: 12pt; text-align: left}
+.FigureNote p {color:black; text-indent: 0; margin: 0; padding: 0; font-size: 11pt}
+.quarto-float, .quarto-float-tbl, .figure {margin: 0; margin-block-start: 0; margin-block-end: 0; margin-block-start: 0; margin-inline-start: 0; margin-inline-end: 0}
+.table {
+  border-top: 1px solid black;
+  border-bottom: 1px solid black;
+}
+
+.table>thead {
+  border-bottom: 1px solid black;
+}
+
+.table>:not(caption)>*>* {
+  border-bottom: none;
+}
+
+#austin .sourceCode {text-wrap: wrap;}
+
+.quarto-float, .quarto-float-tbl, .figure {margin: 0; margin-block-start: 0; margin-block-end: 0; margin-block-start: 0; margin-inline-start: 0; margin-inline-end: 0;}
+
+.quarto-figure-center>figure>p, .quarto-figure-center>figure>div {text-align: left;}
+
+.apa {font-family: Times, "Times New Roman", serif; line-height: 2em; font-size: 12pt}
+
+.apa p {text-indent: 0.5in; margin: 0; line-height: 2em; padding: 0; margin-block-start: 0px; margin-block-end: 0px;}
+.apa h1, .apa h2, .apa h3, .apa h4, .apa h5, .apa .h1, .apa .h2, .apa .h3, .apa .h4, .apa .h5 {
+font-size: 12pt; 
+border: none; 
+padding: 0; 
+margin: 0; 
+border: none; 
+line-height: 2; 
+text-indent: 0; 
+font-weight: bold;
+color: black;
+opacity: 100%;
+}
+
+.apa h1 {text-align: center;}
+.apa h3 {font-style: italic}
+
+.apa h4, .apa h5 {
+text-indent: 0.5in;
+display:inline-block;
+margin: 0;
+margin-block-start: 0px; 
+margin-block-end: 0px;
+}
+
+.apa h5 {
+  font-style: italic;
+  font-weight: normal;
+}
+
+.apa h4 + p, .apa h5 + p {
+  display:inline;
+  text-indent: 0;
+}
+</style>
+</div>
+<p>A good place to start learning about writing Quarto documents is <a href="https://quarto.org/docs/get-started/authoring/rstudio.html">here</a>. I will cover material needed to use apaquarto to write an APA Style document in Markdown text.</p>
+<p><a href="https://daringfireball.net/projects/markdown/">Markdown</a> makes writing in a consistent style straightforward and easy. Its plain-text format was designed to be easy to read and easy to write, yet also flexible and specific enough that it could be converted automatically into fully formatted documents.</p>
+<p>If you are used to writing with a word processor (e.g., MS Word, Google Docs), it might feel disconcerting to not see what the document will look like as you type. This feeling will pass, and the benefits of typing in a plain-text format will become evident. While writing in APA style, the plain-text Markdown approach prevents the introduction of many inconsistencies and makes it much easier to spot and fix any inconsistencies that are already present.</p>
+<section id="create-a-quarto-document" class="level1">
+<h1>Create a Quarto Document</h1>
+<p>To create a Quarto document in RStudio, in the menu (See <a href="#fig-newquarto" class="quarto-xref">Figure&nbsp;1</a>), click <em>File → New File → Quarto Document</em>.</p>
+<div id="fig-newquarto" class="quarto-float quarto-figure quarto-figure-center FigureWithoutNote" data-fignum="1" prefix="" data-custom-style="FigureWithoutNote">
+<figure class="quarto-float quarto-float-fig figure">
+<figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-fig" id="fig-newquarto-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<div class="FigureTitle" data-custom-style="FigureTitle">
+<p>Figure&nbsp;1</p>
+</div>
+<div class="Caption" data-custom-style="Caption">
+<p>Create new Quarto docuemnt from the RStudio menu</p>
+</div>
+</figcaption>
+<div aria-describedby="fig-newquarto-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<a href="img/newquartodocument.png" class="lightbox" data-gallery="quarto-lightbox-gallery-1" title="Figure&nbsp;1: Create new Quarto docuemnt from the RStudio menu"><img src="img/newquartodocument.png" class="img-fluid figure-img"></a>
+</div>
+</figure>
+</div>
+<p>The resulting file can be edited. Here is an annotated example of a short Quarto document:</p>
+<div class="sourceCode" id="annotated-cell-1"><pre class="sourceCode default code-annotation-code code-with-copy code-annotated"><code class="sourceCode default"><span id="annotated-cell-1-1"><a href="#annotated-cell-1-1" aria-hidden="true" tabindex="-1"></a>---                                </span>
+<a class="code-annotation-anchor" data-target-cell="annotated-cell-1" data-target-annotation="1" onclick="event.preventDefault();">1</a><span id="annotated-cell-1-2" class="code-annotation-target"><a href="#annotated-cell-1-2" aria-hidden="true" tabindex="-1"></a>title: My Title</span>
+<span id="annotated-cell-1-3"><a href="#annotated-cell-1-3" aria-hidden="true" tabindex="-1"></a>author: W. Joel Schneider</span>
+<span id="annotated-cell-1-4"><a href="#annotated-cell-1-4" aria-hidden="true" tabindex="-1"></a>---                                </span>
+<span id="annotated-cell-1-5"><a href="#annotated-cell-1-5" aria-hidden="true" tabindex="-1"></a></span>
+<a class="code-annotation-anchor" data-target-cell="annotated-cell-1" data-target-annotation="2" onclick="event.preventDefault();">2</a><span id="annotated-cell-1-6" class="code-annotation-target"><a href="#annotated-cell-1-6" aria-hidden="true" tabindex="-1"></a>This is plain text.</span>
+<span id="annotated-cell-1-7"><a href="#annotated-cell-1-7" aria-hidden="true" tabindex="-1"></a>A pair of asterisks makes *italics*.</span>
+<span id="annotated-cell-1-8"><a href="#annotated-cell-1-8" aria-hidden="true" tabindex="-1"></a>Two asterisks will **bold** text.</span>
+<span id="annotated-cell-1-9"><a href="#annotated-cell-1-9" aria-hidden="true" tabindex="-1"></a></span>
+<a class="code-annotation-anchor" data-target-cell="annotated-cell-1" data-target-annotation="3" onclick="event.preventDefault();">3</a><span id="annotated-cell-1-10" class="code-annotation-target"><a href="#annotated-cell-1-10" aria-hidden="true" tabindex="-1"></a>```{r}</span>
+<span id="annotated-cell-1-11"><a href="#annotated-cell-1-11" aria-hidden="true" tabindex="-1"></a>x &lt;- 5</span>
+<span id="annotated-cell-1-12"><a href="#annotated-cell-1-12" aria-hidden="true" tabindex="-1"></a>```</span><div class="code-annotation-gutter-bg"></div><div class="code-annotation-gutter"></div></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<dl class="code-annotation-container-grid">
+<dt data-target-cell="annotated-cell-1" data-target-annotation="1">1</dt>
+<dd>
+<span data-code-cell="annotated-cell-1" data-code-lines="2,3" data-code-annotation="1">The yaml between pairs of three hyphens (<code>---</code>) contains “metadata” (information about the document) such as the document’s title, author, format, and so forth. YAML (Yet Another Markup Language) has pairs of keys and values separated with colons. For example, <code>title: My Title</code> is has a key of <code>title</code> and a value of <code>My Title</code>.</span>
+</dd>
+<dt data-target-cell="annotated-cell-1" data-target-annotation="2">2</dt>
+<dd>
+<span data-code-cell="annotated-cell-1" data-code-lines="6,7,8" data-code-annotation="2">Markdown text below the yaml becomes part of the document’s content.</span>
+</dd>
+<dt data-target-cell="annotated-cell-1" data-target-annotation="3">3</dt>
+<dd>
+<span data-code-cell="annotated-cell-1" data-code-lines="10,11,12" data-code-annotation="3">Anything between pairs of three backticks (<code>```</code>) is code. The <code>r</code> between the curly braces (<code>{r}</code>) means to run the code in R rather than some other language (e.g., Python or Julia). In this example, <code>x &lt;- 5</code> means “Define a new variable <code>x</code> and set it equal to 5.”</span>
+</dd>
+</dl>
+</section>
+<section id="basic-styling" class="level1">
+<h1>Basic Styling</h1>
+<p>A comprehensive guide to Markdown conventions in Quarto is <a href="https://quarto.org/docs/authoring/markdown-basics.html">here</a>. Some highlights:</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 17%">
+<col style="width: 41%">
+<col style="width: 39%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Formatting</th>
+<th>Markdown</th>
+<th>Rendered Text</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><em>Italic</em></td>
+<td><code>*An italicized phrase*</code></td>
+<td><em>An italicized phrase</em>.</td>
+</tr>
+<tr class="even">
+<td><strong>Bold</strong></td>
+<td><code>A **bolded** word</code></td>
+<td>A <strong>bolded</strong> word</td>
+</tr>
+<tr class="odd">
+<td><sub>Subscript</sub></td>
+<td><code>H~2~O</code></td>
+<td>H<sub>2</sub>O</td>
+</tr>
+<tr class="even">
+<td><sup>Superscript</sup></td>
+<td><code>21^st^</code></td>
+<td>21<sup>st</sup></td>
+</tr>
+<tr class="odd">
+<td>En dash (–)</td>
+<td><code>6--8 hours of sleep</code></td>
+<td>6–8 hours of sleep</td>
+</tr>
+<tr class="even">
+<td>Em dash (—)</td>
+<td><code>It wasn't good---it was the best!</code></td>
+<td>It wasn’t good—it was the best!</td>
+</tr>
+<tr class="odd">
+<td>Bullet List</td>
+<td><pre><code>* Item A
+* Item B
+* Item C</code></pre></td>
+<td><ul>
+<li>Item A</li>
+<li>Item B</li>
+<li>Item C</li>
+</ul></td>
+</tr>
+<tr class="even">
+<td>Numeric List</td>
+<td><pre><code>1. Item A
+2. Item B
+3. Item C</code></pre></td>
+<td><ol type="1">
+<li>Item A</li>
+<li>Item B</li>
+<li>Item C</li>
+</ol></td>
+</tr>
+<tr class="odd">
+<td><blockquote class="blockquote">
+<p>Block Quote</p>
+</blockquote></td>
+<td><div class="sourceCode" id="cb3"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="at">&gt; Short cuts make long delays.</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>--- J.R.R. Tolkien</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div></td>
+<td><blockquote class="blockquote">
+<p>Short cuts make long delays.</p>
+</blockquote>
+<p>— J.R.R. Tolkien</p></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="headings-in-apa-style" class="level1 page-columns page-full">
+<h1>Headings in APA Style</h1>
+<p>APA Style differentiates between <a href="https://apastyle.apa.org/style-grammar-guidelines/paper-format/headings">headings at 5 levels</a>. All headings should be in title case according to <a href="https://apastyle.apa.org/style-grammar-guidelines/capitalization/title-case">these rules and exceptions</a>.</p>
+
+<div class="no-row-height column-margin column-container"><div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Tip
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Quarto works best when there is <em>at least one blank line above and below the heading</em>. If you forget to follow this advice, Quarto will try its best, but it might not parse the document correctly.</p>
+</div>
+</div></div><p>In markdown, a heading starts with the <code>#</code>, followed by a space, and then the text of the heading. The number of <code>#</code>s in a row determines the level of the heading:</p>
+<div class="sourceCode" id="cb4"><pre class="sourceCode md code-with-copy"><code class="sourceCode markdown"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="fu"># Level 1 Heading</span></span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a><span class="fu">## Level 2 Heading</span></span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a><span class="fu">### Level 3 Heading</span></span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a><span class="fu">#### Level 4 Heading</span></span>
+<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a><span class="fu">##### Level 5 Heading</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<section id="level-1-headings" class="level2">
+<h2 data-anchor-id="level-1-headings">Level 1 Headings</h2>
+<p>APA Style reserves a small number of level-1 headings with standard names:</p>
+<ul>
+<li>Method</li>
+<li>Results</li>
+<li>Discussion</li>
+<li>References</li>
+<li>Appendices</li>
+</ul>
+<p>There should be no level-1 heading for the introduction. The title acts as the heading for the introduction, and apaquarto places it there automatically.</p>
+</section>
+<section id="levels-25" class="level2">
+<h2 data-anchor-id="levels-25">Levels 2–5</h2>
+<p>Readers are better able to follow your ideas if you differentiate long sections in your document with headings. I try limit my writing to just levels 1 and 2, but sometimes level 3 headings are needed. I am sparing to the point of stinginess with levels 4 and 5.</p>
+</section>
+<section id="what-can-follow-a-heading" class="level2">
+<h2 data-anchor-id="what-can-follow-a-heading">What Can Follow a Heading</h2>
+<ul>
+<li>Anything can follow immediately after headings at levels 1–3, including other headings.</li>
+<li>Headings at levels 4 and 5 must have text paragraphs below them. Why? When rendered, level-4 and level-5 headings appear on the same line as the paragraphs they summarize.</li>
+</ul>
+<div class="sourceCode" id="cb5"><pre class="sourceCode md code-with-copy"><code class="sourceCode markdown"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="fu"># Level 1 Heading</span></span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>This paragraph follows the level-1 heading.</span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a><span class="fu">## Level 2 Heading </span></span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a><span class="fu">### This Level-3 Heading Directly Follows the Level-2 Heading.</span></span>
+<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a>This paragraph follows the level-3 heading.</span>
+<span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-12"><a href="#cb5-12" aria-hidden="true" tabindex="-1"></a><span class="fu">#### Level 4 Heading</span></span>
+<span id="cb5-13"><a href="#cb5-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-14"><a href="#cb5-14" aria-hidden="true" tabindex="-1"></a>This paragraph will appear on the same line as the level-4 heading.</span>
+<span id="cb5-15"><a href="#cb5-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-16"><a href="#cb5-16" aria-hidden="true" tabindex="-1"></a>Subsequent paragraphs go on their own lines.</span>
+<span id="cb5-17"><a href="#cb5-17" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-18"><a href="#cb5-18" aria-hidden="true" tabindex="-1"></a><span class="fu">##### Level 5 Heading</span></span>
+<span id="cb5-19"><a href="#cb5-19" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-20"><a href="#cb5-20" aria-hidden="true" tabindex="-1"></a>This paragraph will appear on the same line as the level-5 heading.</span>
+<span id="cb5-21"><a href="#cb5-21" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-22"><a href="#cb5-22" aria-hidden="true" tabindex="-1"></a>Subsequent paragraphs go on their own lines.</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+</section>
+<section id="level-1-heading" class="level1 unlisted apa">
+<h1 class="unlisted">Level 1 Heading</h1>
+<p>This paragraph follows the level-1 heading.</p>
+<section id="level-2-heading" class="level2 unlisted">
+<h2 class="unlisted" data-anchor-id="level-2-heading">Level 2 Heading</h2>
+<section id="this-level-3-heading-directly-follows-the-level-2-heading." class="level3 unlisted">
+<h3 class="unlisted" data-anchor-id="this-level-3-heading-directly-follows-the-level-2-heading.">This Level-3 Heading Directly Follows the Level-2 Heading.</h3>
+<p>This paragraph follows the level-3 heading.</p>
+<section id="level-4-heading." class="level4 unlisted">
+<h4 class="unlisted" data-anchor-id="level-4-heading.">Level 4 Heading.</h4>
+<p>This paragraph will appear on the same line as the level-4 heading.</p>
+<p>Subsequent paragraphs go on their own lines.</p>
+<section id="level-5-heading." class="level5 unlisted">
+<h5 class="unlisted" data-anchor-id="level-5-heading.">Level 5 Heading.</h5>
+<p>This paragraph will appear on the same line as the level-5 heading.</p>
+<p>Subsequent paragraphs go on their own lines.</p>
+</section>
+</section>
+</section>
+</section>
+</section>
+<section id="block-quotes-and-suppressing-indentation" class="level2">
+<h2 data-anchor-id="block-quotes-and-suppressing-indentation">Block Quotes and Suppressing Indentation</h2>
+<p>Sometimes you want to give a longer quote that needs to go in its own paragraph. Block quotes are on their own line starting with the <code>&gt;</code> character. For example, Jane Austen’s <span class="citation" data-cites="austenMansfieldPark1990">(<a href="#ref-austenMansfieldPark1990" role="doc-biblioref">1814/1990</a>)</span> <em>Mansfield Park</em> has some memorable insights about the mind:</p>
+<div id="austin">
+<div class="sourceCode" id="cb6"><pre class="sourceCode default code-with-copy"><code class="sourceCode default"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>&gt; If any one faculty of our nature may be called more wonderful than the rest, I do think it is memory. There seems something more speakingly incomprehensible in the powers, the failures, the inequalities of memory, than in any other of our intelligences. The memory is sometimes so retentive, so serviceable, so obedient; at others, so bewildered and so weak; and at others again, so tyrannic, so beyond control! We are, to be sure, a miracle every way; but our powers of recollecting and of forgetting do seem peculiarly past finding out. (p. 163)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>If your quote has multiple paragraphs, like this passage from <span class="citation" data-cites="brownHowKilledPluto2012">Brown (<a href="#ref-brownHowKilledPluto2012" role="doc-biblioref">2012</a>)</span>, separate them with a lone <code>&gt;</code> character between the lines:</p>
+<div class="sourceCode" id="cb7"><pre class="sourceCode md code-with-copy"><code class="sourceCode markdown"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a><span class="at">&gt; In the entire field of astronomy, there is no word other than planet that has a precise, lawyerly definition, in which certain criteria are specifically enumerated. Why does planet have such a definition but star, galaxy, and giant molecular cloud do not? Because in astronomy, as in most sciences, scientists work by concepts rather than by definitions. The concept of a star is clear; a star is a collection of gas with fusion reactions in the interior giving off energy. A galaxy is a large, bound collection of stars. A giant molecular cloud is a giant cloud of molecules. The concept of a planet—in the eight-planet solar system—is equally simple to state. A planet is a one of a small number of bodies that dominate a planetary system. That is a concept, not a definition. How would you write that down in a precise definition?</span></span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a><span class="at">&gt;</span></span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a><span class="at">&gt; I wouldn’t. Once you write down a definition with lawyerly precision, you get the lawyers involved in deciding whether or not your objects are planets. Astronomers work in concepts. We rarely call in the attorneys for adjudication. (p. 242)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>If the text after a quote is a new paragraph, you can create it in the usual fashion (i.e., plain text with an empty line between the block text and the new paragraph). However, if the text after a quote is part of the same paragraph, you can suppress the indentation by creating a div with the .NoIndent class. As an example:</p>
+<div class="sourceCode" id="cb8"><pre class="sourceCode md code-with-copy"><code class="sourceCode markdown"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>Initial paragraph</span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a><span class="at">&gt; Block quote paragraph</span></span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a>:::{.NoIndent}</span>
+<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a>Because this sentence continues the initial paragraph, </span>
+<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a>the indentation is suppresed.</span>
+<span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a>:::</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+<section id="figures" class="level1 page-columns page-full">
+<h1>Figures</h1>
+<p>Plots for figures can be created via code chunks. A pre-existing figure can be imported directly via markdown.</p>
+<section id="figures-in-code-chunks" class="level2 page-columns page-full">
+<h2 data-anchor-id="figures-in-code-chunks">Figures in Code Chunks</h2>
+<p><a href="https://quarto.org/docs/computations/r.html">Code chunk</a> (also known as <em>code blocks</em>) are special sections of a Quarto document that run code. Quarto supports many programming languages, but I will focus on R.</p>
+<p>An empty code chunk looks like this:</p>
+<div class="sourceCode cell-code">
+<pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown">```{r}<br><br>```</code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre>
+</div>
+
+<div class="no-row-height column-margin column-container"><div class="FigureWithoutNote" data-custom-style="FigureWithoutNote">
+<p>Those are not single quotes (<code>'</code>) that fence in the code chunk. Those are backticks (<code>`</code>), which are usually above the Tab key on most keyboards in the US.</p>
+<div id="fig-key" class="quarto-float quarto-figure quarto-figure-center" data-fignum="2" prefix="">
+<figure class="quarto-float quarto-float-fig figure">
+<figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-fig" id="fig-key-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<div class="FigureTitle" data-custom-style="FigureTitle">
+<p>Figure&nbsp;2</p>
+</div>
+<div class="Caption" data-custom-style="Caption">
+<p>Keyboard with backtick hightlighted</p>
+</div>
+</figcaption>
+<div aria-describedby="fig-key-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<a href="img/keyboardwithbacktick.jpeg" class="lightbox" data-gallery="quarto-lightbox-gallery-2" title="Figure&nbsp;2: Keyboard with backtick hightlighted"><img src="img/keyboardwithbacktick.jpeg" class="img-fluid figure-img"></a>
+</div>
+</figure>
+</div>
+</div></div><p>Directly typing the three backticks and the curly braces needed for a code chunk can be tedious. In RStudio, use the keyboard shortcut <kbd aria-hidden="true" data-mac="Cmd+Option+I" data-windows="Ctrl-Alt-I"></kbd><span class="visually-hidden"></span> to create chunks. If keyboard shortcuts are hard to remember, there is a green button with a white “C” in RStudio’s toolbar that creates code chunks. <img src="img/insertchunk.png" class="img-fluid" style="margin:0!important;height:30px" alt="Insert Code Chunk Button"></p>
+<p>At a minimum, an APA-Style figure needs a unique label with the <code>fig-</code> prefix, a caption in <a href="https://apastyle.apa.org/style-grammar-guidelines/capitalization/title-case">title case</a> specified with <code>fig-cap</code>, and code for the plot.</p>
+<div class="cell FigureWithoutNote" data-custom-style="FigureWithoutNote">
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: fig-myplot</span></span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig-cap: This Is the Figure Caption.</span></span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
+<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a><span class="fu">tibble</span>(<span class="at">x =</span> <span class="fu">seq</span>(<span class="dv">0</span>, <span class="dv">8</span>, .<span class="dv">01</span>),</span>
+<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a>       <span class="at">y =</span> <span class="fu">dlnorm</span>(x)) <span class="sc">%&gt;%</span> </span>
+<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(x,y)) <span class="sc">+</span> </span>
+<span id="cb9-8"><a href="#cb9-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_area</span>(<span class="at">fill =</span> <span class="st">"royalblue"</span>, <span class="at">alpha =</span> .<span class="dv">5</span>)</span>
+<span id="cb9-9"><a href="#cb9-9" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div id="fig-myplot" class="quarto-float quarto-figure quarto-figure-center" data-fignum="3" prefix="">
+<figure class="quarto-float quarto-float-fig figure">
+<figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-fig" id="fig-myplot-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<div class="FigureTitle" data-custom-style="FigureTitle">
+<p>Figure&nbsp;3</p>
+</div>
+<div class="Caption" data-custom-style="Caption">
+<p>This Is the Figure Caption.</p>
+</div>
+</figcaption>
+<div aria-describedby="fig-myplot-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<a href="writing_files/figure-html/fig-myplot-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-3" title="Figure&nbsp;3: This Is the Figure Caption."><img src="writing_files/figure-html/fig-myplot-1.png" class="img-fluid figure-img" width="672"></a>
+</div>
+</figure>
+</div>
+</div>
+</div>
+<p><a href="https://quarto.org/docs/computations/r.html#chunk-options">Code chunk options</a> like <code>label</code> and and <code>fig-cap</code> options are preceded by <code>#|</code>. They tell Quarto about how to run the code and present it the document.</p>
+</section>
+<section id="notes-below-figures-and-tables" class="level2">
+<h2 data-anchor-id="notes-below-figures-and-tables">Notes below Figures and Tables</h2>
+<p>APA style distinguishes between three types of table notes, each of which need to be in separate paragraphs:</p>
+<ul>
+<li><em>General Note.</em> Contains definitions, abbreviations, and other information needed to understand the table, as well as copyright information.</li>
+<li><em>Specific Note.</em> These are notes about specific cells in the table, often in form of footnotes with lowercase letters as markers. Each footnote is in the same paragraph. The <em>APA Manual</em> recommends making the the footnote marker in superscript. The space that separates the marker from the the explanatory text should also be in superscript, hence the <code>^&amp;nbsp;^</code> at the beginning of th footnote text.</li>
+<li><em>Probability Note.</em> This note explains the meanings of probability markers (e.g., * <em>p</em> &lt; .05; ** <em>p</em> &lt; .001; *** <em>p</em> &lt; .001).</li>
+</ul>
+<p>You can add a general note below a figure or table with the chunk option <code>apa-note</code>. The note can have markdown formatting (e.g, bolding and italics).</p>
+<div class="cell FigureWithNote" data-apa-note="This is the note below the figure." data-custom-style="FigureWithNote">
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: fig-myplot2</span></span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig-cap: This Is the Figure Caption.</span></span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a><span class="co">#| apa-note: This is the note below the figure.</span></span>
+<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
+<span id="cb10-7"><a href="#cb10-7" aria-hidden="true" tabindex="-1"></a><span class="fu">tibble</span>(<span class="at">x =</span> <span class="fu">seq</span>(<span class="dv">0</span>, <span class="dv">1</span>, .<span class="dv">001</span>),</span>
+<span id="cb10-8"><a href="#cb10-8" aria-hidden="true" tabindex="-1"></a>       <span class="at">y =</span> <span class="fu">dbeta</span>(x,<span class="dv">8</span>,<span class="dv">2</span>)) <span class="sc">%&gt;%</span> </span>
+<span id="cb10-9"><a href="#cb10-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(x,y)) <span class="sc">+</span> </span>
+<span id="cb10-10"><a href="#cb10-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_area</span>(<span class="at">fill =</span> <span class="st">"royalblue"</span>, <span class="at">alpha =</span> .<span class="dv">5</span>)</span>
+<span id="cb10-11"><a href="#cb10-11" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div id="fig-myplot2" class="quarto-float quarto-figure quarto-figure-center" data-fignum="4" prefix="">
+<figure class="quarto-float quarto-float-fig figure">
+<figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-fig" id="fig-myplot2-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<div class="FigureTitle" data-custom-style="FigureTitle">
+<p>Figure&nbsp;4</p>
+</div>
+<div class="Caption" data-custom-style="Caption">
+<p>This Is the Figure Caption.</p>
+</div>
+</figcaption>
+<div aria-describedby="fig-myplot2-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<a href="writing_files/figure-html/fig-myplot2-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-4" title="Figure&nbsp;4: This Is the Figure Caption."><img src="writing_files/figure-html/fig-myplot2-1.png" class="img-fluid figure-img" width="672"></a>
+</div>
+</figure>
+</div>
+</div>
+</div>
+<div>
+<div class="FigureNote NoIndent" data-custom-style="FigureNote">
+<em>Note</em>. This is the note below the figure.
+</div>
+</div>
+<section id="omit-note-prefix-in-apa-note" class="level3">
+<h3 data-anchor-id="omit-note-prefix-in-apa-note">Omit “Note” Prefix in apa-note</h3>
+<p>By default, the first paragraph of the <code>apa-note</code> has a prefix added (<em>Note. </em>). If you wish to omit this prefix (i.e., for a specific note or a probability note), start the note with “NoNote” like so:</p>
+<div class="cell FigureWithNote" data-apa-note="NoNote \* *p* < .05; \*\* *p* < .01" data-custom-style="FigureWithNote">
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: fig-myplot4</span></span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig-cap: This Is the Figure Caption.</span></span>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a><span class="co">#| apa-note: NoNote \\* *p* &lt; .05; \\*\\* *p* &lt; .01</span></span>
+<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
+<span id="cb11-7"><a href="#cb11-7" aria-hidden="true" tabindex="-1"></a><span class="fu">tibble</span>(<span class="at">x =</span> <span class="fu">seq</span>(<span class="dv">0</span>, <span class="dv">1</span>, .<span class="dv">001</span>),</span>
+<span id="cb11-8"><a href="#cb11-8" aria-hidden="true" tabindex="-1"></a>       <span class="at">y =</span> <span class="fu">dbeta</span>(x,<span class="dv">8</span>,<span class="dv">2</span>)) <span class="sc">%&gt;%</span> </span>
+<span id="cb11-9"><a href="#cb11-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(x,y)) <span class="sc">+</span> </span>
+<span id="cb11-10"><a href="#cb11-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_area</span>(<span class="at">fill =</span> <span class="st">"royalblue"</span>, <span class="at">alpha =</span> .<span class="dv">5</span>)</span>
+<span id="cb11-11"><a href="#cb11-11" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div id="fig-myplot4" class="quarto-float quarto-figure quarto-figure-center" data-fignum="5" prefix="">
+<figure class="quarto-float quarto-float-fig figure">
+<figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-fig" id="fig-myplot4-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<div class="FigureTitle" data-custom-style="FigureTitle">
+<p>Figure&nbsp;5</p>
+</div>
+<div class="Caption" data-custom-style="Caption">
+<p>This Is the Figure Caption.</p>
+</div>
+</figcaption>
+<div aria-describedby="fig-myplot4-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<a href="writing_files/figure-html/fig-myplot4-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-5" title="Figure&nbsp;5: This Is the Figure Caption."><img src="writing_files/figure-html/fig-myplot4-1.png" class="img-fluid figure-img" width="672"></a>
+</div>
+</figure>
+</div>
+</div>
+</div>
+<div>
+<div class="FigureNote NoIndent" data-custom-style="FigureNote">
+* <em>p</em> &lt; .05; ** <em>p</em> &lt; .01
+</div>
+</div>
+</section>
+<section id="multi-paragraph-notes" class="level3">
+<h3 data-anchor-id="multi-paragraph-notes">Multi-Paragraph Notes</h3>
+<p>If you need multiple paragraphs in the note, separate them with a yaml sequence.</p>
+<div class="cell FigureWithNote" data-apa-note="[&quot;First paragraph.&quot;,&quot;Second paragraph.&quot;]" prefix="" data-tblnum="1" data-custom-style="FigureWithNote">
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: tbl-penguins</span></span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a><span class="co">#| tbl-cap: Some Descriptives</span></span>
+<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a><span class="co">#| apa-note: </span></span>
+<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a><span class="co">#|   - First paragraph.</span></span>
+<span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a><span class="co">#|   - Second paragraph.</span></span>
+<span id="cb12-7"><a href="#cb12-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-8"><a href="#cb12-8" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(flextable)</span>
+<span id="cb12-9"><a href="#cb12-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-10"><a href="#cb12-10" aria-hidden="true" tabindex="-1"></a>penguins <span class="sc">%&gt;%</span> </span>
+<span id="cb12-11"><a href="#cb12-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(<span class="sc">-</span>year, <span class="sc">-</span>island, <span class="sc">-</span>sex) <span class="sc">%&gt;%</span> </span>
+<span id="cb12-12"><a href="#cb12-12" aria-hidden="true" tabindex="-1"></a>    <span class="fu">rename_with</span>(</span>
+<span id="cb12-13"><a href="#cb12-13" aria-hidden="true" tabindex="-1"></a>    \(x) <span class="fu">str_replace_all</span>(x, <span class="fu">c</span>(<span class="at">len =</span> <span class="st">"length"</span>, <span class="at">dep =</span> <span class="st">"depth"</span>)) <span class="sc">%&gt;%</span></span>
+<span id="cb12-14"><a href="#cb12-14" aria-hidden="true" tabindex="-1"></a>      snakecase<span class="sc">::</span><span class="fu">to_title_case</span>()) <span class="sc">%&gt;%</span> </span>
+<span id="cb12-15"><a href="#cb12-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">na.omit</span>() <span class="sc">%&gt;%</span></span>
+<span id="cb12-16"><a href="#cb12-16" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarizor</span>(<span class="at">by =</span> <span class="st">"Species"</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb12-17"><a href="#cb12-17" aria-hidden="true" tabindex="-1"></a>  <span class="fu">as_flextable</span>()  <span class="sc">%&gt;%</span> </span>
+<span id="cb12-18"><a href="#cb12-18" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_apa</span>() <span class="sc">%&gt;%</span> </span>
+<span id="cb12-19"><a href="#cb12-19" aria-hidden="true" tabindex="-1"></a>  <span class="fu">valign</span>(<span class="at">valign =</span> <span class="st">"top"</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb12-20"><a href="#cb12-20" aria-hidden="true" tabindex="-1"></a>  <span class="fu">surround</span>(<span class="at">i =</span> <span class="sc">~</span> stat <span class="sc">==</span> <span class="st">"mean_sd"</span>,</span>
+<span id="cb12-21"><a href="#cb12-21" aria-hidden="true" tabindex="-1"></a>           <span class="at">border.top =</span> flextable<span class="sc">::</span><span class="fu">fp_border_default</span>()) <span class="sc">%&gt;%</span> </span>
+<span id="cb12-22"><a href="#cb12-22" aria-hidden="true" tabindex="-1"></a>  <span class="fu">set_header_labels</span>(<span class="at">variable =</span> <span class="st">"Variable"</span>, <span class="at">stat =</span> <span class="st">"Descriptive"</span>)</span>
+<span id="cb12-23"><a href="#cb12-23" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div id="tbl-penguins" class="cell quarto-float quarto-figure quarto-figure-center" prefix="" data-tblnum="1" data-apa-note="[&quot;First paragraph.&quot;,&quot;Second paragraph.&quot;]">
+<figure class="quarto-float quarto-float-tbl figure">
+<figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-penguins-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<div class="FigureTitle" data-custom-style="FigureTitle">
+<p>Table&nbsp;1</p>
+</div>
+<div class="Caption" data-custom-style="Caption">
+<p>Some Descriptives</p>
+</div>
+</figcaption>
+<div aria-describedby="tbl-penguins-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<div class="cell-output-display">
+<div class="tabwid"><style>.cl-b526e004{}.cl-b50edf5e{font-family:'Times New Roman';font-size:11pt;font-weight:normal;font-style:normal;text-decoration:none;color:rgba(0, 0, 0, 1.00);background-color:transparent;}.cl-b50edf68{font-family:'Arial';font-size:11pt;font-weight:normal;font-style:normal;text-decoration:none;color:rgba(0, 0, 0, 1.00);background-color:transparent;}.cl-b52034c0{margin:0;text-align:center;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);padding-bottom:5pt;padding-top:5pt;padding-left:5pt;padding-right:5pt;line-height: 2;background-color:transparent;}.cl-b52034ca{margin:0;text-align:center;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);padding-bottom:0;padding-top:0;padding-left:0;padding-right:0;line-height: 2;background-color:transparent;}.cl-b52034cb{margin:0;text-align:center;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);padding-bottom:5pt;padding-top:5pt;padding-left:5pt;padding-right:5pt;line-height: 2;background-color:transparent;}.cl-b52034d4{margin:0;text-align:center;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);padding-bottom:0;padding-top:0;padding-left:0;padding-right:0;line-height: 2;background-color:transparent;}.cl-b5205edc{width:1.241in;background-color:transparent;vertical-align: middle;border-bottom: 0.75pt solid rgba(102, 102, 102, 1.00);border-top: 0.75pt solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-b5205ee6{width:1.181in;background-color:transparent;vertical-align: middle;border-bottom: 0.75pt solid rgba(102, 102, 102, 1.00);border-top: 0.75pt solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-b5205ef0{width:0.079in;background-color:transparent;vertical-align: middle;border-bottom: 0.75pt solid rgba(102, 102, 102, 1.00);border-top: 0.75pt solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-b5205ef1{width:1.419in;background-color:transparent;vertical-align: middle;border-bottom: 0.75pt solid rgba(102, 102, 102, 1.00);border-top: 0.75pt solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-b5205ef2{width:1.241in;background-color:transparent;vertical-align: top;border-bottom: 0.75pt solid rgba(102, 102, 102, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-b5205efa{width:1.181in;background-color:transparent;vertical-align: top;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-b5205efb{width:0.079in;background-color:transparent;vertical-align: top;border-bottom: 0 solid rgba(102, 102, 102, 1.00);border-top: 0 solid rgba(102, 102, 102, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-b5205efc{width:1.419in;background-color:transparent;vertical-align: top;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-b5205f04{width:1.241in;background-color:transparent;vertical-align: top;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-b5205f05{width:1.181in;background-color:transparent;vertical-align: top;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-b5205f06{width:0.079in;background-color:transparent;vertical-align: top;border-bottom: 0 solid rgba(102, 102, 102, 1.00);border-top: 0 solid rgba(102, 102, 102, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-b5205f0e{width:1.419in;background-color:transparent;vertical-align: top;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-b5205f0f{width:1.241in;background-color:transparent;vertical-align: top;border-bottom: 0.75pt solid rgba(102, 102, 102, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-b5205f10{width:1.181in;background-color:transparent;vertical-align: top;border-bottom: 0.75pt solid rgba(102, 102, 102, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-b5205f18{width:0.079in;background-color:transparent;vertical-align: top;border-bottom: 0.75pt solid rgba(102, 102, 102, 1.00);border-top: 0 solid rgba(102, 102, 102, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-b5205f19{width:1.419in;background-color:transparent;vertical-align: top;border-bottom: 0.75pt solid rgba(102, 102, 102, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-b5205f1a{width:1.241in;background-color:transparent;vertical-align: top;border-bottom: 0.75pt solid rgba(102, 102, 102, 1.00);border-top: 0.75pt solid rgba(102, 102, 102, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-b5205f1b{width:1.181in;background-color:transparent;vertical-align: top;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0.75pt solid rgba(102, 102, 102, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-b5205f22{width:0.079in;background-color:transparent;vertical-align: top;border-bottom: 0 solid rgba(102, 102, 102, 1.00);border-top: 0.75pt solid rgba(102, 102, 102, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-b5205f23{width:1.419in;background-color:transparent;vertical-align: top;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0.75pt solid rgba(102, 102, 102, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-b5205f2c{width:1.241in;background-color:transparent;vertical-align: top;border-bottom: 0.75pt solid rgba(0, 0, 0, 1.00);border-top: 0.75pt solid rgba(102, 102, 102, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-b5205f2d{width:1.241in;background-color:transparent;vertical-align: top;border-bottom: 0.75pt solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-b5205f2e{width:1.181in;background-color:transparent;vertical-align: top;border-bottom: 0.75pt solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-b5205f2f{width:0.079in;background-color:transparent;vertical-align: top;border-bottom: 0.75pt solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(102, 102, 102, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-b5205f36{width:1.419in;background-color:transparent;vertical-align: top;border-bottom: 0.75pt solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}</style><table data-quarto-disable-processing="true" class="cl-b526e004"><thead><tr style="overflow-wrap:break-word;"><th class="cl-b5205edc"><p class="cl-b52034c0"><span class="cl-b50edf5e">Variable</span></p></th><th class="cl-b5205ee6"><p class="cl-b52034c0"><span class="cl-b50edf5e">Descriptive</span></p></th><th class="cl-b5205ef0"><p class="cl-b52034ca"><span class="cl-b50edf68"></span></p></th><th class="cl-b5205ef1"><p class="cl-b52034c0"><span class="cl-b50edf5e">Adelie</span><br><span class="cl-b50edf5e">(N=151)</span></p></th><th class="cl-b5205ef0"><p class="cl-b52034ca"><span class="cl-b50edf68"></span></p></th><th class="cl-b5205ef1"><p class="cl-b52034c0"><span class="cl-b50edf5e">Chinstrap</span><br><span class="cl-b50edf5e">(N=68)</span></p></th><th class="cl-b5205ef0"><p class="cl-b52034ca"><span class="cl-b50edf68"></span></p></th><th class="cl-b5205ef1"><p class="cl-b52034c0"><span class="cl-b50edf5e">Gentoo</span><br><span class="cl-b50edf5e">(N=123)</span></p></th></tr></thead><tbody><tr style="overflow-wrap:break-word;"><td rowspan="3" class="cl-b5205ef2"><p class="cl-b52034cb"><span class="cl-b50edf5e">Bill Length</span></p></td><td class="cl-b5205efa"><p class="cl-b52034cb"><span class="cl-b50edf5e">Mean (SD)</span></p></td><td class="cl-b5205efb"><p class="cl-b52034d4"><span class="cl-b50edf68"></span></p></td><td class="cl-b5205efc"><p class="cl-b52034cb"><span class="cl-b50edf5e">38.8 (2.7)</span></p></td><td class="cl-b5205efb"><p class="cl-b52034d4"><span class="cl-b50edf68"></span></p></td><td class="cl-b5205efc"><p class="cl-b52034cb"><span class="cl-b50edf5e">48.8 (3.3)</span></p></td><td class="cl-b5205efb"><p class="cl-b52034d4"><span class="cl-b50edf68"></span></p></td><td class="cl-b5205efc"><p class="cl-b52034cb"><span class="cl-b50edf5e">47.5 (3.1)</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-b5205f05"><p class="cl-b52034cb"><span class="cl-b50edf5e">Median (IQR)</span></p></td><td class="cl-b5205f06"><p class="cl-b52034d4"><span class="cl-b50edf68"></span></p></td><td class="cl-b5205f0e"><p class="cl-b52034cb"><span class="cl-b50edf5e">38.8 (4.0)</span></p></td><td class="cl-b5205f06"><p class="cl-b52034d4"><span class="cl-b50edf68"></span></p></td><td class="cl-b5205f0e"><p class="cl-b52034cb"><span class="cl-b50edf5e">49.5 (4.7)</span></p></td><td class="cl-b5205f06"><p class="cl-b52034d4"><span class="cl-b50edf68"></span></p></td><td class="cl-b5205f0e"><p class="cl-b52034cb"><span class="cl-b50edf5e">47.3 (4.2)</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-b5205f10"><p class="cl-b52034cb"><span class="cl-b50edf5e">Range</span></p></td><td class="cl-b5205f18"><p class="cl-b52034d4"><span class="cl-b50edf68"></span></p></td><td class="cl-b5205f19"><p class="cl-b52034cb"><span class="cl-b50edf5e">32.1 - 46.0</span></p></td><td class="cl-b5205f18"><p class="cl-b52034d4"><span class="cl-b50edf68"></span></p></td><td class="cl-b5205f19"><p class="cl-b52034cb"><span class="cl-b50edf5e">40.9 - 58.0</span></p></td><td class="cl-b5205f18"><p class="cl-b52034d4"><span class="cl-b50edf68"></span></p></td><td class="cl-b5205f19"><p class="cl-b52034cb"><span class="cl-b50edf5e">40.9 - 59.6</span></p></td></tr><tr style="overflow-wrap:break-word;"><td rowspan="3" class="cl-b5205f1a"><p class="cl-b52034cb"><span class="cl-b50edf5e">Bill Depth</span></p></td><td class="cl-b5205f1b"><p class="cl-b52034cb"><span class="cl-b50edf5e">Mean (SD)</span></p></td><td class="cl-b5205f22"><p class="cl-b52034d4"><span class="cl-b50edf68"></span></p></td><td class="cl-b5205f23"><p class="cl-b52034cb"><span class="cl-b50edf5e">18.3 (1.2)</span></p></td><td class="cl-b5205f22"><p class="cl-b52034d4"><span class="cl-b50edf68"></span></p></td><td class="cl-b5205f23"><p class="cl-b52034cb"><span class="cl-b50edf5e">18.4 (1.1)</span></p></td><td class="cl-b5205f22"><p class="cl-b52034d4"><span class="cl-b50edf68"></span></p></td><td class="cl-b5205f23"><p class="cl-b52034cb"><span class="cl-b50edf5e">15.0 (1.0)</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-b5205f05"><p class="cl-b52034cb"><span class="cl-b50edf5e">Median (IQR)</span></p></td><td class="cl-b5205f06"><p class="cl-b52034d4"><span class="cl-b50edf68"></span></p></td><td class="cl-b5205f0e"><p class="cl-b52034cb"><span class="cl-b50edf5e">18.4 (1.5)</span></p></td><td class="cl-b5205f06"><p class="cl-b52034d4"><span class="cl-b50edf68"></span></p></td><td class="cl-b5205f0e"><p class="cl-b52034cb"><span class="cl-b50edf5e">18.4 (1.9)</span></p></td><td class="cl-b5205f06"><p class="cl-b52034d4"><span class="cl-b50edf68"></span></p></td><td class="cl-b5205f0e"><p class="cl-b52034cb"><span class="cl-b50edf5e">15.0 (1.5)</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-b5205f10"><p class="cl-b52034cb"><span class="cl-b50edf5e">Range</span></p></td><td class="cl-b5205f18"><p class="cl-b52034d4"><span class="cl-b50edf68"></span></p></td><td class="cl-b5205f19"><p class="cl-b52034cb"><span class="cl-b50edf5e">15.5 - 21.5</span></p></td><td class="cl-b5205f18"><p class="cl-b52034d4"><span class="cl-b50edf68"></span></p></td><td class="cl-b5205f19"><p class="cl-b52034cb"><span class="cl-b50edf5e">16.4 - 20.8</span></p></td><td class="cl-b5205f18"><p class="cl-b52034d4"><span class="cl-b50edf68"></span></p></td><td class="cl-b5205f19"><p class="cl-b52034cb"><span class="cl-b50edf5e">13.1 - 17.3</span></p></td></tr><tr style="overflow-wrap:break-word;"><td rowspan="3" class="cl-b5205f1a"><p class="cl-b52034cb"><span class="cl-b50edf5e">Flipper Length</span></p></td><td class="cl-b5205f1b"><p class="cl-b52034cb"><span class="cl-b50edf5e">Mean (SD)</span></p></td><td class="cl-b5205f22"><p class="cl-b52034d4"><span class="cl-b50edf68"></span></p></td><td class="cl-b5205f23"><p class="cl-b52034cb"><span class="cl-b50edf5e">190.0 (6.5)</span></p></td><td class="cl-b5205f22"><p class="cl-b52034d4"><span class="cl-b50edf68"></span></p></td><td class="cl-b5205f23"><p class="cl-b52034cb"><span class="cl-b50edf5e">195.8 (7.1)</span></p></td><td class="cl-b5205f22"><p class="cl-b52034d4"><span class="cl-b50edf68"></span></p></td><td class="cl-b5205f23"><p class="cl-b52034cb"><span class="cl-b50edf5e">217.2 (6.5)</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-b5205f05"><p class="cl-b52034cb"><span class="cl-b50edf5e">Median (IQR)</span></p></td><td class="cl-b5205f06"><p class="cl-b52034d4"><span class="cl-b50edf68"></span></p></td><td class="cl-b5205f0e"><p class="cl-b52034cb"><span class="cl-b50edf5e">190.0 (9.0)</span></p></td><td class="cl-b5205f06"><p class="cl-b52034d4"><span class="cl-b50edf68"></span></p></td><td class="cl-b5205f0e"><p class="cl-b52034cb"><span class="cl-b50edf5e">196.0 (10.0)</span></p></td><td class="cl-b5205f06"><p class="cl-b52034d4"><span class="cl-b50edf68"></span></p></td><td class="cl-b5205f0e"><p class="cl-b52034cb"><span class="cl-b50edf5e">216.0 (9.0)</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-b5205f10"><p class="cl-b52034cb"><span class="cl-b50edf5e">Range</span></p></td><td class="cl-b5205f18"><p class="cl-b52034d4"><span class="cl-b50edf68"></span></p></td><td class="cl-b5205f19"><p class="cl-b52034cb"><span class="cl-b50edf5e">172.0 - 210.0</span></p></td><td class="cl-b5205f18"><p class="cl-b52034d4"><span class="cl-b50edf68"></span></p></td><td class="cl-b5205f19"><p class="cl-b52034cb"><span class="cl-b50edf5e">178.0 - 212.0</span></p></td><td class="cl-b5205f18"><p class="cl-b52034d4"><span class="cl-b50edf68"></span></p></td><td class="cl-b5205f19"><p class="cl-b52034cb"><span class="cl-b50edf5e">203.0 - 231.0</span></p></td></tr><tr style="overflow-wrap:break-word;"><td rowspan="3" class="cl-b5205f2c"><p class="cl-b52034cb"><span class="cl-b50edf5e">Body Mass</span></p></td><td class="cl-b5205f1b"><p class="cl-b52034cb"><span class="cl-b50edf5e">Mean (SD)</span></p></td><td class="cl-b5205f22"><p class="cl-b52034d4"><span class="cl-b50edf68"></span></p></td><td class="cl-b5205f23"><p class="cl-b52034cb"><span class="cl-b50edf5e">3,700.7 (458.6)</span></p></td><td class="cl-b5205f22"><p class="cl-b52034d4"><span class="cl-b50edf68"></span></p></td><td class="cl-b5205f23"><p class="cl-b52034cb"><span class="cl-b50edf5e">3,733.1 (384.3)</span></p></td><td class="cl-b5205f22"><p class="cl-b52034d4"><span class="cl-b50edf68"></span></p></td><td class="cl-b5205f23"><p class="cl-b52034cb"><span class="cl-b50edf5e">5,076.0 (504.1)</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-b5205f05"><p class="cl-b52034cb"><span class="cl-b50edf5e">Median (IQR)</span></p></td><td class="cl-b5205f06"><p class="cl-b52034d4"><span class="cl-b50edf68"></span></p></td><td class="cl-b5205f0e"><p class="cl-b52034cb"><span class="cl-b50edf5e">3,700.0 (650.0)</span></p></td><td class="cl-b5205f06"><p class="cl-b52034d4"><span class="cl-b50edf68"></span></p></td><td class="cl-b5205f0e"><p class="cl-b52034cb"><span class="cl-b50edf5e">3,700.0 (462.5)</span></p></td><td class="cl-b5205f06"><p class="cl-b52034d4"><span class="cl-b50edf68"></span></p></td><td class="cl-b5205f0e"><p class="cl-b52034cb"><span class="cl-b50edf5e">5,000.0 (800.0)</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-b5205f2e"><p class="cl-b52034cb"><span class="cl-b50edf5e">Range</span></p></td><td class="cl-b5205f2f"><p class="cl-b52034d4"><span class="cl-b50edf68"></span></p></td><td class="cl-b5205f36"><p class="cl-b52034cb"><span class="cl-b50edf5e">2,850.0 - 4,775.0</span></p></td><td class="cl-b5205f2f"><p class="cl-b52034d4"><span class="cl-b50edf68"></span></p></td><td class="cl-b5205f36"><p class="cl-b52034cb"><span class="cl-b50edf5e">2,700.0 - 4,800.0</span></p></td><td class="cl-b5205f2f"><p class="cl-b52034d4"><span class="cl-b50edf68"></span></p></td><td class="cl-b5205f36"><p class="cl-b52034cb"><span class="cl-b50edf5e">3,950.0 - 6,300.0</span></p></td></tr></tbody></table></div>
+</div>
+</div>
+</figure>
+</div>
+<div>
+<div class="FigureNote NoIndent" data-custom-style="FigureNote">
+<em>Note</em>. First paragraph.
+</div>
+<div class="FigureNote NoIndent" data-custom-style="FigureNote">
+Second paragraph.
+</div>
+</div>
+</div>
+</section>
+</section>
+<section id="importing-figures-with-markdown" class="level2">
+<h2 data-anchor-id="importing-figures-with-markdown">Importing Figures with Markdown</h2>
+<p>Comprehensive details on importing and formatting figures with Markdown is <a href="https://quarto.org/docs/authoring/figures.html">here</a>.</p>
+<p>The Markdown syntax for creating a figure is</p>
+<p><code>![caption](file){#fig-label}</code></p>
+<p>For example,</p>
+<p><code>![My Caption](myimage.png){#fig-myimage}</code></p>
+<p>Note that in this context the figure label must start with <code>#fig-</code>. Additional information can be inserted into the curly braces. Some common options:</p>
+<ul>
+<li><code>fig-alt</code> An accessible description of the image. It is usually not immediately visible, but it is available to a screen reader.</li>
+<li><code>width</code> Image width</li>
+<li><code>apa-note</code> A note below the figure</li>
+</ul>
+<p>For example, in the same same folder as my Quarto document, there is an image file <code>sampleimage.png</code>. We can display this image like so:</p>
+<div class="sourceCode" id="cb13"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="al">![A Simple Mediation Model](sampleimage.png)</span>{</span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>  #fig-myimportedimage </span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>  width="5in" </span>
+<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a>  fig-alt="A mediation model in which A causes B, and B causes C." </span>
+<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a>  apa-note="Variable A indirectly causes Variable C."</span>
+<span id="cb13-6"><a href="#cb13-6" aria-hidden="true" tabindex="-1"></a>  }</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div id="fig-myimportedimage" class="quarto-float quarto-figure quarto-figure-center FigureWithNote" data-apa-note="Variable A indirectly causes Variable C." data-fignum="6" prefix="" alt="A path diagram in which A causes B, and B causes C." data-custom-style="FigureWithNote">
+<figure class="quarto-float quarto-float-fig figure">
+<figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-fig" id="fig-myimportedimage-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<div class="FigureTitle" data-custom-style="FigureTitle">
+<p>Figure&nbsp;6</p>
+</div>
+<div class="Caption" data-custom-style="Caption">
+<p>A Simple Mediation Model</p>
+</div>
+</figcaption>
+<div aria-describedby="fig-myimportedimage-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<a href="sampleimage.png" class="lightbox" data-gallery="quarto-lightbox-gallery-6" title="Figure&nbsp;6: A Simple Mediation Model"><img src="sampleimage.png" class="img-fluid figure-img" style="width:5in" data-apa-note="Variable A indirectly causes Variable C." alt="A path diagram in which A causes B, and B causes C."></a>
+</div>
+</figure>
+</div>
+<div>
+<div class="FigureNote NoIndent" data-custom-style="FigureNote">
+<em>Note</em>. Variable A indirectly causes Variable C.
+</div>
+</div>
+</section>
+<section id="figure-references" class="level2">
+<h2 data-anchor-id="figure-references">Figure References</h2>
+<p>In APA style, we often refer to specific tables and figures by their order in the text (e.g., Figure 2, Table 4). Keeping track of which is which is a pain, especially if you decide to reorder them. In Quarto documents, we instead refer to their labels, which are converted to the right numbers later. To refer to the figure created by the code above, we would type <code>@fig-myplot</code>, which will be converted to <a href="#fig-myplot" class="quarto-xref">Figure&nbsp;3</a>.</p>
+</section>
+</section>
+<section id="tables" class="level1">
+<h1>Tables</h1>
+<p>As with figures, we can create tables in code chunks or make them directly with Markdown.</p>
+<section id="tables-in-code-chunks" class="level2">
+<h2 data-anchor-id="tables-in-code-chunks">Tables in Code Chunks</h2>
+<p>The chunk label must begin with <code>tbl-</code> instead of <code>fig-</code>. The caption is set with <code>tbl-cap</code>. I like making tables with <a href="https://ardata-fr.github.io/flextable-book/">flextable</a> because it ports to to the .docx format without hassle.</p>
+<div class="cell FigureWithNote" data-ft.align="left" data-apa-note="A note below table" prefix="" data-tblnum="2" data-custom-style="FigureWithNote">
+<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: tbl-mytable</span></span>
+<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a><span class="co">#| tbl-cap: My Table</span></span>
+<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a><span class="co">#| ft.align: left</span></span>
+<span id="cb14-5"><a href="#cb14-5" aria-hidden="true" tabindex="-1"></a><span class="co">#| apa-note: A note below table</span></span>
+<span id="cb14-6"><a href="#cb14-6" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
+<span id="cb14-7"><a href="#cb14-7" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(flextable)</span>
+<span id="cb14-8"><a href="#cb14-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-9"><a href="#cb14-9" aria-hidden="true" tabindex="-1"></a><span class="fu">tibble</span>(<span class="at">Letters =</span> <span class="fu">c</span>(<span class="st">"A"</span>, <span class="st">"B"</span>, <span class="st">"C"</span>), </span>
+<span id="cb14-10"><a href="#cb14-10" aria-hidden="true" tabindex="-1"></a>       <span class="at">Numbers =</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">3</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb14-11"><a href="#cb14-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">flextable</span>() <span class="sc">%&gt;%</span> </span>
+<span id="cb14-12"><a href="#cb14-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_apa</span>() </span>
+<span id="cb14-13"><a href="#cb14-13" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div id="tbl-mytable" class="cell quarto-float quarto-figure quarto-figure-center" data-tblnum="2" data-apa-note="A note below table" data-ft.align="left" prefix="">
+<figure class="quarto-float quarto-float-tbl figure">
+<figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-mytable-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<div class="FigureTitle" data-custom-style="FigureTitle">
+<p>Table&nbsp;2</p>
+</div>
+<div class="Caption" data-custom-style="Caption">
+<p>My Table</p>
+</div>
+</figcaption>
+<div aria-describedby="tbl-mytable-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<div class="cell-output-display">
+<div class="tabwid tabwid_left"><style>.cl-b53e6602{}.cl-b535797a{font-family:'Times New Roman';font-size:11pt;font-weight:normal;font-style:normal;text-decoration:none;color:rgba(0, 0, 0, 1.00);background-color:transparent;}.cl-b538bef0{margin:0;text-align:center;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);padding-bottom:5pt;padding-top:5pt;padding-left:5pt;padding-right:5pt;line-height: 2;background-color:transparent;}.cl-b538ebd2{width:0.75in;background-color:transparent;vertical-align: middle;border-bottom: 0.75pt solid rgba(0, 0, 0, 1.00);border-top: 0.75pt solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-b538ebdc{width:0.75in;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-b538ebe6{width:0.75in;background-color:transparent;vertical-align: middle;border-bottom: 0.75pt solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}</style><table data-quarto-disable-processing="true" class="cl-b53e6602"><thead><tr style="overflow-wrap:break-word;"><th class="cl-b538ebd2"><p class="cl-b538bef0"><span class="cl-b535797a">Letters</span></p></th><th class="cl-b538ebd2"><p class="cl-b538bef0"><span class="cl-b535797a">Numbers</span></p></th></tr></thead><tbody><tr style="overflow-wrap:break-word;"><td class="cl-b538ebdc"><p class="cl-b538bef0"><span class="cl-b535797a">A</span></p></td><td class="cl-b538ebdc"><p class="cl-b538bef0"><span class="cl-b535797a">1</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-b538ebdc"><p class="cl-b538bef0"><span class="cl-b535797a">B</span></p></td><td class="cl-b538ebdc"><p class="cl-b538bef0"><span class="cl-b535797a">2</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-b538ebe6"><p class="cl-b538bef0"><span class="cl-b535797a">C</span></p></td><td class="cl-b538ebe6"><p class="cl-b538bef0"><span class="cl-b535797a">3</span></p></td></tr></tbody></table></div>
+</div>
+</div>
+</figure>
+</div>
+<div>
+<div class="FigureNote NoIndent" data-custom-style="FigureNote">
+<em>Note</em>. A note below table
+</div>
+</div>
+</div>
+</section>
+<section id="tables-made-directly-with-markdown" class="level2">
+<h2 data-anchor-id="tables-made-directly-with-markdown">Tables Made Directly with Markdown</h2>
+<p>You can create tables with Markdown in several ways. See <a href="https://quarto.org/docs/authoring/tables.html#markdown-tables">here</a> for details. If you need to make a more complex table in Markdown, I suggest using <a href="https://quarto.org/docs/visual-editor/content.html#editing-tables">RStudio’s visual editor</a>. Here is an example of a simple table:</p>
+<div class="sourceCode" id="cb15"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> Letters <span class="pp">|</span> Numbers <span class="pp">|</span></span>
+<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a><span class="pp">|:-------:|:-------:|</span></span>
+<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> A       <span class="pp">|</span> 1       <span class="pp">|</span></span>
+<span id="cb15-5"><a href="#cb15-5" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> B       <span class="pp">|</span> 2       <span class="pp">|</span></span>
+<span id="cb15-6"><a href="#cb15-6" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> C       <span class="pp">|</span> 3       <span class="pp">|</span></span>
+<span id="cb15-7"><a href="#cb15-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-8"><a href="#cb15-8" aria-hidden="true" tabindex="-1"></a>: My Caption {#tbl-mytable2 apa-note="Note below table" data-quarto-disable-processing="true"}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div id="tbl-mytable2" class="quarto-float quarto-figure quarto-figure-center FigureWithNote" data-apa-note="Note below table" data-custom-style="FigureWithNote">
+<figure class="quarto-float quarto-float-tbl figure">
+<figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-mytable2-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<div class="FigureTitle" data-custom-style="FigureTitle">
+<p>Table&nbsp;2</p>
+</div>
+<div class="Caption" data-custom-style="Caption">
+<p>My Caption</p>
+</div>
+</figcaption>
+<div aria-describedby="tbl-mytable2-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th style="text-align: center;">Letters</th>
+<th style="text-align: center;">Numbers</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: center;">A</td>
+<td style="text-align: center;">1</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">B</td>
+<td style="text-align: center;">2</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">C</td>
+<td style="text-align: center;">3</td>
+</tr>
+</tbody>
+</table>
+</div>
+</figure>
+</div>
+<div>
+<div class="FigureNote NoIndent" data-custom-style="FigureNote">
+<em>Note</em>. Note below table
+</div>
+</div>
+</section>
+<section id="tables-and-figures-spanning-two-columns-in-journal-mode-.pdf" class="level2">
+<h2 data-anchor-id="tables-and-figures-spanning-two-columns-in-journal-mode-.pdf">Tables and Figures Spanning Two Columns in Journal Mode (.pdf)</h2>
+<p>When creating tables and figures in journal mode, care must be taken not to make figures and tables wider than the columns, otherwise sometimes makes them disappear (and sometimes takes large swaths of text with it).</p>
+<p>You can make figures and tables span the two columns by setting the <code>apa-twocolumn</code> chunk option to <code>true</code>. This will only affect .pdf documents when in journal mode (i.e., <code>documentmode: jou</code>).</p>
+<div class="cell FigureWithoutNote" data-apa-twocolumn="true" data-custom-style="FigureWithoutNote">
+<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: fig-myplot3</span></span>
+<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig-cap: A Figure that Will Span Two Columns in Journal Mode</span></span>
+<span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a><span class="co">#| apa-twocolumn: true</span></span>
+<span id="cb16-5"><a href="#cb16-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-6"><a href="#cb16-6" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
+<span id="cb16-7"><a href="#cb16-7" aria-hidden="true" tabindex="-1"></a><span class="fu">tibble</span>(<span class="at">x =</span> <span class="fu">seq</span>(<span class="dv">0</span>, <span class="dv">1</span>, .<span class="dv">001</span>),</span>
+<span id="cb16-8"><a href="#cb16-8" aria-hidden="true" tabindex="-1"></a>       <span class="at">y =</span> <span class="fu">dbeta</span>(x,<span class="dv">2</span>,<span class="dv">8</span>)) <span class="sc">%&gt;%</span> </span>
+<span id="cb16-9"><a href="#cb16-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(x,y)) <span class="sc">+</span> </span>
+<span id="cb16-10"><a href="#cb16-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_area</span>(<span class="at">fill =</span> <span class="st">"royalblue"</span>, <span class="at">alpha =</span> .<span class="dv">5</span>)</span>
+<span id="cb16-11"><a href="#cb16-11" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div id="fig-myplot3" class="quarto-float quarto-figure quarto-figure-center" data-fignum="7" prefix="">
+<figure class="quarto-float quarto-float-fig figure">
+<figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-fig" id="fig-myplot3-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<div class="FigureTitle" data-custom-style="FigureTitle">
+<p>Figure&nbsp;7</p>
+</div>
+<div class="Caption" data-custom-style="Caption">
+<p>A Figure that Will Span Two Columns in Journal Mode</p>
+</div>
+</figcaption>
+<div aria-describedby="fig-myplot3-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<a href="writing_files/figure-html/fig-myplot3-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-7" title="Figure&nbsp;7: A Figure that Will Span Two Columns in Journal Mode"><img src="writing_files/figure-html/fig-myplot3-1.png" class="img-fluid figure-img" width="672"></a>
+</div>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="disable-apaquarto-processing-.pdf-only" class="level2">
+<h2 data-anchor-id="disable-apaquarto-processing-.pdf-only">Disable apaquarto processing (.pdf only)</h2>
+<p>If you want a long table to span multiple pages in .pdf format, the table might get cut off after the first page. Quarto makes .pdf tables using the longtable package, which allows for multi-page tables. Unfortunately, longtable does not always play nicely with the apa7 LaTeX package that aqaquarto uses to make .pdf documents. I have not yet found a fully satisfactory way get all of the features of apaquarto to be compatible with longtable’s multi-page tables. If you set <code>disable-apaquarto-processing</code> to <code>true</code> in the chunk or in markdown, you can get a multi-page table. The <code>apa-note</code> function, however, will not place a note below the table.</p>
+<p>To disable apaquarto processing directly in markdown:</p>
+<div class="sourceCode" id="cb17"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> Letters <span class="pp">|</span> Numbers <span class="pp">|</span></span>
+<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a><span class="pp">|:-------:|:-------:|</span></span>
+<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span>    A    <span class="pp">|</span>    1    <span class="pp">|</span></span>
+<span id="cb17-4"><a href="#cb17-4" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span>    B    <span class="pp">|</span>    2    <span class="pp">|</span></span>
+<span id="cb17-5"><a href="#cb17-5" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span>    C    <span class="pp">|</span>    3    <span class="pp">|</span></span>
+<span id="cb17-6"><a href="#cb17-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-7"><a href="#cb17-7" aria-hidden="true" tabindex="-1"></a>: My Caption {#tbl-disabledprocessing1 disable-apaquarto-processing=true}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>To disable processing within a code chunk:</p>
+<div class="cell FigureWithoutNote" data-ft.align="left" data-disable-apaquarto-processing="true" prefix="" data-tblnum="3" data-custom-style="FigureWithoutNote">
+<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: tbl-disabledprocessing2</span></span>
+<span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a><span class="co">#| tbl-cap: Table with apaquarto processing disabled (note does not appear below)</span></span>
+<span id="cb18-4"><a href="#cb18-4" aria-hidden="true" tabindex="-1"></a><span class="co">#| ft.align: left</span></span>
+<span id="cb18-5"><a href="#cb18-5" aria-hidden="true" tabindex="-1"></a><span class="co">#| disable-apaquarto-processing: true</span></span>
+<span id="cb18-6"><a href="#cb18-6" aria-hidden="true" tabindex="-1"></a><span class="fu">tibble</span>(<span class="at">Letters =</span> <span class="fu">c</span>(<span class="st">"A"</span>, <span class="st">"B"</span>, <span class="st">"C"</span>), </span>
+<span id="cb18-7"><a href="#cb18-7" aria-hidden="true" tabindex="-1"></a>       <span class="at">Numbers =</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">3</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb18-8"><a href="#cb18-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">flextable</span>() <span class="sc">%&gt;%</span> </span>
+<span id="cb18-9"><a href="#cb18-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_apa</span>() </span>
+<span id="cb18-10"><a href="#cb18-10" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div id="tbl-disabledprocessing2" class="cell quarto-float quarto-figure quarto-figure-center" data-tblnum="3" prefix="" data-ft.align="left" data-disable-apaquarto-processing="true">
+<figure class="quarto-float quarto-float-tbl figure">
+<figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-disabledprocessing2-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<div class="FigureTitle" data-custom-style="FigureTitle">
+<p>Table&nbsp;3</p>
+</div>
+<div class="Caption" data-custom-style="Caption">
+<p>Table with apaquarto processing disabled (note does not appear below)</p>
+</div>
+</figcaption>
+<div aria-describedby="tbl-disabledprocessing2-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<div class="cell-output-display">
+<div class="tabwid tabwid_left"><style>.cl-b5a45f16{}.cl-b59c738c{font-family:'Times New Roman';font-size:11pt;font-weight:normal;font-style:normal;text-decoration:none;color:rgba(0, 0, 0, 1.00);background-color:transparent;}.cl-b5a0362a{margin:0;text-align:center;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);padding-bottom:5pt;padding-top:5pt;padding-left:5pt;padding-right:5pt;line-height: 2;background-color:transparent;}.cl-b5a054de{width:0.75in;background-color:transparent;vertical-align: middle;border-bottom: 0.75pt solid rgba(0, 0, 0, 1.00);border-top: 0.75pt solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-b5a054e8{width:0.75in;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-b5a054e9{width:0.75in;background-color:transparent;vertical-align: middle;border-bottom: 0.75pt solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}</style><table data-quarto-disable-processing="true" class="cl-b5a45f16"><thead><tr style="overflow-wrap:break-word;"><th class="cl-b5a054de"><p class="cl-b5a0362a"><span class="cl-b59c738c">Letters</span></p></th><th class="cl-b5a054de"><p class="cl-b5a0362a"><span class="cl-b59c738c">Numbers</span></p></th></tr></thead><tbody><tr style="overflow-wrap:break-word;"><td class="cl-b5a054e8"><p class="cl-b5a0362a"><span class="cl-b59c738c">A</span></p></td><td class="cl-b5a054e8"><p class="cl-b5a0362a"><span class="cl-b59c738c">1</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-b5a054e8"><p class="cl-b5a0362a"><span class="cl-b59c738c">B</span></p></td><td class="cl-b5a054e8"><p class="cl-b5a0362a"><span class="cl-b59c738c">2</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-b5a054e9"><p class="cl-b5a0362a"><span class="cl-b59c738c">C</span></p></td><td class="cl-b5a054e9"><p class="cl-b5a0362a"><span class="cl-b59c738c">3</span></p></td></tr></tbody></table></div>
+</div>
+</div>
+</figure>
+</div>
+</div>
+</section>
+</section>
+<section id="citations" class="level1">
+<h1>Citations</h1>
+<p>See <a href="https://quarto.org/docs/authoring/footnotes-and-citations.html">here</a> for instructions on setting up citations and references.</p>
+<p>I recommend managing your citations in <a href="https://www.zotero.org/">Zotero</a> and exporting them to a file automatically using the <a href="https://retorque.re/zotero-better-bibtex/">BetterBibTex addon</a>. <a href="https://retorque.re/zotero-better-bibtex/installation/">Installation instructions</a>.</p>
+<p>The <code>apa.csl</code> file is already included in apaquarto so there is no need to supply a reference to it in your metadata.</p>
+<section id="parenthetical-citations" class="level2">
+<h2 data-anchor-id="parenthetical-citations">Parenthetical Citations</h2>
+<p>A parenthetical citation uses the reference label in square brackets and starts with <code>@</code> like so:</p>
+<p><code>A sentence that needs a citation [@CameronTrivedi2013].</code></p>
+<p>A sentence that needs a citation <span class="citation" data-cites="CameronTrivedi2013">(<a href="#ref-CameronTrivedi2013" role="doc-biblioref">Cameron &amp; Trivedi, 2013</a>)</span>.</p>
+<section id="with-multiple-citations" class="level3">
+<h3 data-anchor-id="with-multiple-citations">With Multiple Citations</h3>
+<p>2 or more citations are separated by a semicolon: <code>[@CameronTrivedi2013; @cohen2003applied]</code> becomes <span class="citation" data-cites="CameronTrivedi2013 cohen2003applied">(<a href="#ref-CameronTrivedi2013" role="doc-biblioref">Cameron &amp; Trivedi, 2013</a>; <a href="#ref-cohen2003applied" role="doc-biblioref">Cohen et al., 2003</a>)</span>.</p>
+</section>
+<section id="with-page-numbers" class="level3">
+<h3 data-anchor-id="with-page-numbers">With Page Numbers</h3>
+<p>Page references (or any other suffixes) are placed after the reference. If you want a comma, you’ll need to insert it yourself: <code>[@CameronTrivedi2013, pp. 35--41]</code> becomes <span class="citation" data-cites="CameronTrivedi2013">(<a href="#ref-CameronTrivedi2013" role="doc-biblioref">Cameron &amp; Trivedi, 2013, pp. 35–41</a>)</span>.</p>
+</section>
+<section id="with-prefixes" class="level3">
+<h3 data-anchor-id="with-prefixes">With Prefixes</h3>
+<ul>
+<li><p>Prefixes (with or without a comma) are placed before the reference: <code>[e.g., @CameronTrivedi2013]</code> becomes <span class="citation" data-cites="CameronTrivedi2013">(e.g., <a href="#ref-CameronTrivedi2013" role="doc-biblioref">Cameron &amp; Trivedi, 2013</a>)</span>.</p></li>
+<li><p>If you need a prefix at the beginning of 2 or more citations, you will have rearrange the citations so that the prefix accompanies the citation that is first alphabetically <span class="citation" data-cites="CameronTrivedi2013 cohen2003applied">(e.g., <a href="#ref-CameronTrivedi2013" role="doc-biblioref">Cameron &amp; Trivedi, 2013</a>; <a href="#ref-cohen2003applied" role="doc-biblioref">Cohen et al., 2003</a>)</span>. That is, <code>[e.g., @CameronTrivedi2013; @cohen2003applied]</code>, not <code>[e.g., @cohen2003applied; @CameronTrivedi2013]</code>.</p></li>
+<li><p>Any prefixes or suffixes needing a literal semicolon will confuse Quarto (actually Pandoc). To make it clear that you need to print a semicolon, put a backslash before the semicolon: <code>First Outer Inner Last [FOIL\;@CameronTrivedi2013]</code> becomes First Outer Inner Last <span class="citation" data-cites="CameronTrivedi2013">(FOIL; <a href="#ref-CameronTrivedi2013" role="doc-biblioref">Cameron &amp; Trivedi, 2013</a>)</span>.</p></li>
+</ul>
+<div class="callout callout-style-default callout-warning callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Warning
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>This “escaped backslash in front of the semicolon trick” is a hack. When you switch to Visual Mode in RStudio, it thinks you made a mistake, and it removes the backslash. If the citation above looks wrong, it is because I forgot to fix it after switching to visual mode and back. I reported this bug to the developers of RStudio. I hope the bug will be fixed soon.</p>
+</div>
+</div>
+</section>
+</section>
+<section id="in-text-citations" class="level2">
+<h2 data-anchor-id="in-text-citations">In-Text Citations</h2>
+<p>Typically, a plain citation works without any fuss:</p>
+<p><code>@CameronTrivedi2013 said some interesting things.</code></p>
+<p><span class="citation" data-cites="CameronTrivedi2013">Cameron and Trivedi (<a href="#ref-CameronTrivedi2013" role="doc-biblioref">2013</a>)</span> said some interesting things.</p>
+<div class="callout callout-style-default callout-warning callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Warning
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Outside of apaquarto, a limitation of the <code>.csl</code> format requires a special filter to change the separator for multiple authors from <code>&amp;</code> to<code>and</code>. If you render your document in a different format, <code>@CameronTrivedi2013</code> will be “Cameron &amp; Trivedi (2013).”</p>
+</div>
+</div>
+<section id="with-page-numbers-1" class="level3">
+<h3 data-anchor-id="with-page-numbers-1">With Page Numbers</h3>
+<p>If you need to include page references, use square brackets afterwards:</p>
+<p><code>@CameronTrivedi2013 [pp. 101--103] said some interesting things.</code></p>
+<p><span class="citation" data-cites="CameronTrivedi2013">Cameron and Trivedi (<a href="#ref-CameronTrivedi2013" role="doc-biblioref">2013, pp. 101–103</a>)</span> said some interesting things.</p>
+</section>
+<section id="possessive-citations" class="level3">
+<h3 data-anchor-id="possessive-citations">Possessive Citations</h3>
+<p>An experimental feature of apaquarto is automatic “possessive citations.” <code>@CameronTrivedi2013 ['s] position</code> becomes <span class="citation" data-cites="CameronTrivedi2013">Cameron and Trivedi’s (<a href="#ref-CameronTrivedi2013" role="doc-biblioref">2013</a>)</span> position.</p>
+<p>If you render your document in another format, you would need to supply the name in text like this: <code>Cameron and Trivedi's [-@CameronTrivedi2013] position</code>, which becomes Cameron and Trivedi’s <span class="citation" data-cites="CameronTrivedi2013">(<a href="#ref-CameronTrivedi2013" role="doc-biblioref">2013</a>)</span> position. This works because putting a hyphen before the reference <code>[-@CameronTrivedi2013]</code> becomes <span class="citation" data-cites="CameronTrivedi2013">(<a href="#ref-CameronTrivedi2013" role="doc-biblioref">2013</a>)</span>.</p>
+</section>
+</section>
+<section id="citations-for-articles-included-in-a-meta-analysis" class="level2">
+<h2 data-anchor-id="citations-for-articles-included-in-a-meta-analysis">Citations for Articles Included in a Meta-Analysis</h2>
+<p>In a meta-analysis, all studies included in the meta-analysis should appear in the References section but ordinarily should not be cited in the text. Quarto allows references not cited in the text to appear in the References section when they are listed in the the <code>nocite</code> field in the metadata. All articles listed in the <code>nocite</code> field will be marked with an asterisk in the References section.</p>
+<div class="sourceCode" id="cb19"><pre class="sourceCode yaml code-with-copy"><code class="sourceCode yaml"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="fu">nocite</span><span class="kw">: </span><span class="ch">|</span></span>
+<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a>  @schneider2015intelligence, @schneider2012cattell</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>If marking <code>nocite</code> studies with asterisk is unwanted, set the <code>meta-analysis</code> field to <code>false</code>,</p>
+<div class="sourceCode" id="cb20"><pre class="sourceCode yaml code-with-copy"><code class="sourceCode yaml"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="fu">meta-analysis</span><span class="kw">:</span><span class="at"> </span><span class="ch">false</span></span>
+<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a><span class="fu">nocite</span><span class="kw">: </span><span class="ch">|</span></span>
+<span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a>  @schneider2015intelligence, @schneider2012cattell</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+<section id="masked-citations-for-anonymous-peer-review" class="level2">
+<h2 data-anchor-id="masked-citations-for-anonymous-peer-review">Masked Citations for Anonymous Peer Review</h2>
+<p>Suppose you want to cite a previous reference of yours, but your anonymity is supposed to be protected in the review process. You can “mask” any citation you wish by setting the <code>mask</code> field in the metadata yaml to <code>true</code>. Then list all citations that need to be masked in the <code>masked-citations</code> field like so:</p>
+<div class="sourceCode" id="cb21"><pre class="sourceCode yaml code-with-copy"><code class="sourceCode yaml"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="fu">mask</span><span class="kw">:</span><span class="at"> </span><span class="ch">true</span></span>
+<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a><span class="fu">masked-citations</span><span class="kw">:</span></span>
+<span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="kw">-</span><span class="at"> schneider2015intelligence</span></span>
+<span id="cb21-4"><a href="#cb21-4" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="kw">-</span><span class="at"> schneider2012cattell</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>If the <code>mask</code> field is set to <code>false</code>, the masked citations will print as usual. When <code>mast</code> is <code>true</code>, depending if they are an inline or parenthetical citations, they will be listed as “Masked Citations (n.d)” or “(Masked Citations, n.d)”. In parenthetical citations, it is possible to mix masked and unmasked citations.</p>
+<p>Setting <code>mask</code> to <code>true</code> will also remove the authors, affiliations, and author notes from the title page.</p>
+</section>
+</section>
+<section id="appendices" class="level1">
+<h1>Appendices</h1>
+<p>Appendices begin with level-1 headers after the references. The header should be in title case and should describe the content of the appendix. The identifier after the header should have a an <code>#apx-</code> prefix as shown here:</p>
+<div class="sourceCode" id="cb22"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="fu"># Reliability Analysis of the Individual Differences Scale {#apx-myappendix}</span></span>
+<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-3"><a href="#cb22-3" aria-hidden="true" tabindex="-1"></a>The Individual Differences Scale's reliability coefficients can be seen in @tbl-idsrxx.</span>
+<span id="cb22-4"><a href="#cb22-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-5"><a href="#cb22-5" aria-hidden="true" tabindex="-1"></a>...</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Then cite the appendix in your text with the identifier you have chosen like so: <code>See @apx-myappendix</code>.</p>
+<p>There is no need to give the appendix a title of <em>Appendix</em>. the appropriate title will be inserted automatically—<em>Appendix</em> for a single appendix or <em>Appendix A</em>, <em>Appendix B</em>, and so forth for multiple appendixes. Tables and figures included in appendices will be given the appropriate prefixes automatically (e.g., Figure A1, Table B1, Table B2, and so forth).</p>
+<p>If <code>lang</code> is set to a <a href="https://quarto.org/docs/authoring/language.html">supported language</a>, the Appendix heading will start with the word specified in the <code>crossref-apx-prefix</code> subfield of <code>language</code>. If you want to set it a word in a language that is not supported by Quarto or to any other word (e.g., <em>Addendum</em>), set the word for <em>Appendix</em> like so in the YAML header:</p>
+<div class="sourceCode" id="cb23"><pre class="sourceCode yaml code-with-copy"><code class="sourceCode yaml"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="fu">language</span><span class="kw">:</span></span>
+<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">crossref-apx-prefix</span><span class="kw">:</span><span class="at"> </span><span class="st">"Addendum"</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+<section id="references" class="level1">
+
+
+
+
+</section>
+
+<div id="quarto-appendix" class="default"><section class="quarto-appendix-contents" role="doc-bibliography" id="quarto-bibliography"><h2 class="anchored quarto-appendix-heading">References</h2><div id="refs" class="references csl-bib-body hanging-indent" data-entry-spacing="0" data-line-spacing="2" role="list">
+<div id="ref-austenMansfieldPark1990" class="csl-entry" role="listitem">
+Austen, J. (1990). <em>Mansfield <span>P</span>ark</em>. Oxford University Press. (Original work published 1814)
+</div>
+<div id="ref-brownHowKilledPluto2012" class="csl-entry" role="listitem">
+Brown, M. (2012). <em>How <span>I</span> killed <span>Pluto</span> and why it had it coming</em>. Spiegel &amp; Grau.
+</div>
+<div id="ref-CameronTrivedi2013" class="csl-entry" role="listitem">
+Cameron, A. C., &amp; Trivedi, P. K. (2013). <em>Regression analysis of count data</em> (2nd ed.). Cambridge University Press. <a href="https://doi.org/10.1017/CBO9781139013567">https://doi.org/10.1017/CBO9781139013567</a>
+</div>
+<div id="ref-cohen2003applied" class="csl-entry" role="listitem">
+Cohen, J., Cohen, P., West, S. G., &amp; Aiken, L. S. (2003). <em>Applied multiple regression/correlation analysis for the behavioral sciences</em> (3rd ed.). Lawrence Erlbaum Associates.
+</div>
+</div></section></div></main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copied!");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copied!");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+        const codeEl = trigger.previousElementSibling.cloneNode(true);
+        for (const childEl of codeEl.children) {
+          if (isCodeAnnotation(childEl)) {
+            childEl.remove();
+          }
+        }
+        return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp('/' + window.location.host + '/');
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+</div> <!-- /content -->
+<script>var lightboxQuarto = GLightbox({"closeEffect":"zoom","descPosition":"bottom","loop":false,"openEffect":"zoom","selector":".lightbox"});
+(function() {
+  let previousOnload = window.onload;
+  window.onload = () => {
+    if (previousOnload) {
+      previousOnload();
+    }
+    lightboxQuarto.on('slide_before_load', (data) => {
+      const { slideIndex, slideNode, slideConfig, player, trigger } = data;
+      const href = trigger.getAttribute('href');
+      if (href !== null) {
+        const imgEl = window.document.querySelector(`a[href="${href}"] img`);
+        if (imgEl !== null) {
+          const srcAttr = imgEl.getAttribute("src");
+          if (srcAttr && srcAttr.startsWith("data:")) {
+            slideConfig.href = srcAttr;
+          }
+        }
+      } 
+    });
+  
+    lightboxQuarto.on('slide_after_load', (data) => {
+      const { slideIndex, slideNode, slideConfig, player, trigger } = data;
+      if (window.Quarto?.typesetMath) {
+        window.Quarto.typesetMath(slideNode);
+      }
+    });
+  
+  };
+  
+})();
+          </script>
+
+
+
+
+</body></html>

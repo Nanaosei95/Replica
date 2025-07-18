@@ -1,0 +1,1176 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.7.29">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>Changelog – APA Style Documents with apaquarto</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+</style>
+
+
+<script src="site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="site_libs/quarto-nav/headroom.min.js"></script>
+<script src="site_libs/clipboard/clipboard.min.js"></script>
+<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="site_libs/quarto-search/fuse.min.js"></script>
+<script src="site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="./">
+<script src="site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="site_libs/quarto-html/popper.min.js"></script>
+<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="site_libs/quarto-html/anchor.min.js"></script>
+<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-0815c480559380816a4d1ea211a47e91.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="site_libs/bootstrap/bootstrap-1f41107236bd320b13bcc3cd74ed15d5.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN") {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
+
+</head>
+
+<body class="floating nav-fixed quarto-light">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container mx-auto">
+    <a class="navbar-brand" href="./index.html">
+    <span class="navbar-title">APA Style Documents with apaquarto</span>
+    </a>
+  </div>
+            <div id="quarto-search" class="" title="Search"></div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" role="menu" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll me-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="./index.html"> 
+<span class="menu-text">Introduction</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="./installation.html"> 
+<span class="menu-text">Installation</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="./options.html"> 
+<span class="menu-text">Template Options</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="./writing.html"> 
+<span class="menu-text">APA Style via Markdown</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="./resources.html"> 
+<span class="menu-text">Resources</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link active" href="./changelog.html" aria-current="page"> 
+<span class="menu-text">Changelog</span></a>
+  </li>  
+</ul>
+            <ul class="navbar-nav navbar-nav-scroll ms-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="https://github.com/wjschne/apaquarto"> <i class="bi bi-github" role="img">
+</i> 
+<span class="menu-text">Source</span></a>
+  </li>  
+</ul>
+          </div> <!-- /navcollapse -->
+            <div class="quarto-navbar-tools">
+</div>
+      </div> <!-- /container-fluid -->
+    </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
+    <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#future-version-wishlist" id="toc-future-version-wishlist" class="nav-link active" data-scroll-target="#future-version-wishlist">Future Version Wishlist</a></li>
+  <li><a href="#version-5.0.4" id="toc-version-5.0.4" class="nav-link" data-scroll-target="#version-5.0.4">Version 5.0.4</a></li>
+  <li><a href="#version-5.0.3" id="toc-version-5.0.3" class="nav-link" data-scroll-target="#version-5.0.3">Version 5.0.3</a></li>
+  <li><a href="#version-5.0.2" id="toc-version-5.0.2" class="nav-link" data-scroll-target="#version-5.0.2">Version 5.0.2</a></li>
+  <li><a href="#version-5.0.1" id="toc-version-5.0.1" class="nav-link" data-scroll-target="#version-5.0.1">Version 5.0.1</a></li>
+  <li><a href="#version-5.0.0" id="toc-version-5.0.0" class="nav-link" data-scroll-target="#version-5.0.0">Version 5.0.0</a></li>
+  <li><a href="#version-4.4.3" id="toc-version-4.4.3" class="nav-link" data-scroll-target="#version-4.4.3">Version 4.4.3</a></li>
+  <li><a href="#version-4.4.2" id="toc-version-4.4.2" class="nav-link" data-scroll-target="#version-4.4.2">Version 4.4.2</a></li>
+  <li><a href="#version-4.4.1" id="toc-version-4.4.1" class="nav-link" data-scroll-target="#version-4.4.1">Version 4.4.1</a></li>
+  <li><a href="#version-4.4.0" id="toc-version-4.4.0" class="nav-link" data-scroll-target="#version-4.4.0">Version 4.4.0</a></li>
+  <li><a href="#version-4.3.16" id="toc-version-4.3.16" class="nav-link" data-scroll-target="#version-4.3.16">Version 4.3.16</a></li>
+  <li><a href="#version-4.3.15" id="toc-version-4.3.15" class="nav-link" data-scroll-target="#version-4.3.15">Version 4.3.15</a></li>
+  <li><a href="#version-4.3.14" id="toc-version-4.3.14" class="nav-link" data-scroll-target="#version-4.3.14">Version 4.3.14</a></li>
+  <li><a href="#version-4.3.13" id="toc-version-4.3.13" class="nav-link" data-scroll-target="#version-4.3.13">Version 4.3.13</a></li>
+  <li><a href="#version-4.3.12" id="toc-version-4.3.12" class="nav-link" data-scroll-target="#version-4.3.12">Version 4.3.12</a></li>
+  <li><a href="#version-4.3.11" id="toc-version-4.3.11" class="nav-link" data-scroll-target="#version-4.3.11">Version 4.3.11</a></li>
+  <li><a href="#version-4.3.10" id="toc-version-4.3.10" class="nav-link" data-scroll-target="#version-4.3.10">Version 4.3.10</a></li>
+  <li><a href="#version-4.3.9" id="toc-version-4.3.9" class="nav-link" data-scroll-target="#version-4.3.9">Version 4.3.9</a></li>
+  <li><a href="#version-4.3.8" id="toc-version-4.3.8" class="nav-link" data-scroll-target="#version-4.3.8">Version 4.3.8</a></li>
+  <li><a href="#version-4.3.7" id="toc-version-4.3.7" class="nav-link" data-scroll-target="#version-4.3.7">Version 4.3.7</a></li>
+  <li><a href="#version-4.3.6" id="toc-version-4.3.6" class="nav-link" data-scroll-target="#version-4.3.6">Version 4.3.6</a></li>
+  <li><a href="#version-4.3.5" id="toc-version-4.3.5" class="nav-link" data-scroll-target="#version-4.3.5">Version 4.3.5</a></li>
+  <li><a href="#version-4.3.4" id="toc-version-4.3.4" class="nav-link" data-scroll-target="#version-4.3.4">Version 4.3.4</a></li>
+  <li><a href="#version-4.3.3" id="toc-version-4.3.3" class="nav-link" data-scroll-target="#version-4.3.3">Version 4.3.3</a></li>
+  <li><a href="#version-4.3.2" id="toc-version-4.3.2" class="nav-link" data-scroll-target="#version-4.3.2">Version 4.3.2</a></li>
+  <li><a href="#version-4.3.1" id="toc-version-4.3.1" class="nav-link" data-scroll-target="#version-4.3.1">Version 4.3.1</a></li>
+  <li><a href="#version-4.3.0" id="toc-version-4.3.0" class="nav-link" data-scroll-target="#version-4.3.0">Version 4.3.0</a></li>
+  <li><a href="#version-4.2.0" id="toc-version-4.2.0" class="nav-link" data-scroll-target="#version-4.2.0">Version 4.2.0</a></li>
+  <li><a href="#version-4.1.0" id="toc-version-4.1.0" class="nav-link" data-scroll-target="#version-4.1.0">Version 4.1.0</a></li>
+  <li><a href="#version-4.0.3" id="toc-version-4.0.3" class="nav-link" data-scroll-target="#version-4.0.3">Version 4.0.3</a></li>
+  <li><a href="#version-4.0.2" id="toc-version-4.0.2" class="nav-link" data-scroll-target="#version-4.0.2">Version 4.0.2</a></li>
+  <li><a href="#version-4.0.1" id="toc-version-4.0.1" class="nav-link" data-scroll-target="#version-4.0.1">Version 4.0.1</a></li>
+  <li><a href="#version-4.0.0" id="toc-version-4.0.0" class="nav-link" data-scroll-target="#version-4.0.0">Version 4.0.0</a></li>
+  <li><a href="#version-3.5.4" id="toc-version-3.5.4" class="nav-link" data-scroll-target="#version-3.5.4">Version 3.5.4</a></li>
+  <li><a href="#version-3.5.3" id="toc-version-3.5.3" class="nav-link" data-scroll-target="#version-3.5.3">Version 3.5.3</a></li>
+  <li><a href="#version-3.5.2" id="toc-version-3.5.2" class="nav-link" data-scroll-target="#version-3.5.2">Version 3.5.2</a></li>
+  <li><a href="#version-3.5.1" id="toc-version-3.5.1" class="nav-link" data-scroll-target="#version-3.5.1">Version 3.5.1</a></li>
+  <li><a href="#version-3.5.0" id="toc-version-3.5.0" class="nav-link" data-scroll-target="#version-3.5.0">Version 3.5.0</a></li>
+  <li><a href="#version-3.4.9" id="toc-version-3.4.9" class="nav-link" data-scroll-target="#version-3.4.9">Version 3.4.9</a></li>
+  <li><a href="#version-3.4.8" id="toc-version-3.4.8" class="nav-link" data-scroll-target="#version-3.4.8">Version 3.4.8</a></li>
+  <li><a href="#version-3.4.7" id="toc-version-3.4.7" class="nav-link" data-scroll-target="#version-3.4.7">Version 3.4.7</a></li>
+  <li><a href="#version-3.4.6" id="toc-version-3.4.6" class="nav-link" data-scroll-target="#version-3.4.6">Version 3.4.6</a></li>
+  <li><a href="#version-3.4.5" id="toc-version-3.4.5" class="nav-link" data-scroll-target="#version-3.4.5">Version 3.4.5</a></li>
+  <li><a href="#version-3.4.4" id="toc-version-3.4.4" class="nav-link" data-scroll-target="#version-3.4.4">Version 3.4.4</a></li>
+  <li><a href="#version-3.4.3" id="toc-version-3.4.3" class="nav-link" data-scroll-target="#version-3.4.3">Version 3.4.3</a></li>
+  <li><a href="#version-3.4.2" id="toc-version-3.4.2" class="nav-link" data-scroll-target="#version-3.4.2">Version 3.4.2</a></li>
+  <li><a href="#version-3.4.1" id="toc-version-3.4.1" class="nav-link" data-scroll-target="#version-3.4.1">Version 3.4.1</a></li>
+  <li><a href="#version-3.4.0" id="toc-version-3.4.0" class="nav-link" data-scroll-target="#version-3.4.0">Version 3.4.0</a></li>
+  <li><a href="#version-3.3.0" id="toc-version-3.3.0" class="nav-link" data-scroll-target="#version-3.3.0">Version 3.3.0</a></li>
+  <li><a href="#version-3.2.3" id="toc-version-3.2.3" class="nav-link" data-scroll-target="#version-3.2.3">Version 3.2.3</a></li>
+  <li><a href="#version-3.2.2" id="toc-version-3.2.2" class="nav-link" data-scroll-target="#version-3.2.2">Version 3.2.2</a></li>
+  <li><a href="#version-3.2.1" id="toc-version-3.2.1" class="nav-link" data-scroll-target="#version-3.2.1">Version 3.2.1</a></li>
+  <li><a href="#version-3.2.0" id="toc-version-3.2.0" class="nav-link" data-scroll-target="#version-3.2.0">Version 3.2.0</a></li>
+  <li><a href="#version-3.1.0" id="toc-version-3.1.0" class="nav-link" data-scroll-target="#version-3.1.0">Version 3.1.0</a></li>
+  <li><a href="#version-3.0.0" id="toc-version-3.0.0" class="nav-link" data-scroll-target="#version-3.0.0">Version 3.0.0</a>
+  <ul class="collapse">
+  <li><a href="#breaking-changes" id="toc-breaking-changes" class="nav-link" data-scroll-target="#breaking-changes">Breaking changes</a></li>
+  <li><a href="#improvements" id="toc-improvements" class="nav-link" data-scroll-target="#improvements">Improvements</a>
+  <ul class="collapse">
+  <li><a href="#docx" id="toc-docx" class="nav-link" data-scroll-target="#docx">.docx</a></li>
+  <li><a href="#pdf" id="toc-pdf" class="nav-link" data-scroll-target="#pdf">.pdf</a></li>
+  </ul></li>
+  </ul></li>
+  <li><a href="#version-2.0.0" id="toc-version-2.0.0" class="nav-link" data-scroll-target="#version-2.0.0">Version 2.0.0</a></li>
+  <li><a href="#version-1.0.0" id="toc-version-1.0.0" class="nav-link" data-scroll-target="#version-1.0.0">Version 1.0.0</a></li>
+  </ul>
+</nav>
+</nav>
+<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar zindex-bottom">
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">Changelog</h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<section id="future-version-wishlist" class="level1">
+<h1>Future Version Wishlist</h1>
+<ul>
+<li>Implement missing .pdf features
+<ul>
+<li>Tables in .pdf jou mode should fit automatically.</li>
+<li>Figure out why text disappears whenever there are too many tables and figures too close together.</li>
+</ul></li>
+<li>Implement missing .docx features
+<ul>
+<li>Full control of font, paper size</li>
+<li>Right-align equation numbers</li>
+</ul></li>
+<li>Implement missing Typst features
+<ul>
+<li>Journal format</li>
+<li>Line numbering</li>
+<li>Full language option support</li>
+</ul></li>
+</ul>
+</section>
+<section id="version-5.0.4" class="level1">
+<h1>Version 5.0.4</h1>
+<ul>
+<li>2025-06-26</li>
+<li>The <code>apa-note</code> code chunk can produce multiple paragraphs using yaml sequences.</li>
+<li>For .pdf and typst, the <code>first-page</code> option can set the first page to a different value.</li>
+</ul>
+</section>
+<section id="version-5.0.3" class="level1">
+<h1>Version 5.0.3</h1>
+<ul>
+<li>2025-06-09</li>
+<li><a href="https://github.com/wjschne/apaquarto/issues/28">#28</a>. Allow section numbering with Quarto’s <code>number-section</code> (and <code>number-depth</code>) fields. Thanks <a href="https://github.com/juho7">juho7</a> for the feature request and to <a href="https://github.com/lnalborczyk">Ladislas Nalborczyk</a> for the solution to the longstanding problem.</li>
+</ul>
+</section>
+<section id="version-5.0.2" class="level1">
+<h1>Version 5.0.2</h1>
+<ul>
+<li>2025-05-17</li>
+<li><a href="https://github.com/wjschne/apaquarto/issues/130">#130</a>. Implement word count feature. Thanks <a href="https://github.com/k-jens">k-jens</a></li>
+</ul>
+</section>
+<section id="version-5.0.1" class="level1">
+<h1>Version 5.0.1</h1>
+<ul>
+<li>2025-05-11</li>
+<li>New style of <a href="https://wjschne.github.io/apaquarto/writing.html#appendices">specifying appendices with the <code>#apx-</code> prefix</a>.</li>
+<li>Older style of making appendices will still work but is deprecated.</li>
+</ul>
+</section>
+<section id="version-5.0.0" class="level1">
+<h1>Version 5.0.0</h1>
+<ul>
+<li>2025-05-06</li>
+<li><a href="https://github.com/wjschne/apaquarto/issues/75">#75</a> Set caption width for tables correctly so text fits in column in two-column mode. Thanks <a href="https://github.com/mvuorre">Matti Vuorre</a>!</li>
+</ul>
+</section>
+<section id="version-4.4.3" class="level1">
+<h1>Version 4.4.3</h1>
+<ul>
+<li>2025-05-05</li>
+<li><a href="https://github.com/wjschne/apaquarto/issues/129">#129</a> Make it possible to cite appendices. Thanks <a href="https://github.com/RobertEspo">Robert Esposito</a>!</li>
+</ul>
+</section>
+<section id="version-4.4.2" class="level1">
+<h1>Version 4.4.2</h1>
+<ul>
+<li>2025-05-04</li>
+<li>Allow markdown formatting in <code>apa-note</code> for .pdf documents.</li>
+</ul>
+</section>
+<section id="version-4.4.1" class="level1">
+<h1>Version 4.4.1</h1>
+<ul>
+<li>2025-05-03</li>
+<li><a href="https://github.com/wjschne/apaquarto/issues/128">#128</a> Table and figure notes using <code>apa-note</code> now translate to the other langauges in the .pdf format. Thanks <a href="https://github.com/ggpinto">Guilherme Pinto</a></li>
+<li>Fixed .html level 4 heading bolding problem.</li>
+<li>Upgraded to latest apa.csl format</li>
+</ul>
+</section>
+<section id="version-4.4.0" class="level1">
+<h1>Version 4.4.0</h1>
+<ul>
+<li>2025-03-31</li>
+<li><a href="https://github.com/wjschne/apaquarto/issues/124">#124</a> Cross-referencing now works for markdown tables outside of fenced divs. Thanks <a href="https://github.com/cbrnr">Clemens Brunner</a>!</li>
+<li><a href="https://github.com/wjschne/apaquarto/issues/121">#121</a> Adding support for subfigures. Thanks <a href="https://github.com/cbrnr">Clemens Brunner</a> for the suggestion!</li>
+</ul>
+</section>
+<section id="version-4.3.16" class="level1">
+<h1>Version 4.3.16</h1>
+<ul>
+<li>2025-03-30)</li>
+<li><a href="https://github.com/wjschne/apaquarto/issues/71">#71</a> Workaround implemented for getting .pdf to allow multi-page tables. Thanks <a href="https://github.com/fkohrt">Florian Kohrt</a>!</li>
+</ul>
+</section>
+<section id="version-4.3.15" class="level1">
+<h1>Version 4.3.15</h1>
+<ul>
+<li>2025-03-29)</li>
+<li><a href="https://github.com/wjschne/apaquarto/issues/123">#123</a> Fixed bug that omitted affiliations in docx, html, and typst output. Thanks <a href="https://github.com/stefanycoxe">Stefany Coxe</a>!</li>
+</ul>
+</section>
+<section id="version-4.3.14" class="level1">
+<h1>Version 4.3.14</h1>
+<ul>
+<li>2025-03-16)</li>
+<li><a href="https://github.com/wjschne/apaquarto/issues/120">#120</a> When a table or figure reference is not found, a more informative error is displayed. Thanks <a href="https://github.com/a-asen">Steffen Aasen</a>!</li>
+</ul>
+</section>
+<section id="version-4.3.13" class="level1">
+<h1>Version 4.3.13</h1>
+<ul>
+<li>2025-03-15)</li>
+<li><a href="https://github.com/wjschne/apaquarto/issues/118">#118</a> Email in correspondence note is displayed as a link. HTML format has additional blank lines before and after Abstract. Thanks <a href="https://github.com/cbrnr">Clemens Brunner</a>!</li>
+<li><a href="https://github.com/wjschne/apaquarto/issues/119">#119</a> Allow use of <code>beforenotespace</code> code chunk option in .pdf <code>jou</code> mode. Thanks <a href="https://github.com/drfurtado">Ovande Furtado</a>!</li>
+</ul>
+</section>
+<section id="version-4.3.12" class="level1">
+<h1>Version 4.3.12</h1>
+<ul>
+<li><p>2025-03-07)</p></li>
+<li><p><a href="https://github.com/wjschne/apaquarto/issues/116">#116</a> Orcid links now work in all formats. Thanks <a href="https://github.com/cbrnr">Clemens Brunner</a>!</p></li>
+<li><p><a href="https://github.com/wjschne/apaquarto/issues/113">#113</a> The <code>blank-lines-above-author-note</code> should work when <code>author-note</code> is omitted. Thanks <a href="https://github.com/cbrnr">Clemens Brunner</a>!</p></li>
+</ul>
+</section>
+<section id="version-4.3.11" class="level1">
+<h1>Version 4.3.11</h1>
+<ul>
+<li><p>2025-03-06)</p></li>
+<li><p><a href="https://github.com/wjschne/apaquarto/issues/113">#113</a> Author note will show author correspondence information if author-note is absent. Thanks <a href="https://github.com/cbrnr">Clemens Brunner</a>!</p></li>
+<li><p><a href="https://github.com/wjschne/apaquarto/issues/115">#115</a> The <code>title-block-role-introduction</code> field now works in apaquarto-pdf. Thanks <a href="https://github.com/cbrnr">Clemens Brunner</a>!</p></li>
+<li><p><a href="https://github.com/wjschne/apaquarto/issues/117">#117</a> The <code>papersize</code> field now works in apaquarto-typst. Thanks <a href="https://github.com/cbrnr">Clemens Brunner</a>!</p></li>
+</ul>
+</section>
+<section id="version-4.3.10" class="level1">
+<h1>Version 4.3.10</h1>
+<ul>
+<li>2025-01-26</li>
+<li><a href="https://github.com/wjschne/apaquarto/pull/109">#109</a> Make ORCID have https link instead of http. Thanks <a href="https://github.com/KilianSander">Kilian Sander!</a>!</li>
+<li><a href="https://github.com/wjschne/apaquarto/issues/107">#107</a> added table of contents, list of figures, and list of tables to apaquarto-typst. Thanks <a href="https://github.com/bsgallih12">bsgallih12</a>!</li>
+<li>Implemented Impact Statement. Thanks <a href="https://github.com/franfrutos">franfrutos</a>!</li>
+</ul>
+</section>
+<section id="version-4.3.9" class="level1">
+<h1>Version 4.3.9</h1>
+<ul>
+<li>2024-12-14</li>
+<li>Removed an unnecessary keyword print command used to debug 4.3.8.</li>
+<li>Made html blockquote text the same color as body text.</li>
+</ul>
+</section>
+<section id="version-4.3.8" class="level1">
+<h1>Version 4.3.8</h1>
+<ul>
+<li>2024-12-14</li>
+<li><a href="https://github.com/wjschne/apaquarto/issues/102">#102</a> Let <code>keywords</code> field be a string instead of an array</li>
+</ul>
+</section>
+<section id="version-4.3.7" class="level1">
+<h1>Version 4.3.7</h1>
+<ul>
+<li>2024-12-14</li>
+<li><a href="https://github.com/wjschne/apaquarto/issues/101">#101</a> Removed indentation from .docx abstract’s first paragraph</li>
+</ul>
+</section>
+<section id="version-4.3.6" class="level1">
+<h1>Version 4.3.6</h1>
+<ul>
+<li>2024-11-22</li>
+<li><a href="https://github.com/wjschne/apaquarto/issues/98">#98</a> The <code>mainfont</code> option now works for apaquarto-html.</li>
+</ul>
+</section>
+<section id="version-4.3.5" class="level1">
+<h1>Version 4.3.5</h1>
+<ul>
+<li>2024-11-22</li>
+<li><a href="https://github.com/wjschne/apaquarto/issues/97">#97</a> Added a <code>draft-date</code> option.</li>
+</ul>
+</section>
+<section id="version-4.3.4" class="level1">
+<h1>Version 4.3.4</h1>
+<ul>
+<li>2024-09-01</li>
+<li><a href="https://github.com/wjschne/apaquarto/issues/85">#85</a> Fixed longtable counter problem.</li>
+</ul>
+</section>
+<section id="version-4.3.3" class="level1">
+<h1>Version 4.3.3</h1>
+<ul>
+<li>2024-07-04</li>
+<li>Fixed <code>lang</code> option for abstract. Documented language options that are likely to be used in apaquarto.</li>
+</ul>
+</section>
+<section id="version-4.3.2" class="level1">
+<h1>Version 4.3.2</h1>
+<ul>
+<li>2024-06-19</li>
+<li><a href="https://github.com/wjschne/apaquarto/issues/76">#76</a> Fixed bug that failed to account for user-specified terms in <code>crossref</code></li>
+</ul>
+</section>
+<section id="version-4.3.1" class="level1">
+<h1>Version 4.3.1</h1>
+<ul>
+<li>2024-05-28</li>
+<li><a href="https://github.com/wjschne/apaquarto/issues/72">#72</a> Fix bug while loading flextable in pdf.</li>
+<li><a href="https://github.com/wjschne/apaquarto/issues/73">#73</a> Fix bug for figure labels with underscores in them.</li>
+</ul>
+</section>
+<section id="version-4.3.0" class="level1">
+<h1>Version 4.3.0</h1>
+<ul>
+<li>2024-05-22</li>
+<li><a href="https://github.com/wjschne/apaquarto/issues/69">#69</a> Allow users to set custom margins using Quarto’s <code>geometry</code> options.</li>
+</ul>
+</section>
+<section id="version-4.2.0" class="level1">
+<h1>Version 4.2.0</h1>
+<ul>
+<li>2024-05-16</li>
+<li><a href="https://github.com/wjschne/apaquarto/issues/67">#67</a> Setting <code>no-ampersand-parenthetical: true</code> will replace the ampersand in both parenthetical and narrative (in text) citations.</li>
+<li>Make <code>link-citations: true</code> the default. Can be set to <code>link-citations: false</code> in YAML.</li>
+</ul>
+</section>
+<section id="version-4.1.0" class="level1">
+<h1>Version 4.1.0</h1>
+<ul>
+<li>2024-05-13</li>
+<li><a href="https://github.com/wjschne/apaquarto/issues/68">#68</a> Enable selective suppression of most elements of the title page and abstract page.</li>
+</ul>
+</section>
+<section id="version-4.0.3" class="level1">
+<h1>Version 4.0.3</h1>
+<ul>
+<li>2024-05-11</li>
+<li>For apaquarto-typst to run correctly, Quarto 1.5 or greater is required <a href="https://github.com/wjschne/apaquarto/issues/54">#54</a>. An error message now prompts the user to update Typst.</li>
+<li>Fixed link-citations for pdf <a href="https://github.com/wjschne/apaquarto/issues/64">#64</a>.</li>
+<li>Fixed rendering of stylized <span class="math inline">\(\LaTeX\)</span> symbol in docx.</li>
+<li>Updated to most recent version of <a href="https://github.com/citation-style-language/styles/commit/fab696b6f365a770547df90b84a54691462b7c21">apa.cls</a></li>
+<li>Enable codelisting <a href="https://github.com/wjschne/apaquarto/issues/62">#62</a></li>
+</ul>
+</section>
+<section id="version-4.0.2" class="level1">
+<h1>Version 4.0.2</h1>
+<ul>
+<li>2024-05-01</li>
+<li>For apaquarto-typst to run correctly, Typst version 0.11.0 or greater is required <a href="https://github.com/wjschne/apaquarto/issues/54">#54</a>. An error message now prompts the user to update Typst.</li>
+</ul>
+</section>
+<section id="version-4.0.1" class="level1">
+<h1>Version 4.0.1</h1>
+<ul>
+<li>2024-05-01</li>
+<li>Improvemements for typst
+<ul>
+<li>Render LaTeX logo correctly</li>
+<li>Implemented NoIndent feature for typst</li>
+<li>Proper indenting for multi-paragraph abstracts</li>
+<li>Fixed numbering of tables in appendices</li>
+<li>Block quote indenting corrected</li>
+<li>Color links blue</li>
+</ul></li>
+<li>Fixed bug that reversed <code>floatsintext</code> to the opposite of expectations.</li>
+<li>On the remote chance that anyone needs more than 26 appendices, subsequent appendices are AA, AB, AC, …, BA, BB, BC, … AAA, AAB, …</li>
+</ul>
+</section>
+<section id="version-4.0.0" class="level1">
+<h1>Version 4.0.0</h1>
+<ul>
+<li>2024-05-01</li>
+<li>Building on <a href="https://github.com/mvuorre">mvuorre</a>’s typst template, typst-apaquarto is working. More to come.</li>
+</ul>
+</section>
+<section id="version-3.5.4" class="level1">
+<h1>Version 3.5.4</h1>
+<ul>
+<li>2024-04-30</li>
+<li>Fixed many bugs.</li>
+<li><a href="https://github.com/mvuorre">mvuorre</a> contributed a typst template for apaquarto! Not all features are working yet, but typst opens up many possibilities.</li>
+</ul>
+</section>
+<section id="version-3.5.3" class="level1">
+<h1>Version 3.5.3</h1>
+<ul>
+<li>2024-04-23</li>
+<li>Abstract in .docx and .html no longer indented</li>
+</ul>
+</section>
+<section id="version-3.5.2" class="level1">
+<h1>Version 3.5.2</h1>
+<ul>
+<li>2024-04-20</li>
+<li>Added xpatch package to .pdf to fix appendix bug</li>
+<li>Fixed bug that inserted meta-analysis explanation when nocite was empty</li>
+<li>Fixed placement of references when refs div is omitted.</li>
+</ul>
+</section>
+<section id="version-3.5.1" class="level1">
+<h1>Version 3.5.1</h1>
+<ul>
+<li>2024-04-19</li>
+<li>Fixed bug that failed to move all float to the end of the document in .docx and .html</li>
+</ul>
+</section>
+<section id="version-3.5.0" class="level1">
+<h1>Version 3.5.0</h1>
+<ul>
+<li>2024-04-12</li>
+<li>Added table of contents for pdf documents <a href="https://github.com/wjschne/apaquarto/issues/45">#45</a></li>
+</ul>
+</section>
+<section id="version-3.4.9" class="level1">
+<h1>Version 3.4.9</h1>
+<ul>
+<li>2024-04-09</li>
+<li>At mvuorre’s suggestion <a href="https://github.com/wjschne/apaquarto/issues/41">#41</a>:
+<ul>
+<li>I moved the example/documentation text out of the template and into a file called <code>example.qmd</code>. The new template contains what used to be called <code>minimal.qmd</code>.</li>
+<li>I removed the <code>apaquarto.Rproj</code> file, <code>references.bib</code>, and <code>img</code> folder from being included by the <code>quarto use template</code> command.</li>
+</ul></li>
+<li>Fixed mainfont problem not loading fontspec package in time for .pdf <a href="https://github.com/wjschne/apaquarto/issues/40">#40</a></li>
+<li>Fixed bug associated with <code></code> <a href="https://github.com/wjschne/apaquarto/issues/41">#41</a></li>
+<li>Fixed bug that occurs when no author note is included.</li>
+<li>Fixed figure numbering bug for markdown figures.</li>
+</ul>
+</section>
+<section id="version-3.4.8" class="level1">
+<h1>Version 3.4.8</h1>
+<ul>
+<li>2024-03-30</li>
+<li>Allow the correspondence note to be overridden by setting the <code>correspondence-note</code> subfield of the <code>author-note</code> field.</li>
+<li>The <code>meta-analysis</code> field is now set to <code>true</code> by default (and thus does not need to appear in the metadata). If marking studies in the <code>nocite</code> field with asterisks is not desired, set the <code>meta-analysis</code> field to <code>false</code>.</li>
+</ul>
+</section>
+<section id="version-3.4.7" class="level1">
+<h1>Version 3.4.7</h1>
+<ul>
+<li>2024-03-29</li>
+<li>Studies included in a meta-analysis are not usually cited in the text but are <a href="https://apastyle.apa.org/style-grammar-guidelines/references/meta-analysis-references">included in the References section and flagged with an asterisk</a>. When the <code>meta-analysis</code> field is set to <code>true</code>, citations listed in <code>nocite</code> are flagged with an asterisk in References section and a note to that effect is inserted below the References header.</li>
+</ul>
+</section>
+<section id="version-3.4.6" class="level1">
+<h1>Version 3.4.6</h1>
+<ul>
+<li>2024-03-22</li>
+<li>Figures and Tables in appendices have prefixes of A, B, C, etc.</li>
+<li>Appendices appear after figures and tables when figures and tables appear at the end of the document.</li>
+</ul>
+</section>
+<section id="version-3.4.5" class="level1">
+<h1>Version 3.4.5</h1>
+<ul>
+<li>2024-03-16</li>
+<li>Indent abstract with multiple paragraphs properly</li>
+<li>Title on first page of text is no longer numbered when <code>number-sections</code> is <code>true</code></li>
+<li>Remove indent from level 3 headers in .html output</li>
+</ul>
+</section>
+<section id="version-3.4.4" class="level1">
+<h1>Version 3.4.4</h1>
+<ul>
+<li>2024-03-10</li>
+<li><code>supress-title-page</code> option to suppress title page</li>
+<li>Fix author names when specified by given, family, or literal fields</li>
+<li>Fix author subscripts in pdf when affiliations are identical</li>
+</ul>
+</section>
+<section id="version-3.4.3" class="level1">
+<h1>Version 3.4.3</h1>
+<ul>
+<li>2024-03-08</li>
+<li>Allow for fonts other than Times in pdf documents.</li>
+<li>Removed the <code>notimes</code> and <code>notxfonts</code> options for pdf documents. If <code>mainfont</code> is not selected, then the <a href="https://ctan.org/pkg/newtx"><code>newtx</code> package</a> will be used.</li>
+<li>Fixed balance of two columns in journal mode for pdf.</li>
+</ul>
+</section>
+<section id="version-3.4.2" class="level1">
+<h1>Version 3.4.2</h1>
+<ul>
+<li>2024-03-06</li>
+<li>Fixed .pdf bug when only one author or one affiliation</li>
+</ul>
+</section>
+<section id="version-3.4.1" class="level1">
+<h1>Version 3.4.1</h1>
+<ul>
+<li>2024-03-05</li>
+<li>Added “possessive” citations such that <code>@schneider2024 ['s]</code> will render as “Schneider’s - 2024)”</li>
+</ul>
+</section>
+<section id="version-3.4.0" class="level1">
+<h1>Version 3.4.0</h1>
+<ul>
+<li>2024-03-04</li>
+<li>Implemented <a href="https://wjschne.github.io/apaquarto/options.html#language-options">language options</a> for internationalization and customization.</li>
+<li>Figures in <code>jou</code> mode fit to column width automatically. Can be overridden with <code>fig-width</code> or <code>out-width</code>.</li>
+</ul>
+</section>
+<section id="version-3.3.0" class="level1">
+<h1>Version 3.3.0</h1>
+<ul>
+<li>2024-02-29</li>
+<li>Added better documentation of <a href="https://wjschne.github.io/apaquarto/">apaquarto template options</a></li>
+<li>If mask option is true, remove author names, author affiliations, and author notes from title page.</li>
+<li>Fixed blank spaces above title and author note in .docx</li>
+<li>Numbered lines for .docx</li>
+<li>Support for multiline abstracts</li>
+<li>Many minor fixes</li>
+</ul>
+</section>
+<section id="version-3.2.3" class="level1">
+<h1>Version 3.2.3</h1>
+<ul>
+<li>2024-02-19</li>
+<li>Add support for callout boxes in .pdf</li>
+<li>Fixed .pdf line number problem that crept back in somehow yet again <a href="https://github.com/wjschne/apaquarto/issues/34">#34</a></li>
+<li>Fixed problem with curly single quote in .docx running header</li>
+</ul>
+</section>
+<section id="version-3.2.2" class="level1">
+<h1>Version 3.2.2</h1>
+<ul>
+<li>2024-02-15</li>
+<li>Fixed bug so that tables and figures appear in correct order when <code>floatsintext</code> is true.</li>
+</ul>
+</section>
+<section id="version-3.2.1" class="level1">
+<h1>Version 3.2.1</h1>
+<ul>
+<li>2024-02-14</li>
+<li>Fixed error when no citations are present <a href="https://github.com/wjschne/apaquarto/issues/33">#33</a></li>
+<li>Fixed .pdf line number problem that crept back in somehow <a href="https://github.com/wjschne/apaquarto/issues/34">#34</a></li>
+</ul>
+</section>
+<section id="version-3.2.0" class="level1">
+<h1>Version 3.2.0</h1>
+<ul>
+<li>2024-02-13</li>
+<li>Added support for masked references. <a href="https://github.com/wjschne/apaquarto/issues/27">#27</a></li>
+</ul>
+</section>
+<section id="version-3.1.0" class="level1">
+<h1>Version 3.1.0</h1>
+<ul>
+<li>2024-02-09</li>
+<li>The <code>floatsintext</code> option now works in docx and html. Setting it to <code>true</code>, intermingles text, figures, and tables. Setting it to <code>false</code> moves all figures and tables to the end of the document.</li>
+</ul>
+</section>
+<section id="version-3.0.0" class="level1">
+<h1>Version 3.0.0</h1>
+<ul>
+<li>2024-01-20</li>
+</ul>
+<p>The main goal for version 3 was to do everything with lua filters instead of R. It was quite a journey, but apaquarto is now completely independent of R, which should help folks working with other languages.</p>
+<section id="breaking-changes" class="level2">
+<h2 class="anchored" data-anchor-id="breaking-changes">Breaking changes</h2>
+<ul>
+<li>The the <code>apafg-</code> and <code>apatb-</code> prefixes are no longer used for figures and tables. Use the standard Quarto prefixes (<code>fig-</code> and <code>tbl-</code>), as well as the standard quarto referencing syntax (e.g,. <code>@fig-myplot</code> will reference the <code>fig-myplot</code> chunk.).</li>
+<li>The include statement below the metadata is no longer used and must be deleted. An informative error will provide instruction if the include statement remains.</li>
+</ul>
+</section>
+<section id="improvements" class="level2">
+<h2 class="anchored" data-anchor-id="improvements">Improvements</h2>
+<section id="docx" class="level3">
+<h3 class="anchored" data-anchor-id="docx">.docx</h3>
+<ul>
+<li>The title page and abstract page are now processed using lua filters instead of R.</li>
+<li>The officer package is no longer required to create a new reference document every time the document is rendered <a href="https://github.com/wjschne/apaquarto/issues/5">#5</a> <a href="https://github.com/wjschne/apaquarto/issues/29">#29</a>. Now, a lua filter looks for the <code>shorttitle</code> field in your yaml. If that is not found, the <code>title</code> and <code>subtitle</code> fields are used instead. The running header is assigned to the <code>description</code> field in the quarto metadata. This value will show up in the <code>Comments</code> field in the rendered .docx file, which is then inserted into the field box in the header.</li>
+<li>The .docx running header is set with a lua filter and a docx field that draws from the .docx metadata.</li>
+</ul>
+</section>
+<section id="pdf" class="level3">
+<h3 class="anchored" data-anchor-id="pdf">.pdf</h3>
+<ul>
+<li>Can number lines <a href="https://github.com/wjschne/apaquarto/issues/25">#25</a></li>
+<li>Fixed tightlist error <a href="https://github.com/wjschne/apaquarto/issues/31">#31</a></li>
+<li>The jou (journal) mode in .pdf is better supported. There are a few hacky solutions that need a bit of work. <a href="https://github.com/wjschne/apaquarto/issues/2">#2</a> <a href="https://github.com/wjschne/apaquarto/issues/27">#27</a></li>
+</ul>
+</section>
+</section>
+</section>
+<section id="version-2.0.0" class="level1">
+<h1>Version 2.0.0</h1>
+<ul>
+<li>2023-11-10</li>
+<li>Many small fixes <a href="https://github.com/wjschne/apaquarto/issues/15">#15</a></li>
+<li>Support for markdown tables <a href="https://github.com/wjschne/apaquarto/issues/9">#9</a> <a href="https://github.com/wjschne/apaquarto/issues/21">#21</a></li>
+<li>Support for .html and .pdf became more solid. <a href="https://github.com/wjschne/apaquarto/issues/22">#22</a></li>
+<li>CReditT taxonomy added for author roles. <a href="https://github.com/wjschne/apaquarto/issues/3">#3</a></li>
+</ul>
+</section>
+<section id="version-1.0.0" class="level1">
+<h1>Version 1.0.0</h1>
+<ul>
+<li>2023-03-05</li>
+</ul>
+<p>Initial release. Basic functions worked, but relied on many hacks that I always intended to fix. Mostly just for .docx, but .html and .pdf supported to some degree.</p>
+<ul>
+<li>Most of the title page information was processed in R because I did not understand lua. UPDATE: As of version 3.0.0, all of the R code that used to be inserted, is not longer used. The lua filters take care of everything in the .html and .docx formats.</li>
+<li>Because I did not yet understand lua and Quarto, I processed figures and tables differently in a non-standard way. I wrestled with Quarto, but I could not stop it from formatting the captions the way it wanted to. Finally I gave up and processed them with non-standard syntax and knitr hooks. UPDATE: This was always intended to be a temporary solution. As of version 3.0.0, all non-standard syntax is gone.</li>
+<li>The ability to put simple markdown notes below figures and tables was important to me. The tricky part was to get them to travel with the figures and tables when they were part of floats or when they moved to the end of the document. Many headaches later, it works using the <code>apa-note</code> chunk option or <code>apa-note</code> as a custom attribute of a fenced div.</li>
+<li>APA level 4 and 5 headings should remain as true headings that appear in the navigation tab in MS Word. Yet they appear as if they are in the same paragraph with subsequent text. This feature was implemented with apaquarto.lua filter that inserts openxml tags in the headers:</li>
+</ul>
+<pre><code>```openxml
+&lt;w:vanish/&gt;&lt;w:specVanish/&gt;
+```</code></pre>
+<p>This creates a <em>Style Separator</em> character that you can see in MS Word by clicking the Show/Hide ¶ button. BTW, the CTRL+ALT+Enter keyboard shortcut in Word will insert a style separator. See https://www.cadmanediting.com/the-style-separator-a-hidden-gem-in-ms-word</p>
+
+
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copied!");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copied!");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+        const codeEl = trigger.previousElementSibling.cloneNode(true);
+        for (const childEl of codeEl.children) {
+          if (isCodeAnnotation(childEl)) {
+            childEl.remove();
+          }
+        }
+        return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp('/' + window.location.host + '/');
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+</div> <!-- /content -->
+
+
+
+
+</body></html>
