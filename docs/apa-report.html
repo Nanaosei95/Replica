@@ -1,12 +1,15 @@
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 
-<meta charset="utf-8">
-<meta name="generator" content="quarto-1.6.42">
+<head>
 
-<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+<meta charset="utf-8" />
+<meta name="generator" content="quarto-1.6.42" />
 
-<meta name="author" content="Osei Tony Attefah 400804174">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+
+<meta name="author" content="Osei Tony Attefah (400804174)" />
+<meta name="description" content="DATA SCIENCE AND ARTIFICIAL INTELLIGENCE" />
 
 <title>Replication Project For Data Science</title>
 <style>
@@ -77,83 +80,125 @@ div.csl-indent {
   margin-left: 2em;
 }</style>
 
-
-<script src="apa-report_files/libs/clipboard/clipboard.min.js"></script>
-<script src="apa-report_files/libs/quarto-html/quarto.js"></script>
-<script src="apa-report_files/libs/quarto-html/popper.min.js"></script>
-<script src="apa-report_files/libs/quarto-html/tippy.umd.min.js"></script>
-<script src="apa-report_files/libs/quarto-html/anchor.min.js"></script>
-<link href="apa-report_files/libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="apa-report_files/libs/quarto-html/quarto-syntax-highlighting-2f5df379a58b258e96c21c0638c20c03.css" rel="stylesheet" id="quarto-text-highlighting-styles">
-<script src="apa-report_files/libs/bootstrap/bootstrap.min.js"></script>
-<link href="apa-report_files/libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="apa-report_files/libs/bootstrap/bootstrap-1bc8a17f135ab3d594c857e9f48e611b.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<!-- htmldependencies:E3FAD763 -->
 
 
+<link rel="stylesheet" href="_extensions/apaquarto/apa.css" />
 </head>
 
 <body>
 
-<div id="quarto-content" class="page-columns page-rows-contents page-layout-article">
+<div id="quarto-content" class="page-columns page-rows-contents page-layout-article toc-left">
+<div id="quarto-sidebar-toc-left" class="sidebar toc-left">
+  <div id="quarto-toc-target"></div>
+</div>
 <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
-<div class="quarto-alternate-formats"><h2>Other Formats</h2><ul><li><a href="apa-report.pdf"><i class="bi bi-file-pdf"></i>PDF (apaquarto)</a></li><li><a href="apa-report.docx"><i class="bi bi-file-word"></i>MS Word (apaquarto)</a></li><li><a href="apa-report.pdf"><i class="bi bi-file-pdf"></i>Typst (apaquarto)</a></li></ul></div></div>
+</div>
 <main class="content" id="quarto-document-content">
 
-<header id="title-block-header" class="quarto-title-block default">
-<div class="quarto-title">
-<h1 class="title">Replication Project For Data Science</h1>
+
+
+<nav id="TOC" role="doc-toc">
+    <h2 id="toc-title">Table of contents</h2>
+   
+  <ul>
+  <li><a href="#introduction" id="toc-introduction"><span class="header-section-number">1</span> Introduction</a></li>
+  <li><a href="#data-import" id="toc-data-import"><span class="header-section-number">2</span> Data Import</a>
+  <ul>
+  <li><a href="#file-path-issue" id="toc-file-path-issue"><span class="header-section-number">2.1</span> File Path Issue</a></li>
+  <li><a href="#observed-inconsistencies" id="toc-observed-inconsistencies"><span class="header-section-number">2.2</span> Observed Inconsistencies</a></li>
+  </ul></li>
+  <li><a href="#data-cleaning-and-transformation" id="toc-data-cleaning-and-transformation"><span class="header-section-number">3</span> Data Cleaning and Transformation</a>
+  <ul>
+  <li><a href="#hour-of-week-graphs-panels-a-to-e" id="toc-hour-of-week-graphs-panels-a-to-e"><span class="header-section-number">3.1</span> Hour-of-Week Graphs (Panels A to E)</a></li>
+  <li><a href="#subset-of-data-used" id="toc-subset-of-data-used"><span class="header-section-number">3.2</span> Subset of Data Used</a></li>
+  <li><a href="#aggregation-and-distribution-metrics" id="toc-aggregation-and-distribution-metrics"><span class="header-section-number">3.3</span> Aggregation and Distribution Metrics</a></li>
+  <li><a href="#cleaning-challenges-and-filtering" id="toc-cleaning-challenges-and-filtering"><span class="header-section-number">3.4</span> Cleaning Challenges and Filtering</a></li>
+  <li><a href="#hour-of-week-line-graphs" id="toc-hour-of-week-line-graphs"><span class="header-section-number">3.5</span> Hour-of-Week Line Graphs</a></li>
+  <li><a href="#alignment-issues" id="toc-alignment-issues"><span class="header-section-number">3.6</span> Alignment Issues</a></li>
+  <li><a href="#discrepancies-in-final-output" id="toc-discrepancies-in-final-output"><span class="header-section-number">3.7</span> Discrepancies in Final Output</a></li>
+  <li><a href="#comparison-to-original" id="toc-comparison-to-original"><span class="header-section-number">3.8</span> Comparison to Original</a></li>
+  </ul></li>
+  <li><a href="#scatter-plot-price-index-vs.frequency" id="toc-scatter-plot-price-index-vs.frequency"><span class="header-section-number">4</span> Scatter Plot: Price Index vs.Frequency</a>
+  <ul>
+  <li><a href="#process-and-implementation" id="toc-process-and-implementation"><span class="header-section-number">4.1</span> Process and Implementation</a></li>
+  <li><a href="#minor-issues-and-observations" id="toc-minor-issues-and-observations"><span class="header-section-number">4.2</span> Minor Issues and Observations</a></li>
+  <li><a href="#outcome" id="toc-outcome"><span class="header-section-number">4.3</span> Outcome</a></li>
+  </ul></li>
+  <li><a href="#publishing-the-quarto-presentation-on-github" id="toc-publishing-the-quarto-presentation-on-github"><span class="header-section-number">5</span> Publishing the Quarto Presentation on GitHub</a></li>
+  <li><a href="#making-the-pull-request" id="toc-making-the-pull-request"><span class="header-section-number">6</span> Making the Pull Request</a></li>
+  <li><a href="#challenges-encountered" id="toc-challenges-encountered"><span class="header-section-number">7</span> Challenges Encountered</a>
+  <ul>
+  <li><a href="#publishing-the-project-on-github" id="toc-publishing-the-project-on-github"><span class="header-section-number">7.1</span> Publishing the Project on GitHub</a></li>
+  <li><a href="#quarto-rendering-and-visual-mode-issues" id="toc-quarto-rendering-and-visual-mode-issues"><span class="header-section-number">7.2</span> Quarto Rendering and Visual Mode Issues</a></li>
+  </ul></li>
+  <li><a href="#collaboration-and-experience" id="toc-collaboration-and-experience"><span class="header-section-number">8</span> Collaboration and Experience</a>
+  <ul>
+  <li><a href="#utilisation-of-chatgpt" id="toc-utilisation-of-chatgpt"><span class="header-section-number">8.1</span> Utilisation of ChatGpt</a></li>
+  <li><a href="#reflections-on-learning-rstudio-as-a-beginner" id="toc-reflections-on-learning-rstudio-as-a-beginner"><span class="header-section-number">8.2</span> Reflections on Learning RStudio as a Beginner</a></li>
+  </ul></li>
+  <li><a href="#conclusion" id="toc-conclusion"><span class="header-section-number">9</span> Conclusion</a>
+  <ul>
+  <li><a href="#what-could-have-been-accomplished-with-more-time" id="toc-what-could-have-been-accomplished-with-more-time"><span class="header-section-number">9.1</span> What could have been accomplished with more time</a></li>
+  <li><a href="#further-investigations-and-readings" id="toc-further-investigations-and-readings"><span class="header-section-number">9.2</span> Further investigations and readings</a></li>
+  </ul></li>
+  <li><a href="#references" id="toc-references"><span class="header-section-number">10</span> References</a></li>
+  <li><span class="header-section-number">11</span> Appendix</li>
+  <li><a href="#apx-a" id="toc-apx-a"><span class="header-section-number">12</span> This Section Is an Appendix</a>
+  <ul>
+  <li><a href="#relevant-links" id="toc-relevant-links"><span class="header-section-number">12.1</span> Relevant Links</a></li>
+  </ul></li>
+  <li><a href="#affidavit" id="toc-affidavit"><span class="header-section-number">13</span> Affidavit</a></li>
+  </ul>
+</nav>
+<br />
+
+<br />
+
+<section id="title" class="level1 title unnumbered unlisted">
+<h1 class="title unnumbered unlisted">Replication Project For Data Science</h1>
+<div class="Author">
+<br />
+
+<p>Osei Tony Attefah (400804174)</p>
+<p>Hochschule Fresenius University</p>
 </div>
+<br />
 
+<br />
 
-<div class="quarto-title-meta-author">
-  <div class="quarto-title-meta-heading">Author</div>
-  <div class="quarto-title-meta-heading">Affiliation</div>
-  
-    <div class="quarto-title-meta-contents">
-    <p class="author">Osei Tony Attefah 400804174 <a href="mailto:osei.tony@stud.hs-fresenius" class="quarto-title-author-email"><i class="bi bi-envelope"></i></a> <a href="https://orcid.org/0000-0000-0000-0001" class="quarto-title-author-orcid"> <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAA2ZpVFh0WE1MOmNvbS5hZG9iZS54bXAAAAAAADw/eHBhY2tldCBiZWdpbj0i77u/IiBpZD0iVzVNME1wQ2VoaUh6cmVTek5UY3prYzlkIj8+IDx4OnhtcG1ldGEgeG1sbnM6eD0iYWRvYmU6bnM6bWV0YS8iIHg6eG1wdGs9IkFkb2JlIFhNUCBDb3JlIDUuMC1jMDYwIDYxLjEzNDc3NywgMjAxMC8wMi8xMi0xNzozMjowMCAgICAgICAgIj4gPHJkZjpSREYgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj4gPHJkZjpEZXNjcmlwdGlvbiByZGY6YWJvdXQ9IiIgeG1sbnM6eG1wTU09Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9tbS8iIHhtbG5zOnN0UmVmPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvc1R5cGUvUmVzb3VyY2VSZWYjIiB4bWxuczp4bXA9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC8iIHhtcE1NOk9yaWdpbmFsRG9jdW1lbnRJRD0ieG1wLmRpZDo1N0NEMjA4MDI1MjA2ODExOTk0QzkzNTEzRjZEQTg1NyIgeG1wTU06RG9jdW1lbnRJRD0ieG1wLmRpZDozM0NDOEJGNEZGNTcxMUUxODdBOEVCODg2RjdCQ0QwOSIgeG1wTU06SW5zdGFuY2VJRD0ieG1wLmlpZDozM0NDOEJGM0ZGNTcxMUUxODdBOEVCODg2RjdCQ0QwOSIgeG1wOkNyZWF0b3JUb29sPSJBZG9iZSBQaG90b3Nob3AgQ1M1IE1hY2ludG9zaCI+IDx4bXBNTTpEZXJpdmVkRnJvbSBzdFJlZjppbnN0YW5jZUlEPSJ4bXAuaWlkOkZDN0YxMTc0MDcyMDY4MTE5NUZFRDc5MUM2MUUwNEREIiBzdFJlZjpkb2N1bWVudElEPSJ4bXAuZGlkOjU3Q0QyMDgwMjUyMDY4MTE5OTRDOTM1MTNGNkRBODU3Ii8+IDwvcmRmOkRlc2NyaXB0aW9uPiA8L3JkZjpSREY+IDwveDp4bXBtZXRhPiA8P3hwYWNrZXQgZW5kPSJyIj8+84NovQAAAR1JREFUeNpiZEADy85ZJgCpeCB2QJM6AMQLo4yOL0AWZETSqACk1gOxAQN+cAGIA4EGPQBxmJA0nwdpjjQ8xqArmczw5tMHXAaALDgP1QMxAGqzAAPxQACqh4ER6uf5MBlkm0X4EGayMfMw/Pr7Bd2gRBZogMFBrv01hisv5jLsv9nLAPIOMnjy8RDDyYctyAbFM2EJbRQw+aAWw/LzVgx7b+cwCHKqMhjJFCBLOzAR6+lXX84xnHjYyqAo5IUizkRCwIENQQckGSDGY4TVgAPEaraQr2a4/24bSuoExcJCfAEJihXkWDj3ZAKy9EJGaEo8T0QSxkjSwORsCAuDQCD+QILmD1A9kECEZgxDaEZhICIzGcIyEyOl2RkgwAAhkmC+eAm0TAAAAABJRU5ErkJggg=="></a></p>
-  </div>
-  <div class="quarto-title-meta-contents">
-        <p class="affiliation">
-            Hochschule Fresenius University
-          </p>
-      </div>
-  </div>
-
-<div class="quarto-title-meta">
-
-      
-  
-    
-  </div>
-  
-<div>
-  <div class="abstract">
-    <div class="block-title">Abstract</div>
-    This report documents the replication of figures and data visualizations from the study Competition in Pricing Algorithms by <span class="citation" data-cites="brown2023competition">(<a href="#ref-brown2023competition" role="doc-biblioref">Brown and MacKay 2023</a>)</span>. The project was conducted using RStudio, translating original Stata .do files into R. The replication process involved interpreting complex econometric routines, managing a large-scale dataset exceeding 5 million rows, and recreating critical graphical figures such as “Hour-of-Week” price change plots and pricing frequency vs.&nbsp;price level scatter plots. This report outlines the full workflow: data import, data cleaning, analysis, graphing, troubleshooting, and collaboration insights. Code snippets are provided for transparency and reproducibility. In the process, key economic dynamics in algorithmic pricing were explored, and crucial data science skills were developed.
-  </div>
+</section>
+<section id="author-note" class="level1 unnumbered unlisted AuthorNote">
+<h1 class="unnumbered unlisted AuthorNote">Author Note</h1>
+<p>Correspondence concerning this article should be addressed to Osei Tony Attefah (400804174), Hochschule Fresenius University, Cologne, Germany, Email: <a href="mailto:osei.tony@stud.hs-fresenius.de">osei.tony@stud.hs-fresenius.de</a></p>
+<br>
+</section>
+<section id="abstract" class="level1 unnumbered unlisted AuthorNote">
+<h1 class="unnumbered unlisted AuthorNote">Abstract</h1>
+<div class="AbstractFirstParagraph">
+<p>This report documents the replication of figures and data visualizations from the study Competition in Pricing Algorithms by <span class="citation" data-cites="10.1257/mic.20210158">(<a href="#ref-10.1257/mic.20210158" role="doc-biblioref">Brown &amp; MacKay, 2023</a>)</span>. The project was conducted using RStudio, translating original Stata .do files into R. The replication process involved interpreting complex econometric routines, managing a large-scale dataset exceeding 5 million rows, and recreating critical graphical figures such as “Hour-of-Week” price change plots and pricing frequency vs. price level scatter plots. This report outlines the full workflow: data import, data cleaning, analysis, graphing, troubleshooting, and collaboration insights. Code snippets are provided for transparency and reproducibility. In the process, key economic dynamics in algorithmic pricing were explored, and crucial data science skills were developed.</p>
 </div>
-
-
-</header>
-
-
-<!-- The introduction should not have a level-1 heading such as Introduction. -->
-<p>This report documents the full workflow of replicating key visualizations and empirical outputs from the study Competition in Pricing Algorithms by <span class="citation" data-cites="brown2023competition">(<a href="#ref-brown2023competition" role="doc-biblioref">Brown and MacKay 2023</a>)</span>. The original analysis was conducted in Stata and involved a large dataset of online drug prices from five major retailers. Our replication was performed entirely in R statistical programming language <span class="citation" data-cites="rsoftware">(<a href="#ref-rsoftware" role="doc-biblioref">R Core Team 2024</a>)</span> using Quarto <span class="citation" data-cites="quarto">(<a href="#ref-quarto" role="doc-biblioref">Quarto Development Team 2024</a>)</span>, with an emphasis on transparency, reproducibility, and technical clarity. The goal is to make the logic and steps of the replication accessible to both researchers and business practitioners. To structure this report clearly, each section targets a specific component of the replication workflow:</p>
-<p>Section 1 (Data Import) describes reading the dataset into RStudio, including file path and large file handling challenges.</p>
-<p>Section 2 (Data Cleaning and Transformation) details filtering, transforming, and aggregating data to generate key variables and replicate graphs.</p>
-<p>Section 3 (Hour-of-Week Line Graphs) covers replication of price change distributions by hour and retailer, with formatting challenges.</p>
-<p>Section 4 (Scatter Plot: Pricing Frequency vs.&nbsp;Price Level) explains creation of scatter plots linking pricing frequency and price index.</p>
-<p>Section 5 (Regression Table Replication) walks through replicating a multi-column regression table using the fixest package, including sample restrictions and technical difficulties.</p>
-<p>Section 6 (Publishing the Quarto Presentation on GitHub) details preparing and deploying the Quarto presentation to GitHub Pages for sharing and collaboration.</p>
-<p>Section 7 (Making the pull request) describes the process of forking, branching, contributing, and submitting a pull request via GitHub, demonstrating version control skills.</p>
-<p>Section 8 (Challenges Encountered) reports technical and workflow issues and their resolutions.</p>
-<p>Section 9 (Collaboration and Experience) reflects on teamwork, role sharing, and lessons learned.</p>
-<p>Section 10 (Reflections on Learning RStudio as a Beginner) personal reflection on learning RStudio, handling syntax, large data, and debugging.</p>
-<p>Section 11 (Conclusion) summarizes project achievements and future opportunities.</p>
-<p>Section 12 (References) lists all sources cited, ensuring consistent citation style.</p>
-<section id="data-import" class="level1">
-<h1>Data Import</h1>
-<p>The dataset analysis_data.dta was loaded using the haven and data.table packages. It contained over 5 million rows and 23 columns. Key variables included:</p>
+<br>
+</section>
+<section id="firstheader" class="level1 title unnumbered unlisted">
+<h1 class="title unnumbered unlisted">Replication Project For Data Science</h1>
+</section>
+<section id="introduction" class="level1" data-number="1">
+<h1 data-number="1"><span class="header-section-number">1</span> Introduction</h1>
+<p>This report documents the complete workflow of replicating key graphs and empirical outputs from Competition in Pricing Algorithms by <span class="citation" data-cites="10.1257/mic.20210158">(<a href="#ref-10.1257/mic.20210158" role="doc-biblioref">Brown &amp; MacKay, 2023</a>)</span>. The original study was conducted in Stata using a large dataset of online drug prices from five major retailers. Our replication was carried out in R <span class="citation" data-cites="rsoftware">(<a href="#ref-rsoftware" role="doc-biblioref">R Core Team, 2024</a>)</span> using Quarto <span class="citation" data-cites="quarto">(<a href="#ref-quarto" role="doc-biblioref">Quarto Development Team, 2024</a>)</span>, with a focus on reproducibility and clarity. Each section of the report targets a specific part of the replication process as mentioned below:</p>
+<p>Section 2 (Data Import) describes reading the dataset into RStudio, including file path and large file handling challenges.</p>
+<p>Section 3 (Data Cleaning and Transformation) details filtering, transforming, and aggregating data to generate key variables and replicate graphs.</p>
+<p>Section 4 (Scatter Plot: Pricing Frequency vs. Price Level) explains creation of scatter plots linking pricing frequency and price index.</p>
+<p>Section 5 (Publishing the Quarto Presentation on GitHub) details preparing and deploying the Quarto presentation to GitHub Pages for sharing and collaboration.</p>
+<p>Section 6 (Making the pull request) describes the process of forking, branching, contributing, and submitting a pull request via GitHub, demonstrating version control skills.</p>
+<p>Section 7 (Challenges Encountered) reports technical and workflow issues and their resolutions.</p>
+<p>Section 8 (Collaboration and Experience) reflects on teamwork and lessons learned.</p>
+<p>Section 9 (Conclusion) talks about the project achievements and future opportunities.</p>
+<p>Section 10 (References) lists all sources cited.</p>
+</section>
+<section id="data-import" class="level1" data-number="2">
+<h1 data-number="2"><span class="header-section-number">2</span> Data Import</h1>
+<p>The dataset, analysis_data.dta, was loaded using the haven and data.table packages <span class="citation" data-cites="haven data.table">(<a href="#ref-data.table" role="doc-biblioref">Dowle et al., 2024</a>; <a href="#ref-haven" role="doc-biblioref">Wickham et al., 2024</a>)</span>. It contained over 5 million rows and 23 columns. Some variables included the following:</p>
 <p>website: Retailer identifier (A to E)</p>
 <p>product_id: Unique identifier for each product</p>
 <p>period_id: Time index used for plotting</p>
@@ -162,67 +207,77 @@ div.csl-indent {
 <p>hour, date: Timestamp details</p>
 <p>form, size, multipack, childrens: Product characteristics</p>
 <p>flag_imputed_price, flag_missing_price, is_observed: Data quality indicators</p>
-<p>The dataset was large and complex, consisting of detailed hourly pricing for different allergy medications across multiple formats and brands. This required efficient loading and filtering:</p>
+<p>The dataset was large and complex, consisting of detailed hourly pricing for different allergy medications across multiple formats and brands. This needed efficient loading and filtering as shown in the code below:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(haven)</span>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r cell-code"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(haven)</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(data.table)</span>
 <span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
 <span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>df <span class="ot">&lt;-</span> <span class="fu">as.data.table</span>(<span class="fu">read_dta</span>(<span class="st">"C:/Users/attef/OneDrive/Documents/Replicaproject/Replica/analysis/data/analysis_data.dta"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>df <span class="ot">&lt;-</span> <span class="fu">as.data.table</span>(<span class="fu">read_dta</span>(<span class="st">&quot;C:/Users/attef/OneDrive/Documents/Replicaproject/Replica/analysis/data/analysis_data.dta&quot;</span>))</span></code></pre></div>
 </div>
-<section id="file-path-issue" class="level2">
-<h2 class="anchored" data-anchor-id="file-path-issue">File Path Issue</h2>
-<p>One of the first challenges encountered was correctly specifying the path to the .dta file. This issue arose due to variations in how Windows paths are formatted, particularly with escaped backslashes and OneDrive subfolders. Multiple attempts were made to locate the correct working directory, and it was resolved by:</p>
-<p>Manually navigating to the correct folder via the Files pane in RStudio.</p>
-<p>Using getwd() and setwd() to match the location of the dataset.</p>
-<p>Using forward slashes (/) instead of backslashes () in the file path.</p>
+<section id="file-path-issue" class="level2" data-number="2.1">
+<h2 data-number="2.1"><span class="header-section-number">2.1</span> File Path Issue</h2>
+<p>One of the first challenges I encountered was correctly specifying the path to the .dta file. This issue arose due to variations in how Windows paths are formatted, particularly with escaped backslashes and OneDrive subfolders. Multiple attempts were made to locate the correct working directory, and it was resolved by:</p>
+<ol type="i">
+<li><p>Manually navigating to the correct folder via the Files pane in RStudio.</p></li>
+<li><p>Using getwd() and setwd() to match the location of the dataset.</p></li>
+<li><p>Using forward slashes ( / ) instead of backslashes (  ) in the file path.</p></li>
+</ol>
 </section>
-<section id="observed-inconsistencies" class="level2">
-<h2 class="anchored" data-anchor-id="observed-inconsistencies">Observed Inconsistencies</h2>
-<p>A number of inconsistencies were noted during import:</p>
-<p>Missing prices: Several rows had NA for the price variable. These needed to be removed for valid analysis.</p>
-<p>Imputed prices: Rows flagged with flag_imputed_price == 1 were excluded to ensure accuracy.</p>
-<p>Duplicate entries: A check using isid logic in Stata revealed the need to ensure unique combinations of website, product_id, and period_id.</p>
-<p>Data imbalance: The number of observations varied significantly across retailers. These issues were handled during the data cleaning phase but are important to note here as they shaped how the dataset was processed.</p>
+<section id="observed-inconsistencies" class="level2" data-number="2.2">
+<h2 data-number="2.2"><span class="header-section-number">2.2</span> Observed Inconsistencies</h2>
+<p>I noticed some inconsistencies during the import. These are as follows:</p>
+<ol type="i">
+<li><p>Several rows had NA for the price variable.</p></li>
+<li><p>Some rows flagged with flag_imputed_price == 1.</p></li>
+<li><p>Some rows with website, product_id, and period_id,had the same values.</p></li>
+<li><p>Data imbalance: The number of variables varied significantly across retailers.</p></li>
+</ol>
 <p>Once imported, the file’s large size made it necessary to use data.table for performance and memory management. Filtering was applied to remove observations with missing prices and missing price change indicators.</p>
 </section>
 </section>
-<section id="data-cleaning-and-transformation" class="level1">
-<h1>Data Cleaning and Transformation</h1>
-<p>The primary goal of this replication project was to reproduce several critical figures from Competition in Pricing Algorithms by Brown and MacKay (2023), specifically focusing on two sets of visualizations:</p>
-<p>(1)the hour-of-week price change distribution plots (Panels A to E)</p>
-<p>(2)the scatter plot of pricing frequency versus price index.</p>
+<section id="data-cleaning-and-transformation" class="level1" data-number="3">
+<h1 data-number="3"><span class="header-section-number">3</span> Data Cleaning and Transformation</h1>
+<p>My primary goal of this replication project was to reproduce some graphs from the article, specifically focusing on two sets. These were:</p>
+<ol type="i">
+<li><p>the hour-of-week price change distribution plots (Panels A to E)</p></li>
+<li><p>the scatter plot of pricing frequency versus price index.</p></li>
+</ol>
+<section id="hour-of-week-graphs-panels-a-to-e" class="level2" data-number="3.1">
+<h2 data-number="3.1"><span class="header-section-number">3.1</span> Hour-of-Week Graphs (Panels A to E)</h2>
+<p>The hour-of-week graphs display the distribution of price changes across each hour of the week (0 to 167 hours), separately for each retailer. These graphs are very important in the paper because they demonstrate the heterogeneity in pricing technology. Algorithmic retailers tend to update prices regularly, while manual or semi-automated retailers update prices during specific business hours.</p>
+<p>The plots serve two main purposes. These are:</p>
+<ol type="i">
+<li><p>Behavioral insight: By visualizing the timing of price changes, the authors assess the role of automation in pricing decisions.</p></li>
+<li><p>Market competition evidence: They highlight how frequently and strategically each retailer updates prices, contributing to the paper’s argument that algorithmic pricing changes competitive dynamics.</p></li>
+</ol>
 </section>
-<section id="hour-of-week-graphs-panels-a-to-e" class="level1">
-<h1>Hour-of-Week Graphs (Panels A to E)</h1>
-<p>The hour-of-week graphs display the distribution of price changes across each hour of the week (0 to 167 hours), separately for each retailer. These graphs are particularly important in the paper because they demonstrate heterogeneity in pricing technology: algorithmic retailers tend to update prices at regular or high-frequency intervals, while manual or semi-automated retailers show concentrated updates during specific business hours.</p>
-<p>The plots serve two main purposes:</p>
-<p>Behavioral insight: By visualizing the timing of price changes, the authors assess the role of automation in pricing decisions.</p>
-<p>Market competition evidence: They highlight how frequently and strategically each retailer updates prices, contributing to the paper’s argument that algorithmic pricing changes competitive dynamics.</p>
-<section id="subset-of-data-used" class="level2">
-<h2 class="anchored" data-anchor-id="subset-of-data-used">Subset of Data Used</h2>
-<p>To replicate these graphs, we narrowed the dataset to observations where a price change was recorded (price_change == 1). Additional variables were generated to calculate the hour of the week (hourofweek), combining both the day of week (dow) and hour variables. The Eastern Daylight Time adjustment was also applied to align with the time zone used in the original study:</p>
+<section id="subset-of-data-used" class="level2" data-number="3.2">
+<h2 data-number="3.2"><span class="header-section-number">3.2</span> Subset of Data Used</h2>
+<p>To replicate these graphs, I narrowed the dataset to see where a price change was recorded (price_change == 1). Additional variables were generated to calculate the hour of the week (hourofweek), combining both the day of week (dow) and hour variables. The Eastern Daylight Time adjustment was also applied to align with the time zone used in the original study:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(lubridate)</span>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r cell-code"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(lubridate)</span>
 <span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>df <span class="ot">&lt;-</span> df[<span class="sc">!</span><span class="fu">is.na</span>(price_change)]</span>
 <span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Convert to hour of week (EDT)</span></span>
 <span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>df<span class="sc">$</span>hour_eastern <span class="ot">&lt;-</span> (df<span class="sc">$</span>hour <span class="sc">+</span> <span class="dv">20</span>) <span class="sc">%%</span> <span class="dv">24</span>  <span class="co"># (hour + 24 - 4) mod 24</span></span>
 <span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>df<span class="sc">$</span>dow <span class="ot">&lt;-</span> <span class="fu">wday</span>(df<span class="sc">$</span>date, <span class="at">week_start =</span> <span class="dv">7</span>) <span class="sc">-</span> <span class="dv">1</span>  <span class="co"># Make Sunday = 0</span></span>
 <span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>df<span class="sc">$</span>dow[df<span class="sc">$</span>dow <span class="sc">==</span> <span class="dv">6</span>] <span class="ot">&lt;-</span> <span class="sc">-</span><span class="dv">1</span>  <span class="co"># Set Saturday to -1 for consistent plotting</span></span>
-<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>df<span class="sc">$</span>hourofweek <span class="ot">&lt;-</span> <span class="dv">24</span> <span class="sc">+</span> df<span class="sc">$</span>dow <span class="sc">*</span> <span class="dv">24</span> <span class="sc">+</span> df<span class="sc">$</span>hour_eastern</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>df<span class="sc">$</span>hourofweek <span class="ot">&lt;-</span> <span class="dv">24</span> <span class="sc">+</span> df<span class="sc">$</span>dow <span class="sc">*</span> <span class="dv">24</span> <span class="sc">+</span> df<span class="sc">$</span>hour_eastern</span></code></pre></div>
 </div>
 </section>
-<section id="aggregation-and-distribution-metrics" class="level2">
-<h2 class="anchored" data-anchor-id="aggregation-and-distribution-metrics">Aggregation and Distribution Metrics</h2>
+<section id="aggregation-and-distribution-metrics" class="level2" data-number="3.3">
+<h2 data-number="3.3"><span class="header-section-number">3.3</span> Aggregation and Distribution Metrics</h2>
 <p>Once the correct hourly value was created, the data was collapsed to compute:</p>
-<p>The total number of price changes per hour (price_change)</p>
-<p>The total number of observations per hour (is_observed)</p>
-<p>The distribution of price changes per hour, calculated as a percentage.</p>
+<ol type="i">
+<li><p>The total number of price changes per hour (price_change)</p></li>
+<li><p>The total number of observations per hour (is_observed)</p></li>
+<li><p>The distribution of price changes per hour, calculated as a percentage.</p></li>
+</ol>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>df_hourly <span class="ot">&lt;-</span> df[, .(</span>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r cell-code"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>df_hourly <span class="ot">&lt;-</span> df[, .(</span>
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">price_change =</span> <span class="fu">sum</span>(price_change, <span class="at">na.rm =</span> <span class="cn">TRUE</span>),</span>
 <span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">is_observed =</span> <span class="fu">sum</span>(is_observed, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)</span>
 <span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>), by <span class="ot">=</span> .(website, hourofweek)]</span>
@@ -230,68 +285,74 @@ div.csl-indent {
 <span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a><span class="co"># Normalize by total price changes per retailer</span></span>
 <span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>df_hourly[, total_price_change <span class="sc">:</span><span class="er">=</span> <span class="fu">sum</span>(price_change), by <span class="ot">=</span> website]</span>
 <span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>df_hourly[, hourly_dist <span class="sc">:</span><span class="er">=</span> (price_change <span class="sc">/</span> total_price_change) <span class="sc">*</span> <span class="dv">100</span>]</span>
-<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a>df_hourly[, hourly_freq <span class="sc">:</span><span class="er">=</span> price_change <span class="sc">/</span> is_observed]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a>df_hourly[, hourly_freq <span class="sc">:</span><span class="er">=</span> price_change <span class="sc">/</span> is_observed]</span></code></pre></div>
 </div>
 </section>
-<section id="cleaning-challenges-and-filtering" class="level2">
-<h2 class="anchored" data-anchor-id="cleaning-challenges-and-filtering">Cleaning Challenges and Filtering</h2>
+<section id="cleaning-challenges-and-filtering" class="level2" data-number="3.4">
+<h2 data-number="3.4"><span class="header-section-number">3.4</span> Cleaning Challenges and Filtering</h2>
 <p>Before this transformation, several key cleaning steps were applied:</p>
-<p>Missing price values: Rows with missing price or price_change were removed.</p>
-<p>Flagged prices: Observations with flag_imputed_price == 1 were excluded to avoid biasing the distribution.</p>
-<p>Duplicates: The dataset was filtered to keep only one row per unique website, product_id, and period_id.</p>
-<p>Retailer coding: The website variable was converted into consistent labels (A through E), and encoding errors were manually checked.</p>
+<ol type="i">
+<li><p>Rows with missing price or price_change were removed.</p></li>
+<li><p>Rows with flag_imputed_price == 1 were excluded to avoid biasing the distribution.</p></li>
+<li><p>To remove duplicates, i filtered the dataset to keep only one row per unique website, product_id, and period_id.</p></li>
+<li><p>The website variable was converted into consistent labels (A through E), and encoding errors were manually checked.</p></li>
+</ol>
 <p>These steps were essential to produce reliable hourly visualizations that closely match the published figures. After import, data transformation included:</p>
-<p>Encoding the website variable as a factor.</p>
-<p>Calculating the hourofweek by adjusting for U.S. Eastern Daylight Time.</p>
-<p>Aggregating the data to compute the number and percentage of price changes per hour of the week by retailer.</p>
+<ol type="i">
+<li><p>Encoding the website variable as a factor.</p></li>
+<li><p>Calculating the hourofweek by adjusting for U.S. Eastern Daylight Time.</p></li>
+<li><p>Aggregating the data to compute the number and percentage of price changes per hour of the week by retailer.</p></li>
+</ol>
+<p>The code is displayed below:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>df <span class="ot">&lt;-</span> df <span class="sc">%&gt;%</span></span>
+<div class="sourceCode" id="cb4"><pre class="sourceCode r cell-code"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>df <span class="ot">&lt;-</span> df <span class="sc">%&gt;%</span></span>
 <span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="sc">!</span><span class="fu">is.na</span>(price), <span class="sc">!</span><span class="fu">is.na</span>(price_change)) <span class="sc">%&gt;%</span></span>
 <span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(</span>
 <span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">hour_eastern =</span> (hour <span class="sc">+</span> <span class="dv">20</span>) <span class="sc">%%</span> <span class="dv">24</span>,</span>
 <span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">dow =</span> <span class="fu">as.POSIXlt</span>(date)<span class="sc">$</span>wday,</span>
 <span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">hourofweek =</span> dow <span class="sc">*</span> <span class="dv">24</span> <span class="sc">+</span> hour_eastern</span>
-<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a>  )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a>  )</span></code></pre></div>
 </div>
-<p>The variable hourly_dist was then calculated as the percent of weekly price changes occurring at each hour for each retailer.</p>
+<p>The variable, hourly_dist, was then calculated as the percent of weekly price changes occurring at each hour for each retailer.</p>
 </section>
+<section id="hour-of-week-line-graphs" class="level2" data-number="3.5">
+<h2 data-number="3.5"><span class="header-section-number">3.5</span> Hour-of-Week Line Graphs</h2>
+<p>Replicating the hour-of-week price change graphs involved challenges in formatting and alignment.</p>
 </section>
-<section id="hour-of-week-line-graphs" class="level1">
-<h1>Hour-of-Week Line Graphs</h1>
-<p>The replication of the hour-of-week price change graphs presented several formatting and accuracy challenges.</p>
-<section id="alignment-issues" class="level2">
-<h2 class="anchored" data-anchor-id="alignment-issues">Alignment Issues</h2>
-<p>One of the core difficulties was aligning the x-axis correctly so that day markers (e.g., Sat, Sun, Mon) appear exactly under the expected hours. In the original Stata-generated graphs, the day names were annotated precisely every 24 hours starting from Saturday. However, in the R version, the alignment initially appeared skewed, with some day labels overlapping or cut off.</p>
-<p>Attempts to resolve this included:</p>
-<p>Adjusting xintercept positions of vertical lines.</p>
-<p>Tuning annotate(“text”) x-values to reposition labels.</p>
-<p>Rechecking hour-of-week calculation to ensure consistency.</p>
-<p>Although these tweaks improved alignment, minor misplacements remained. Given more time, the use of ggplot2::geom_text() with hjust/vjust tuning or creating a separate axis panel for labels could have helped.</p>
+<section id="alignment-issues" class="level2" data-number="3.6">
+<h2 data-number="3.6"><span class="header-section-number">3.6</span> Alignment Issues</h2>
+<p>A major issue was ensuring x-axis labels (Sat, Sun, Mon, etc.) aligned correctly every 24 hours, as in the original Stata graphs. In R, day labels initially appeared misaligned or overlapped. I attempted to fix this by:</p>
+<ol type="i">
+<li><p>Adjusting xintercept positions of vertical lines.</p></li>
+<li><p>Tuning annotate(“text”) x-values to reposition labels.</p></li>
+<li><p>Verifying hour-of-week calculations.</p></li>
+</ol>
+<p>I was able to improve the alignment, but not fully. Future refinements could include geom_text() with hjust/vjust adjustments or adding a separate axis panel for day labels.</p>
 </section>
+<section id="discrepancies-in-final-output" class="level2" data-number="3.7">
+<h2 data-number="3.7"><span class="header-section-number">3.7</span> Discrepancies in Final Output</h2>
+<p>The original paper presents a combined figure (Panels A–E), whilst my replication showed separate plots for each retailer, following the structure of the original Stata .do files. To mirror the combined layout, we could have used the patchwork or cowplot packages.</p>
 </section>
-<section id="discrepancies-in-final-output" class="level1">
-<h1>Discrepancies in Final Output</h1>
-<p>In the published article, the graphs are combined into a single figure (Panels A–E), showing all five retailers. In the replication, each panel was generated separately to allow individual inspection and ease of troubleshooting. This separation was partly a result of how the Stata code provided line plots individually and exported each as a distinct .pdf. To replicate the original structure more closely, the patchwork or cowplot R packages could have been used to assemble the five graphs into one combined image.</p>
-<section id="overall-comparison" class="level2">
-<h2 class="anchored" data-anchor-id="overall-comparison">Overall Comparison</h2>
-<p>Despite layout differences, the replicated line graphs for each retailer display the correct general patterns. Retailers D and E show high price-change activity in the early hours of the week, consistent with algorithmic behavior. Manual retailers (A and B) show more human-like, regular-hour updates. This validates the replication, even if visual presentation differs. The output, while not pixel-perfect, accurately reflects the statistical information presented in the article and demonstrates understanding of the analytical process. The codes for replication as well as the replicated images are below:</p>
+<section id="comparison-to-original" class="level2" data-number="3.8">
+<h2 data-number="3.8"><span class="header-section-number">3.8</span> Comparison to Original</h2>
+<p>Despite layout differences, the replicated graphs maitain the correct patterns: Retailers D and E show early-week algorithmic updates, while A and B exhibit regular human-timed changes. The replication accurately captures the underlying behavior, which i believe validates my process even if the visuals differ slightly.The codes for replication as well as the replicated images are below:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(data.table)</span>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r cell-code"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(data.table)</span>
 <span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(dplyr)</span>
 <span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggplot2)</span>
 <span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>data <span class="ot">&lt;-</span> <span class="fu">read_dta</span>(<span class="st">"C:/Users/attef/OneDrive/Documents/Replicaproject/Replica/analysis/data/analysis_data.dta"</span>)</span>
-<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a>df <span class="ot">&lt;-</span> <span class="fu">as.data.table</span>(haven<span class="sc">::</span><span class="fu">read_dta</span>(<span class="st">"C:/Users/attef/OneDrive/Documents/Replicaproject/Replica/analysis/data/analysis_data.dta"</span>))</span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>data <span class="ot">&lt;-</span> <span class="fu">read_dta</span>(<span class="st">&quot;C:/Users/attef/OneDrive/Documents/Replicaproject/Replica/analysis/data/analysis_data.dta&quot;</span>)</span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a>df <span class="ot">&lt;-</span> <span class="fu">as.data.table</span>(haven<span class="sc">::</span><span class="fu">read_dta</span>(<span class="st">&quot;C:/Users/attef/OneDrive/Documents/Replicaproject/Replica/analysis/data/analysis_data.dta&quot;</span>))</span>
 <span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb5-12"><a href="#cb5-12" aria-hidden="true" tabindex="-1"></a><span class="co"># Filter for Retailer A</span></span>
-<span id="cb5-13"><a href="#cb5-13" aria-hidden="true" tabindex="-1"></a>retailer_A <span class="ot">&lt;-</span> df_hourly[website <span class="sc">==</span> <span class="st">"A"</span>]</span>
+<span id="cb5-13"><a href="#cb5-13" aria-hidden="true" tabindex="-1"></a>retailer_A <span class="ot">&lt;-</span> df_hourly[website <span class="sc">==</span> <span class="st">&quot;A&quot;</span>]</span>
 <span id="cb5-14"><a href="#cb5-14" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb5-15"><a href="#cb5-15" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(retailer_A, <span class="fu">aes</span>(<span class="at">x =</span> hourofweek, <span class="at">y =</span> hourly_dist)) <span class="sc">+</span></span>
-<span id="cb5-16"><a href="#cb5-16" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="at">color =</span> <span class="st">"black"</span>, <span class="at">linewidth =</span> <span class="dv">1</span>) <span class="sc">+</span></span>
+<span id="cb5-16"><a href="#cb5-16" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="at">color =</span> <span class="st">&quot;black&quot;</span>, <span class="at">linewidth =</span> <span class="dv">1</span>) <span class="sc">+</span></span>
 <span id="cb5-17"><a href="#cb5-17" aria-hidden="true" tabindex="-1"></a>  </span>
 <span id="cb5-18"><a href="#cb5-18" aria-hidden="true" tabindex="-1"></a>  <span class="co"># X-axis: tick every 24 hours (no labels)</span></span>
 <span id="cb5-19"><a href="#cb5-19" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_x_continuous</span>(</span>
@@ -304,25 +365,25 @@ div.csl-indent {
 <span id="cb5-26"><a href="#cb5-26" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_y_continuous</span>(</span>
 <span id="cb5-27"><a href="#cb5-27" aria-hidden="true" tabindex="-1"></a>    <span class="at">limits =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">1</span>),</span>
 <span id="cb5-28"><a href="#cb5-28" aria-hidden="true" tabindex="-1"></a>    <span class="at">breaks =</span> <span class="fu">seq</span>(<span class="dv">0</span>, <span class="dv">1</span>, <span class="at">by =</span> <span class="fl">0.2</span>),</span>
-<span id="cb5-29"><a href="#cb5-29" aria-hidden="true" tabindex="-1"></a>    <span class="at">labels =</span> <span class="cf">function</span>(x) <span class="fu">sprintf</span>(<span class="st">"%.1f"</span>, x)</span>
+<span id="cb5-29"><a href="#cb5-29" aria-hidden="true" tabindex="-1"></a>    <span class="at">labels =</span> <span class="cf">function</span>(x) <span class="fu">sprintf</span>(<span class="st">&quot;%.1f&quot;</span>, x)</span>
 <span id="cb5-30"><a href="#cb5-30" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
 <span id="cb5-31"><a href="#cb5-31" aria-hidden="true" tabindex="-1"></a>  </span>
 <span id="cb5-32"><a href="#cb5-32" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Vertical dashed lines at day boundaries</span></span>
-<span id="cb5-33"><a href="#cb5-33" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_vline</span>(<span class="at">xintercept =</span> <span class="fu">seq</span>(<span class="dv">24</span>, <span class="dv">144</span>, <span class="at">by =</span> <span class="dv">24</span>), <span class="at">linetype =</span> <span class="st">"dashed"</span>, <span class="at">color =</span> <span class="st">"gray60"</span>) <span class="sc">+</span></span>
+<span id="cb5-33"><a href="#cb5-33" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_vline</span>(<span class="at">xintercept =</span> <span class="fu">seq</span>(<span class="dv">24</span>, <span class="dv">144</span>, <span class="at">by =</span> <span class="dv">24</span>), <span class="at">linetype =</span> <span class="st">&quot;dashed&quot;</span>, <span class="at">color =</span> <span class="st">&quot;gray60&quot;</span>) <span class="sc">+</span></span>
 <span id="cb5-34"><a href="#cb5-34" aria-hidden="true" tabindex="-1"></a>  </span>
 <span id="cb5-35"><a href="#cb5-35" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Add day labels as text (not tick labels)</span></span>
-<span id="cb5-36"><a href="#cb5-36" aria-hidden="true" tabindex="-1"></a>  <span class="fu">annotate</span>(<span class="st">"text"</span>, <span class="at">x =</span> <span class="dv">12</span>, <span class="at">y =</span> <span class="dv">0</span>, <span class="at">label =</span> <span class="st">"Sat"</span>, <span class="at">vjust =</span> <span class="fl">1.5</span>, <span class="at">size =</span> <span class="dv">4</span>) <span class="sc">+</span></span>
-<span id="cb5-37"><a href="#cb5-37" aria-hidden="true" tabindex="-1"></a>  <span class="fu">annotate</span>(<span class="st">"text"</span>, <span class="at">x =</span> <span class="dv">36</span>, <span class="at">y =</span> <span class="dv">0</span>, <span class="at">label =</span> <span class="st">"Sun"</span>, <span class="at">vjust =</span> <span class="fl">1.5</span>, <span class="at">size =</span> <span class="dv">4</span>) <span class="sc">+</span></span>
-<span id="cb5-38"><a href="#cb5-38" aria-hidden="true" tabindex="-1"></a>  <span class="fu">annotate</span>(<span class="st">"text"</span>, <span class="at">x =</span> <span class="dv">60</span>, <span class="at">y =</span> <span class="dv">0</span>, <span class="at">label =</span> <span class="st">"Mon"</span>, <span class="at">vjust =</span> <span class="fl">1.5</span>, <span class="at">size =</span> <span class="dv">4</span>) <span class="sc">+</span></span>
-<span id="cb5-39"><a href="#cb5-39" aria-hidden="true" tabindex="-1"></a>  <span class="fu">annotate</span>(<span class="st">"text"</span>, <span class="at">x =</span> <span class="dv">84</span>, <span class="at">y =</span> <span class="dv">0</span>, <span class="at">label =</span> <span class="st">"Tue"</span>, <span class="at">vjust =</span> <span class="fl">1.5</span>, <span class="at">size =</span> <span class="dv">4</span>) <span class="sc">+</span></span>
-<span id="cb5-40"><a href="#cb5-40" aria-hidden="true" tabindex="-1"></a>  <span class="fu">annotate</span>(<span class="st">"text"</span>, <span class="at">x =</span> <span class="dv">108</span>, <span class="at">y =</span> <span class="dv">0</span>, <span class="at">label =</span> <span class="st">"Wed"</span>, <span class="at">vjust =</span> <span class="fl">1.5</span>, <span class="at">size =</span> <span class="dv">4</span>) <span class="sc">+</span></span>
-<span id="cb5-41"><a href="#cb5-41" aria-hidden="true" tabindex="-1"></a>  <span class="fu">annotate</span>(<span class="st">"text"</span>, <span class="at">x =</span> <span class="dv">132</span>, <span class="at">y =</span> <span class="dv">0</span>, <span class="at">label =</span> <span class="st">"Thu"</span>, <span class="at">vjust =</span> <span class="fl">1.5</span>, <span class="at">size =</span> <span class="dv">4</span>) <span class="sc">+</span></span>
-<span id="cb5-42"><a href="#cb5-42" aria-hidden="true" tabindex="-1"></a>  <span class="fu">annotate</span>(<span class="st">"text"</span>, <span class="at">x =</span> <span class="dv">156</span>, <span class="at">y =</span> <span class="dv">0</span>, <span class="at">label =</span> <span class="st">"Fri"</span>, <span class="at">vjust =</span> <span class="fl">1.5</span>, <span class="at">size =</span> <span class="dv">4</span>) <span class="sc">+</span></span>
+<span id="cb5-36"><a href="#cb5-36" aria-hidden="true" tabindex="-1"></a>  <span class="fu">annotate</span>(<span class="st">&quot;text&quot;</span>, <span class="at">x =</span> <span class="dv">12</span>, <span class="at">y =</span> <span class="dv">0</span>, <span class="at">label =</span> <span class="st">&quot;Sat&quot;</span>, <span class="at">vjust =</span> <span class="fl">1.5</span>, <span class="at">size =</span> <span class="dv">4</span>) <span class="sc">+</span></span>
+<span id="cb5-37"><a href="#cb5-37" aria-hidden="true" tabindex="-1"></a>  <span class="fu">annotate</span>(<span class="st">&quot;text&quot;</span>, <span class="at">x =</span> <span class="dv">36</span>, <span class="at">y =</span> <span class="dv">0</span>, <span class="at">label =</span> <span class="st">&quot;Sun&quot;</span>, <span class="at">vjust =</span> <span class="fl">1.5</span>, <span class="at">size =</span> <span class="dv">4</span>) <span class="sc">+</span></span>
+<span id="cb5-38"><a href="#cb5-38" aria-hidden="true" tabindex="-1"></a>  <span class="fu">annotate</span>(<span class="st">&quot;text&quot;</span>, <span class="at">x =</span> <span class="dv">60</span>, <span class="at">y =</span> <span class="dv">0</span>, <span class="at">label =</span> <span class="st">&quot;Mon&quot;</span>, <span class="at">vjust =</span> <span class="fl">1.5</span>, <span class="at">size =</span> <span class="dv">4</span>) <span class="sc">+</span></span>
+<span id="cb5-39"><a href="#cb5-39" aria-hidden="true" tabindex="-1"></a>  <span class="fu">annotate</span>(<span class="st">&quot;text&quot;</span>, <span class="at">x =</span> <span class="dv">84</span>, <span class="at">y =</span> <span class="dv">0</span>, <span class="at">label =</span> <span class="st">&quot;Tue&quot;</span>, <span class="at">vjust =</span> <span class="fl">1.5</span>, <span class="at">size =</span> <span class="dv">4</span>) <span class="sc">+</span></span>
+<span id="cb5-40"><a href="#cb5-40" aria-hidden="true" tabindex="-1"></a>  <span class="fu">annotate</span>(<span class="st">&quot;text&quot;</span>, <span class="at">x =</span> <span class="dv">108</span>, <span class="at">y =</span> <span class="dv">0</span>, <span class="at">label =</span> <span class="st">&quot;Wed&quot;</span>, <span class="at">vjust =</span> <span class="fl">1.5</span>, <span class="at">size =</span> <span class="dv">4</span>) <span class="sc">+</span></span>
+<span id="cb5-41"><a href="#cb5-41" aria-hidden="true" tabindex="-1"></a>  <span class="fu">annotate</span>(<span class="st">&quot;text&quot;</span>, <span class="at">x =</span> <span class="dv">132</span>, <span class="at">y =</span> <span class="dv">0</span>, <span class="at">label =</span> <span class="st">&quot;Thu&quot;</span>, <span class="at">vjust =</span> <span class="fl">1.5</span>, <span class="at">size =</span> <span class="dv">4</span>) <span class="sc">+</span></span>
+<span id="cb5-42"><a href="#cb5-42" aria-hidden="true" tabindex="-1"></a>  <span class="fu">annotate</span>(<span class="st">&quot;text&quot;</span>, <span class="at">x =</span> <span class="dv">156</span>, <span class="at">y =</span> <span class="dv">0</span>, <span class="at">label =</span> <span class="st">&quot;Fri&quot;</span>, <span class="at">vjust =</span> <span class="fl">1.5</span>, <span class="at">size =</span> <span class="dv">4</span>) <span class="sc">+</span></span>
 <span id="cb5-43"><a href="#cb5-43" aria-hidden="true" tabindex="-1"></a>  </span>
 <span id="cb5-44"><a href="#cb5-44" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(</span>
-<span id="cb5-45"><a href="#cb5-45" aria-hidden="true" tabindex="-1"></a>    <span class="at">title =</span> <span class="st">"Panel A. Retailer A"</span>,</span>
-<span id="cb5-46"><a href="#cb5-46" aria-hidden="true" tabindex="-1"></a>    <span class="at">x =</span> <span class="st">"Hour of Week"</span>,</span>
-<span id="cb5-47"><a href="#cb5-47" aria-hidden="true" tabindex="-1"></a>    <span class="at">y =</span> <span class="st">"Percent of Price Changes"</span></span>
+<span id="cb5-45"><a href="#cb5-45" aria-hidden="true" tabindex="-1"></a>    <span class="at">title =</span> <span class="st">&quot;Panel A. Retailer A&quot;</span>,</span>
+<span id="cb5-46"><a href="#cb5-46" aria-hidden="true" tabindex="-1"></a>    <span class="at">x =</span> <span class="st">&quot;Hour of Week&quot;</span>,</span>
+<span id="cb5-47"><a href="#cb5-47" aria-hidden="true" tabindex="-1"></a>    <span class="at">y =</span> <span class="st">&quot;Percent of Price Changes&quot;</span></span>
 <span id="cb5-48"><a href="#cb5-48" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
 <span id="cb5-49"><a href="#cb5-49" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>(<span class="at">base_size =</span> <span class="dv">14</span>) <span class="sc">+</span></span>
 <span id="cb5-50"><a href="#cb5-50" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(</span>
@@ -330,16 +391,16 @@ div.csl-indent {
 <span id="cb5-52"><a href="#cb5-52" aria-hidden="true" tabindex="-1"></a>    <span class="at">axis.text.x =</span> <span class="fu">element_blank</span>(),   <span class="co"># Hide tick labels</span></span>
 <span id="cb5-53"><a href="#cb5-53" aria-hidden="true" tabindex="-1"></a>    <span class="at">axis.ticks.x =</span> <span class="fu">element_blank</span>(),</span>
 <span id="cb5-54"><a href="#cb5-54" aria-hidden="true" tabindex="-1"></a>    <span class="at">plot.title =</span> <span class="fu">element_text</span>(<span class="at">hjust =</span> <span class="fl">0.5</span>)</span>
-<span id="cb5-55"><a href="#cb5-55" aria-hidden="true" tabindex="-1"></a>  )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb5-55"><a href="#cb5-55" aria-hidden="true" tabindex="-1"></a>  )</span></code></pre></div>
 <div class="cell-output-display">
 <div>
-<figure class="figure">
-<p><img src="apa-report_files/figure-html/unnamed-chunk-5-1.png" class="img-fluid figure-img" width="672"></p>
+<figure>
+<p><img src="apa-report_files/figure-html/unnamed-chunk-5-1.svg" class="img-fluid" width="624" /></p>
 </figure>
 </div>
 </div>
-<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(df_hourly[website <span class="sc">==</span> <span class="st">"B"</span>], <span class="fu">aes</span>(<span class="at">x =</span> hourofweek, <span class="at">y =</span> hourly_dist)) <span class="sc">+</span></span>
-<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="at">color =</span> <span class="st">"black"</span>, <span class="at">linewidth =</span> <span class="dv">1</span>) <span class="sc">+</span></span>
+<div class="sourceCode" id="cb6"><pre class="sourceCode r cell-code"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(df_hourly[website <span class="sc">==</span> <span class="st">&quot;B&quot;</span>], <span class="fu">aes</span>(<span class="at">x =</span> hourofweek, <span class="at">y =</span> hourly_dist)) <span class="sc">+</span></span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="at">color =</span> <span class="st">&quot;black&quot;</span>, <span class="at">linewidth =</span> <span class="dv">1</span>) <span class="sc">+</span></span>
 <span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_x_continuous</span>(</span>
 <span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">breaks =</span> <span class="fu">seq</span>(<span class="dv">0</span>, <span class="dv">168</span>, <span class="at">by =</span> <span class="dv">24</span>),</span>
 <span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">limits =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">168</span>),</span>
@@ -348,14 +409,14 @@ div.csl-indent {
 <span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_y_continuous</span>(</span>
 <span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a>    <span class="at">limits =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">1</span>),</span>
 <span id="cb6-10"><a href="#cb6-10" aria-hidden="true" tabindex="-1"></a>    <span class="at">breaks =</span> <span class="fu">seq</span>(<span class="dv">0</span>, <span class="dv">1</span>, <span class="at">by =</span> <span class="fl">0.2</span>),</span>
-<span id="cb6-11"><a href="#cb6-11" aria-hidden="true" tabindex="-1"></a>    <span class="at">labels =</span> <span class="cf">function</span>(x) <span class="fu">sprintf</span>(<span class="st">"%.1f"</span>, x)</span>
+<span id="cb6-11"><a href="#cb6-11" aria-hidden="true" tabindex="-1"></a>    <span class="at">labels =</span> <span class="cf">function</span>(x) <span class="fu">sprintf</span>(<span class="st">&quot;%.1f&quot;</span>, x)</span>
 <span id="cb6-12"><a href="#cb6-12" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
-<span id="cb6-13"><a href="#cb6-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_vline</span>(<span class="at">xintercept =</span> <span class="fu">seq</span>(<span class="dv">24</span>, <span class="dv">144</span>, <span class="at">by =</span> <span class="dv">24</span>), <span class="at">linetype =</span> <span class="st">"dashed"</span>, <span class="at">color =</span> <span class="st">"gray60"</span>) <span class="sc">+</span></span>
-<span id="cb6-14"><a href="#cb6-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">annotate</span>(<span class="st">"text"</span>, <span class="at">x =</span> <span class="fu">seq</span>(<span class="dv">12</span>, <span class="dv">156</span>, <span class="at">by =</span> <span class="dv">24</span>), <span class="at">y =</span> <span class="dv">0</span>, <span class="at">label =</span> <span class="fu">c</span>(<span class="st">"Sat"</span>, <span class="st">"Sun"</span>, <span class="st">"Mon"</span>, <span class="st">"Tue"</span>, <span class="st">"Wed"</span>, <span class="st">"Thu"</span>, <span class="st">"Fri"</span>), <span class="at">vjust =</span> <span class="fl">1.5</span>, <span class="at">size =</span> <span class="dv">4</span>) <span class="sc">+</span></span>
+<span id="cb6-13"><a href="#cb6-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_vline</span>(<span class="at">xintercept =</span> <span class="fu">seq</span>(<span class="dv">24</span>, <span class="dv">144</span>, <span class="at">by =</span> <span class="dv">24</span>), <span class="at">linetype =</span> <span class="st">&quot;dashed&quot;</span>, <span class="at">color =</span> <span class="st">&quot;gray60&quot;</span>) <span class="sc">+</span></span>
+<span id="cb6-14"><a href="#cb6-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">annotate</span>(<span class="st">&quot;text&quot;</span>, <span class="at">x =</span> <span class="fu">seq</span>(<span class="dv">12</span>, <span class="dv">156</span>, <span class="at">by =</span> <span class="dv">24</span>), <span class="at">y =</span> <span class="dv">0</span>, <span class="at">label =</span> <span class="fu">c</span>(<span class="st">&quot;Sat&quot;</span>, <span class="st">&quot;Sun&quot;</span>, <span class="st">&quot;Mon&quot;</span>, <span class="st">&quot;Tue&quot;</span>, <span class="st">&quot;Wed&quot;</span>, <span class="st">&quot;Thu&quot;</span>, <span class="st">&quot;Fri&quot;</span>), <span class="at">vjust =</span> <span class="fl">1.5</span>, <span class="at">size =</span> <span class="dv">4</span>) <span class="sc">+</span></span>
 <span id="cb6-15"><a href="#cb6-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(</span>
-<span id="cb6-16"><a href="#cb6-16" aria-hidden="true" tabindex="-1"></a>    <span class="at">title =</span> <span class="st">"Panel B. Retailer B"</span>,</span>
-<span id="cb6-17"><a href="#cb6-17" aria-hidden="true" tabindex="-1"></a>    <span class="at">x =</span> <span class="st">"Hour of Week"</span>,</span>
-<span id="cb6-18"><a href="#cb6-18" aria-hidden="true" tabindex="-1"></a>    <span class="at">y =</span> <span class="st">"Percent of Price Changes"</span></span>
+<span id="cb6-16"><a href="#cb6-16" aria-hidden="true" tabindex="-1"></a>    <span class="at">title =</span> <span class="st">&quot;Panel B. Retailer B&quot;</span>,</span>
+<span id="cb6-17"><a href="#cb6-17" aria-hidden="true" tabindex="-1"></a>    <span class="at">x =</span> <span class="st">&quot;Hour of Week&quot;</span>,</span>
+<span id="cb6-18"><a href="#cb6-18" aria-hidden="true" tabindex="-1"></a>    <span class="at">y =</span> <span class="st">&quot;Percent of Price Changes&quot;</span></span>
 <span id="cb6-19"><a href="#cb6-19" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
 <span id="cb6-20"><a href="#cb6-20" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>(<span class="at">base_size =</span> <span class="dv">14</span>) <span class="sc">+</span></span>
 <span id="cb6-21"><a href="#cb6-21" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(</span>
@@ -363,16 +424,16 @@ div.csl-indent {
 <span id="cb6-23"><a href="#cb6-23" aria-hidden="true" tabindex="-1"></a>    <span class="at">axis.ticks.x =</span> <span class="fu">element_blank</span>(),</span>
 <span id="cb6-24"><a href="#cb6-24" aria-hidden="true" tabindex="-1"></a>    <span class="at">axis.text.y =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">10</span>),</span>
 <span id="cb6-25"><a href="#cb6-25" aria-hidden="true" tabindex="-1"></a>    <span class="at">plot.title =</span> <span class="fu">element_text</span>(<span class="at">hjust =</span> <span class="fl">0.5</span>),</span>
-<span id="cb6-26"><a href="#cb6-26" aria-hidden="true" tabindex="-1"></a>  )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb6-26"><a href="#cb6-26" aria-hidden="true" tabindex="-1"></a>  )</span></code></pre></div>
 <div class="cell-output-display">
 <div>
-<figure class="figure">
-<p><img src="apa-report_files/figure-html/unnamed-chunk-5-2.png" class="img-fluid figure-img" width="672"></p>
+<figure>
+<p><img src="apa-report_files/figure-html/unnamed-chunk-5-2.svg" class="img-fluid" width="624" /></p>
 </figure>
 </div>
 </div>
-<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(df_hourly[website <span class="sc">==</span> <span class="st">"C"</span>], <span class="fu">aes</span>(<span class="at">x =</span> hourofweek, <span class="at">y =</span> hourly_dist)) <span class="sc">+</span></span>
-<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="at">color =</span> <span class="st">"black"</span>, <span class="at">linewidth =</span> <span class="dv">1</span>) <span class="sc">+</span></span>
+<div class="sourceCode" id="cb7"><pre class="sourceCode r cell-code"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(df_hourly[website <span class="sc">==</span> <span class="st">&quot;C&quot;</span>], <span class="fu">aes</span>(<span class="at">x =</span> hourofweek, <span class="at">y =</span> hourly_dist)) <span class="sc">+</span></span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="at">color =</span> <span class="st">&quot;black&quot;</span>, <span class="at">linewidth =</span> <span class="dv">1</span>) <span class="sc">+</span></span>
 <span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_x_continuous</span>(</span>
 <span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">breaks =</span> <span class="fu">seq</span>(<span class="dv">0</span>, <span class="dv">168</span>, <span class="at">by =</span> <span class="dv">24</span>),</span>
 <span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">limits =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">168</span>),</span>
@@ -381,14 +442,14 @@ div.csl-indent {
 <span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_y_continuous</span>(</span>
 <span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a>    <span class="at">limits =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">8</span>),</span>
 <span id="cb7-10"><a href="#cb7-10" aria-hidden="true" tabindex="-1"></a>    <span class="at">breaks =</span> <span class="fu">seq</span>(<span class="dv">0</span>, <span class="dv">8</span>, <span class="at">by =</span> <span class="dv">2</span>),</span>
-<span id="cb7-11"><a href="#cb7-11" aria-hidden="true" tabindex="-1"></a>    <span class="at">labels =</span> <span class="cf">function</span>(x) <span class="fu">sprintf</span>(<span class="st">"%.0f"</span>, x)</span>
+<span id="cb7-11"><a href="#cb7-11" aria-hidden="true" tabindex="-1"></a>    <span class="at">labels =</span> <span class="cf">function</span>(x) <span class="fu">sprintf</span>(<span class="st">&quot;%.0f&quot;</span>, x)</span>
 <span id="cb7-12"><a href="#cb7-12" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
-<span id="cb7-13"><a href="#cb7-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_vline</span>(<span class="at">xintercept =</span> <span class="fu">seq</span>(<span class="dv">24</span>, <span class="dv">144</span>, <span class="at">by =</span> <span class="dv">24</span>), <span class="at">linetype =</span> <span class="st">"dashed"</span>, <span class="at">color =</span> <span class="st">"gray60"</span>) <span class="sc">+</span></span>
-<span id="cb7-14"><a href="#cb7-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">annotate</span>(<span class="st">"text"</span>, <span class="at">x =</span> <span class="fu">seq</span>(<span class="dv">12</span>, <span class="dv">156</span>, <span class="at">by =</span> <span class="dv">24</span>), <span class="at">y =</span> <span class="dv">0</span>, <span class="at">label =</span> <span class="fu">c</span>(<span class="st">"Sat"</span>, <span class="st">"Sun"</span>, <span class="st">"Mon"</span>, <span class="st">"Tue"</span>, <span class="st">"Wed"</span>, <span class="st">"Thu"</span>, <span class="st">"Fri"</span>), <span class="at">vjust =</span> <span class="fl">1.5</span>, <span class="at">size =</span> <span class="dv">4</span>) <span class="sc">+</span></span>
+<span id="cb7-13"><a href="#cb7-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_vline</span>(<span class="at">xintercept =</span> <span class="fu">seq</span>(<span class="dv">24</span>, <span class="dv">144</span>, <span class="at">by =</span> <span class="dv">24</span>), <span class="at">linetype =</span> <span class="st">&quot;dashed&quot;</span>, <span class="at">color =</span> <span class="st">&quot;gray60&quot;</span>) <span class="sc">+</span></span>
+<span id="cb7-14"><a href="#cb7-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">annotate</span>(<span class="st">&quot;text&quot;</span>, <span class="at">x =</span> <span class="fu">seq</span>(<span class="dv">12</span>, <span class="dv">156</span>, <span class="at">by =</span> <span class="dv">24</span>), <span class="at">y =</span> <span class="dv">0</span>, <span class="at">label =</span> <span class="fu">c</span>(<span class="st">&quot;Sat&quot;</span>, <span class="st">&quot;Sun&quot;</span>, <span class="st">&quot;Mon&quot;</span>, <span class="st">&quot;Tue&quot;</span>, <span class="st">&quot;Wed&quot;</span>, <span class="st">&quot;Thu&quot;</span>, <span class="st">&quot;Fri&quot;</span>), <span class="at">vjust =</span> <span class="fl">1.5</span>, <span class="at">size =</span> <span class="dv">4</span>) <span class="sc">+</span></span>
 <span id="cb7-15"><a href="#cb7-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(</span>
-<span id="cb7-16"><a href="#cb7-16" aria-hidden="true" tabindex="-1"></a>    <span class="at">title =</span> <span class="st">"Panel C. Retailer C"</span>,</span>
-<span id="cb7-17"><a href="#cb7-17" aria-hidden="true" tabindex="-1"></a>    <span class="at">x =</span> <span class="st">"Hour of Week"</span>,</span>
-<span id="cb7-18"><a href="#cb7-18" aria-hidden="true" tabindex="-1"></a>    <span class="at">y =</span> <span class="st">"Percent of Price Changes"</span></span>
+<span id="cb7-16"><a href="#cb7-16" aria-hidden="true" tabindex="-1"></a>    <span class="at">title =</span> <span class="st">&quot;Panel C. Retailer C&quot;</span>,</span>
+<span id="cb7-17"><a href="#cb7-17" aria-hidden="true" tabindex="-1"></a>    <span class="at">x =</span> <span class="st">&quot;Hour of Week&quot;</span>,</span>
+<span id="cb7-18"><a href="#cb7-18" aria-hidden="true" tabindex="-1"></a>    <span class="at">y =</span> <span class="st">&quot;Percent of Price Changes&quot;</span></span>
 <span id="cb7-19"><a href="#cb7-19" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
 <span id="cb7-20"><a href="#cb7-20" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>(<span class="at">base_size =</span> <span class="dv">14</span>) <span class="sc">+</span></span>
 <span id="cb7-21"><a href="#cb7-21" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(</span>
@@ -396,16 +457,16 @@ div.csl-indent {
 <span id="cb7-23"><a href="#cb7-23" aria-hidden="true" tabindex="-1"></a>    <span class="at">axis.ticks.x =</span> <span class="fu">element_blank</span>(),</span>
 <span id="cb7-24"><a href="#cb7-24" aria-hidden="true" tabindex="-1"></a>    <span class="at">axis.text.y =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">10</span>),</span>
 <span id="cb7-25"><a href="#cb7-25" aria-hidden="true" tabindex="-1"></a>    <span class="at">plot.title =</span> <span class="fu">element_text</span>(<span class="at">hjust =</span> <span class="fl">0.5</span>),</span>
-<span id="cb7-26"><a href="#cb7-26" aria-hidden="true" tabindex="-1"></a>  )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb7-26"><a href="#cb7-26" aria-hidden="true" tabindex="-1"></a>  )</span></code></pre></div>
 <div class="cell-output-display">
 <div>
-<figure class="figure">
-<p><img src="apa-report_files/figure-html/unnamed-chunk-5-3.png" class="img-fluid figure-img" width="672"></p>
+<figure>
+<p><img src="apa-report_files/figure-html/unnamed-chunk-5-3.svg" class="img-fluid" width="624" /></p>
 </figure>
 </div>
 </div>
-<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(df_hourly[website <span class="sc">==</span> <span class="st">"D"</span>], <span class="fu">aes</span>(<span class="at">x =</span> hourofweek, <span class="at">y =</span> hourly_dist)) <span class="sc">+</span></span>
-<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="at">color =</span> <span class="st">"black"</span>, <span class="at">linewidth =</span> <span class="dv">1</span>) <span class="sc">+</span></span>
+<div class="sourceCode" id="cb8"><pre class="sourceCode r cell-code"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(df_hourly[website <span class="sc">==</span> <span class="st">&quot;D&quot;</span>], <span class="fu">aes</span>(<span class="at">x =</span> hourofweek, <span class="at">y =</span> hourly_dist)) <span class="sc">+</span></span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="at">color =</span> <span class="st">&quot;black&quot;</span>, <span class="at">linewidth =</span> <span class="dv">1</span>) <span class="sc">+</span></span>
 <span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_x_continuous</span>(</span>
 <span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">breaks =</span> <span class="fu">seq</span>(<span class="dv">0</span>, <span class="dv">168</span>, <span class="at">by =</span> <span class="dv">24</span>),</span>
 <span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">limits =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">168</span>),</span>
@@ -414,14 +475,14 @@ div.csl-indent {
 <span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_y_continuous</span>(</span>
 <span id="cb8-9"><a href="#cb8-9" aria-hidden="true" tabindex="-1"></a>    <span class="at">limits =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">25</span>),</span>
 <span id="cb8-10"><a href="#cb8-10" aria-hidden="true" tabindex="-1"></a>    <span class="at">breaks =</span> <span class="fu">seq</span>(<span class="dv">0</span>, <span class="dv">25</span>, <span class="at">by =</span> <span class="dv">5</span>),</span>
-<span id="cb8-11"><a href="#cb8-11" aria-hidden="true" tabindex="-1"></a>    <span class="at">labels =</span> <span class="cf">function</span>(x) <span class="fu">sprintf</span>(<span class="st">"%.0f"</span>, x)</span>
+<span id="cb8-11"><a href="#cb8-11" aria-hidden="true" tabindex="-1"></a>    <span class="at">labels =</span> <span class="cf">function</span>(x) <span class="fu">sprintf</span>(<span class="st">&quot;%.0f&quot;</span>, x)</span>
 <span id="cb8-12"><a href="#cb8-12" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
-<span id="cb8-13"><a href="#cb8-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_vline</span>(<span class="at">xintercept =</span> <span class="fu">seq</span>(<span class="dv">24</span>, <span class="dv">144</span>, <span class="at">by =</span> <span class="dv">24</span>), <span class="at">linetype =</span> <span class="st">"dashed"</span>, <span class="at">color =</span> <span class="st">"gray60"</span>) <span class="sc">+</span></span>
-<span id="cb8-14"><a href="#cb8-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">annotate</span>(<span class="st">"text"</span>, <span class="at">x =</span> <span class="fu">seq</span>(<span class="dv">12</span>, <span class="dv">156</span>, <span class="at">by =</span> <span class="dv">24</span>), <span class="at">y =</span> <span class="dv">0</span>, <span class="at">label =</span> <span class="fu">c</span>(<span class="st">"Sat"</span>, <span class="st">"Sun"</span>, <span class="st">"Mon"</span>, <span class="st">"Tue"</span>, <span class="st">"Wed"</span>, <span class="st">"Thu"</span>, <span class="st">"Fri"</span>), <span class="at">vjust =</span> <span class="fl">1.5</span>, <span class="at">size =</span> <span class="dv">4</span>) <span class="sc">+</span></span>
+<span id="cb8-13"><a href="#cb8-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_vline</span>(<span class="at">xintercept =</span> <span class="fu">seq</span>(<span class="dv">24</span>, <span class="dv">144</span>, <span class="at">by =</span> <span class="dv">24</span>), <span class="at">linetype =</span> <span class="st">&quot;dashed&quot;</span>, <span class="at">color =</span> <span class="st">&quot;gray60&quot;</span>) <span class="sc">+</span></span>
+<span id="cb8-14"><a href="#cb8-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">annotate</span>(<span class="st">&quot;text&quot;</span>, <span class="at">x =</span> <span class="fu">seq</span>(<span class="dv">12</span>, <span class="dv">156</span>, <span class="at">by =</span> <span class="dv">24</span>), <span class="at">y =</span> <span class="dv">0</span>, <span class="at">label =</span> <span class="fu">c</span>(<span class="st">&quot;Sat&quot;</span>, <span class="st">&quot;Sun&quot;</span>, <span class="st">&quot;Mon&quot;</span>, <span class="st">&quot;Tue&quot;</span>, <span class="st">&quot;Wed&quot;</span>, <span class="st">&quot;Thu&quot;</span>, <span class="st">&quot;Fri&quot;</span>), <span class="at">vjust =</span> <span class="fl">1.5</span>, <span class="at">size =</span> <span class="dv">4</span>) <span class="sc">+</span></span>
 <span id="cb8-15"><a href="#cb8-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(</span>
-<span id="cb8-16"><a href="#cb8-16" aria-hidden="true" tabindex="-1"></a>    <span class="at">title =</span> <span class="st">"Panel D. Retailer D"</span>,</span>
-<span id="cb8-17"><a href="#cb8-17" aria-hidden="true" tabindex="-1"></a>    <span class="at">x =</span> <span class="st">"Hour of Week"</span>,</span>
-<span id="cb8-18"><a href="#cb8-18" aria-hidden="true" tabindex="-1"></a>    <span class="at">y =</span> <span class="st">"Percent of Price Changes"</span></span>
+<span id="cb8-16"><a href="#cb8-16" aria-hidden="true" tabindex="-1"></a>    <span class="at">title =</span> <span class="st">&quot;Panel D. Retailer D&quot;</span>,</span>
+<span id="cb8-17"><a href="#cb8-17" aria-hidden="true" tabindex="-1"></a>    <span class="at">x =</span> <span class="st">&quot;Hour of Week&quot;</span>,</span>
+<span id="cb8-18"><a href="#cb8-18" aria-hidden="true" tabindex="-1"></a>    <span class="at">y =</span> <span class="st">&quot;Percent of Price Changes&quot;</span></span>
 <span id="cb8-19"><a href="#cb8-19" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
 <span id="cb8-20"><a href="#cb8-20" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>(<span class="at">base_size =</span> <span class="dv">14</span>) <span class="sc">+</span></span>
 <span id="cb8-21"><a href="#cb8-21" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(</span>
@@ -429,16 +490,16 @@ div.csl-indent {
 <span id="cb8-23"><a href="#cb8-23" aria-hidden="true" tabindex="-1"></a>    <span class="at">axis.ticks.x =</span> <span class="fu">element_blank</span>(),</span>
 <span id="cb8-24"><a href="#cb8-24" aria-hidden="true" tabindex="-1"></a>    <span class="at">axis.text.y =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">10</span>),</span>
 <span id="cb8-25"><a href="#cb8-25" aria-hidden="true" tabindex="-1"></a>    <span class="at">plot.title =</span> <span class="fu">element_text</span>(<span class="at">hjust =</span> <span class="fl">0.5</span>),</span>
-<span id="cb8-26"><a href="#cb8-26" aria-hidden="true" tabindex="-1"></a>  )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb8-26"><a href="#cb8-26" aria-hidden="true" tabindex="-1"></a>  )</span></code></pre></div>
 <div class="cell-output-display">
 <div>
-<figure class="figure">
-<p><img src="apa-report_files/figure-html/unnamed-chunk-5-4.png" class="img-fluid figure-img" width="672"></p>
+<figure>
+<p><img src="apa-report_files/figure-html/unnamed-chunk-5-4.svg" class="img-fluid" width="624" /></p>
 </figure>
 </div>
 </div>
-<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(df_hourly[website <span class="sc">==</span> <span class="st">"E"</span>], <span class="fu">aes</span>(<span class="at">x =</span> hourofweek, <span class="at">y =</span> hourly_dist)) <span class="sc">+</span></span>
-<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="at">color =</span> <span class="st">"black"</span>, <span class="at">linewidth =</span> <span class="dv">1</span>) <span class="sc">+</span></span>
+<div class="sourceCode" id="cb9"><pre class="sourceCode r cell-code"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(df_hourly[website <span class="sc">==</span> <span class="st">&quot;E&quot;</span>], <span class="fu">aes</span>(<span class="at">x =</span> hourofweek, <span class="at">y =</span> hourly_dist)) <span class="sc">+</span></span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="at">color =</span> <span class="st">&quot;black&quot;</span>, <span class="at">linewidth =</span> <span class="dv">1</span>) <span class="sc">+</span></span>
 <span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_x_continuous</span>(</span>
 <span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">breaks =</span> <span class="fu">seq</span>(<span class="dv">0</span>, <span class="dv">168</span>, <span class="at">by =</span> <span class="dv">24</span>),</span>
 <span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">limits =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">168</span>),</span>
@@ -447,14 +508,14 @@ div.csl-indent {
 <span id="cb9-8"><a href="#cb9-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_y_continuous</span>(</span>
 <span id="cb9-9"><a href="#cb9-9" aria-hidden="true" tabindex="-1"></a>    <span class="at">limits =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">60</span>),</span>
 <span id="cb9-10"><a href="#cb9-10" aria-hidden="true" tabindex="-1"></a>    <span class="at">breaks =</span> <span class="fu">seq</span>(<span class="dv">0</span>, <span class="dv">60</span>, <span class="at">by =</span> <span class="dv">10</span>),</span>
-<span id="cb9-11"><a href="#cb9-11" aria-hidden="true" tabindex="-1"></a>    <span class="at">labels =</span> <span class="cf">function</span>(x) <span class="fu">sprintf</span>(<span class="st">"%.0f"</span>, x)</span>
+<span id="cb9-11"><a href="#cb9-11" aria-hidden="true" tabindex="-1"></a>    <span class="at">labels =</span> <span class="cf">function</span>(x) <span class="fu">sprintf</span>(<span class="st">&quot;%.0f&quot;</span>, x)</span>
 <span id="cb9-12"><a href="#cb9-12" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
-<span id="cb9-13"><a href="#cb9-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_vline</span>(<span class="at">xintercept =</span> <span class="fu">seq</span>(<span class="dv">24</span>, <span class="dv">144</span>, <span class="at">by =</span> <span class="dv">24</span>), <span class="at">linetype =</span> <span class="st">"dashed"</span>, <span class="at">color =</span> <span class="st">"gray60"</span>) <span class="sc">+</span></span>
-<span id="cb9-14"><a href="#cb9-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">annotate</span>(<span class="st">"text"</span>, <span class="at">x =</span> <span class="fu">seq</span>(<span class="dv">12</span>, <span class="dv">156</span>, <span class="at">by =</span> <span class="dv">24</span>), <span class="at">y =</span> <span class="dv">0</span>, <span class="at">label =</span> <span class="fu">c</span>(<span class="st">"Sat"</span>, <span class="st">"Sun"</span>, <span class="st">"Mon"</span>, <span class="st">"Tue"</span>, <span class="st">"Wed"</span>, <span class="st">"Thu"</span>, <span class="st">"Fri"</span>), <span class="at">vjust =</span> <span class="fl">1.5</span>, <span class="at">size =</span> <span class="dv">4</span>) <span class="sc">+</span></span>
+<span id="cb9-13"><a href="#cb9-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_vline</span>(<span class="at">xintercept =</span> <span class="fu">seq</span>(<span class="dv">24</span>, <span class="dv">144</span>, <span class="at">by =</span> <span class="dv">24</span>), <span class="at">linetype =</span> <span class="st">&quot;dashed&quot;</span>, <span class="at">color =</span> <span class="st">&quot;gray60&quot;</span>) <span class="sc">+</span></span>
+<span id="cb9-14"><a href="#cb9-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">annotate</span>(<span class="st">&quot;text&quot;</span>, <span class="at">x =</span> <span class="fu">seq</span>(<span class="dv">12</span>, <span class="dv">156</span>, <span class="at">by =</span> <span class="dv">24</span>), <span class="at">y =</span> <span class="dv">0</span>, <span class="at">label =</span> <span class="fu">c</span>(<span class="st">&quot;Sat&quot;</span>, <span class="st">&quot;Sun&quot;</span>, <span class="st">&quot;Mon&quot;</span>, <span class="st">&quot;Tue&quot;</span>, <span class="st">&quot;Wed&quot;</span>, <span class="st">&quot;Thu&quot;</span>, <span class="st">&quot;Fri&quot;</span>), <span class="at">vjust =</span> <span class="fl">1.5</span>, <span class="at">size =</span> <span class="dv">4</span>) <span class="sc">+</span></span>
 <span id="cb9-15"><a href="#cb9-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(</span>
-<span id="cb9-16"><a href="#cb9-16" aria-hidden="true" tabindex="-1"></a>    <span class="at">title =</span> <span class="st">"Panel E. Retailer E"</span>,</span>
-<span id="cb9-17"><a href="#cb9-17" aria-hidden="true" tabindex="-1"></a>    <span class="at">x =</span> <span class="st">"Hour of Week"</span>,</span>
-<span id="cb9-18"><a href="#cb9-18" aria-hidden="true" tabindex="-1"></a>    <span class="at">y =</span> <span class="st">"Percent of Price Changes"</span></span>
+<span id="cb9-16"><a href="#cb9-16" aria-hidden="true" tabindex="-1"></a>    <span class="at">title =</span> <span class="st">&quot;Panel E. Retailer E&quot;</span>,</span>
+<span id="cb9-17"><a href="#cb9-17" aria-hidden="true" tabindex="-1"></a>    <span class="at">x =</span> <span class="st">&quot;Hour of Week&quot;</span>,</span>
+<span id="cb9-18"><a href="#cb9-18" aria-hidden="true" tabindex="-1"></a>    <span class="at">y =</span> <span class="st">&quot;Percent of Price Changes&quot;</span></span>
 <span id="cb9-19"><a href="#cb9-19" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
 <span id="cb9-20"><a href="#cb9-20" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>(<span class="at">base_size =</span> <span class="dv">14</span>) <span class="sc">+</span></span>
 <span id="cb9-21"><a href="#cb9-21" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(</span>
@@ -462,46 +523,45 @@ div.csl-indent {
 <span id="cb9-23"><a href="#cb9-23" aria-hidden="true" tabindex="-1"></a>    <span class="at">axis.ticks.x =</span> <span class="fu">element_blank</span>(),</span>
 <span id="cb9-24"><a href="#cb9-24" aria-hidden="true" tabindex="-1"></a>    <span class="at">axis.text.y =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">10</span>),</span>
 <span id="cb9-25"><a href="#cb9-25" aria-hidden="true" tabindex="-1"></a>    <span class="at">plot.title =</span> <span class="fu">element_text</span>(<span class="at">hjust =</span> <span class="fl">0.5</span>),</span>
-<span id="cb9-26"><a href="#cb9-26" aria-hidden="true" tabindex="-1"></a>  )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb9-26"><a href="#cb9-26" aria-hidden="true" tabindex="-1"></a>  )</span></code></pre></div>
 <div class="cell-output-display">
 <div>
-<figure class="figure">
-<p><img src="apa-report_files/figure-html/unnamed-chunk-5-5.png" class="img-fluid figure-img" width="672"></p>
+<figure>
+<p><img src="apa-report_files/figure-html/unnamed-chunk-5-5.svg" class="img-fluid" width="624" /></p>
 </figure>
 </div>
 </div>
 </div>
-<p>For each retailer (A–E), a line plot was generated using ggplot2, showing the percent of price changes by hour of week. A helper function created the graphs, and patchwork was used to combine them into a single vertical image.</p>
-<p>Challenges encountered: Aligning weekday labels correctly. Suppressing x-axis tick labels but retaining vertical guides. Each panel was saved as a separate figure and then combined into a summary plot replicating Figure 5 of the original paper.</p>
+<p>For each retailer (A–E), a line plot was generated using <span class="citation" data-cites="ggplot2">(<a href="#ref-ggplot2" role="doc-biblioref">Wickham, 2016</a>)</span>, showing the percent of price changes by hour of week. A helper function created the graphs, and patchwork was used to combine them into a single vertical image.</p>
 </section>
 </section>
-<section id="scatter-plot-price-index-vs.frequency" class="level1">
-<h1>Scatter Plot: Price Index vs.Frequency</h1>
-<p>Among the different components replicated in this project, the scatter plot showing the relationship between pricing frequency and log price levels was arguably the smoothest to execute. This visualization, originally presented in Figure IX of the paper, illustrates how different retailers’ average prices compare to how frequently they update those prices. Specifically, it plots the median hours between price changes (as a proxy for algorithmic responsiveness) against a price index derived from the log price regressions.</p>
-<section id="description-of-the-plot" class="level2">
-<h2 class="anchored" data-anchor-id="description-of-the-plot">Description of the Plot</h2>
-<p>In the original paper, each point on the plot represents a retailer. The x-axis (log scale, reversed) shows the median time between price changes (i.e., pricing frequency), while the y-axis shows the price index, computed by exponentiating the estimated log price premiums. This figure emphasizes the technological differences in pricing — with algorithmic retailers tending to update more frequently and charge higher prices. The replication followed this logic and required combining two sources of information:</p>
-<p>Regression output (log price premiums by retailer) from earlier fixed-effect models.</p>
-<p>Aggregated pricing behavior (median time between updates) computed from the raw dataset.</p>
-</section>
-<section id="process-and-implementation" class="level2">
-<h2 class="anchored" data-anchor-id="process-and-implementation">Process and Implementation</h2>
-<p>The process involved several intermediate steps:</p>
-<p>Filtering to keep only observations with price changes.</p>
-<p>Grouping and calculating hour_gap — the difference between the earliest and latest update on a given date.</p>
-<p>Computing the median of hour_gap by retailer, weighted by the number of price changes. Merging the results with the predicted log premiums.</p>
-<p>Computing a price index using exp(ln_premium) * 100.</p>
-<p>Finally, plotting the scatter using ggplot2.</p>
+<section id="scatter-plot-price-index-vs.frequency" class="level1" data-number="4">
+<h1 data-number="4"><span class="header-section-number">4</span> Scatter Plot: Price Index vs.Frequency</h1>
+<p>During presentation, a critique on my diverse skill in Rstudio encouraged me to replicate a scatter plot from the article. It plots the median hours between price changes (as a proxy for algorithmic responsiveness) against a price index derived from the log price regressions. The replication followed this logic and required combining two sources of information:</p>
+<ol type="i">
+<li><p>Regression output (log price premiums by retailer) from earlier fixed-effect models.</p></li>
+<li><p>Aggregated pricing behavior (median time between updates) computed from the raw dataset.</p></li>
+</ol>
+<section id="process-and-implementation" class="level2" data-number="4.1">
+<h2 data-number="4.1"><span class="header-section-number">4.1</span> Process and Implementation</h2>
+<p>The process involved are outlined below:</p>
+<ol type="i">
+<li><p>Filtering to keep only variables with price changes.</p></li>
+<li><p>Grouping and calculating hour_gap, which is the difference between the earliest and latest update on a given date.</p></li>
+<li><p>Computing the median of hour_gap by retailer, weighted by the number of price changes. Merging the results with the predicted log premiums.</p></li>
+<li><p>Computing a price index using exp(ln_premium) * 100.</p></li>
+<li><p>Finally, plotting the scatter using ggplot2.</p></li>
+</ol>
 <p>Here is the R code that performed these tasks:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Load necessary libraries</span></span>
+<div class="sourceCode" id="cb10"><pre class="sourceCode r cell-code"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Load necessary libraries</span></span>
 <span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(data.table)</span>
 <span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(haven)</span>
 <span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(fixest)</span>
 <span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(matrixStats)</span>
 <span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb10-7"><a href="#cb10-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Read data</span></span>
-<span id="cb10-8"><a href="#cb10-8" aria-hidden="true" tabindex="-1"></a>df <span class="ot">&lt;-</span> <span class="fu">as.data.table</span>(<span class="fu">read_dta</span>(<span class="st">"C:/Users/attef/OneDrive/Documents/Replicaproject/Replica/analysis/data/analysis_data.dta"</span>))</span>
+<span id="cb10-8"><a href="#cb10-8" aria-hidden="true" tabindex="-1"></a>df <span class="ot">&lt;-</span> <span class="fu">as.data.table</span>(<span class="fu">read_dta</span>(<span class="st">&quot;C:/Users/attef/OneDrive/Documents/Replicaproject/Replica/analysis/data/analysis_data.dta&quot;</span>))</span>
 <span id="cb10-9"><a href="#cb10-9" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb10-10"><a href="#cb10-10" aria-hidden="true" tabindex="-1"></a><span class="co"># Step 1: Prepare website codes and log prices</span></span>
 <span id="cb10-11"><a href="#cb10-11" aria-hidden="true" tabindex="-1"></a>df[, website_code <span class="sc">:</span><span class="er">=</span> <span class="fu">as.integer</span>(<span class="fu">factor</span>(website))]</span>
@@ -520,8 +580,8 @@ div.csl-indent {
 <span id="cb10-24"><a href="#cb10-24" aria-hidden="true" tabindex="-1"></a>coef_df <span class="ot">&lt;-</span> <span class="fu">rbindlist</span>(<span class="fu">list</span>(<span class="fu">data.table</span>(<span class="at">website_code =</span> <span class="dv">1</span>, <span class="at">ln_premium =</span> <span class="dv">0</span>), coef_df))</span>
 <span id="cb10-25"><a href="#cb10-25" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb10-26"><a href="#cb10-26" aria-hidden="true" tabindex="-1"></a><span class="co"># Map website codes back to labels</span></span>
-<span id="cb10-27"><a href="#cb10-27" aria-hidden="true" tabindex="-1"></a>website_labels <span class="ot">&lt;-</span> <span class="fu">data.table</span>(<span class="at">website_code =</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">5</span>, <span class="at">website =</span> <span class="fu">c</span>(<span class="st">"A"</span>, <span class="st">"B"</span>, <span class="st">"C"</span>, <span class="st">"D"</span>, <span class="st">"E"</span>))</span>
-<span id="cb10-28"><a href="#cb10-28" aria-hidden="true" tabindex="-1"></a>ln_premium_df <span class="ot">&lt;-</span> <span class="fu">merge</span>(coef_df, website_labels, <span class="at">by =</span> <span class="st">"website_code"</span>)</span>
+<span id="cb10-27"><a href="#cb10-27" aria-hidden="true" tabindex="-1"></a>website_labels <span class="ot">&lt;-</span> <span class="fu">data.table</span>(<span class="at">website_code =</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">5</span>, <span class="at">website =</span> <span class="fu">c</span>(<span class="st">&quot;A&quot;</span>, <span class="st">&quot;B&quot;</span>, <span class="st">&quot;C&quot;</span>, <span class="st">&quot;D&quot;</span>, <span class="st">&quot;E&quot;</span>))</span>
+<span id="cb10-28"><a href="#cb10-28" aria-hidden="true" tabindex="-1"></a>ln_premium_df <span class="ot">&lt;-</span> <span class="fu">merge</span>(coef_df, website_labels, <span class="at">by =</span> <span class="st">&quot;website_code&quot;</span>)</span>
 <span id="cb10-29"><a href="#cb10-29" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb10-30"><a href="#cb10-30" aria-hidden="true" tabindex="-1"></a><span class="co"># Step 4: Calculate hour gap between price changes</span></span>
 <span id="cb10-31"><a href="#cb10-31" aria-hidden="true" tabindex="-1"></a>df_change <span class="ot">&lt;-</span> df[price_change <span class="sc">==</span> <span class="dv">1</span>]</span>
@@ -533,11 +593,11 @@ div.csl-indent {
 <span id="cb10-37"><a href="#cb10-37" aria-hidden="true" tabindex="-1"></a>hour_gap_df <span class="ot">&lt;-</span> df_change[, .(<span class="at">hour_gap =</span> <span class="fu">weightedMedian</span>(hour_gap, <span class="at">w =</span> price_change, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)), by <span class="ot">=</span> website]</span>
 <span id="cb10-38"><a href="#cb10-38" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb10-39"><a href="#cb10-39" aria-hidden="true" tabindex="-1"></a><span class="co"># Step 5: Merge the two tables</span></span>
-<span id="cb10-40"><a href="#cb10-40" aria-hidden="true" tabindex="-1"></a>plot_data <span class="ot">&lt;-</span> <span class="fu">merge</span>(hour_gap_df, ln_premium_df[, .(website, ln_premium)], <span class="at">by =</span> <span class="st">"website"</span>)</span>
+<span id="cb10-40"><a href="#cb10-40" aria-hidden="true" tabindex="-1"></a>plot_data <span class="ot">&lt;-</span> <span class="fu">merge</span>(hour_gap_df, ln_premium_df[, .(website, ln_premium)], <span class="at">by =</span> <span class="st">&quot;website&quot;</span>)</span>
 <span id="cb10-41"><a href="#cb10-41" aria-hidden="true" tabindex="-1"></a>plot_data[, price_index <span class="sc">:</span><span class="er">=</span> <span class="fu">exp</span>(ln_premium) <span class="sc">*</span> <span class="dv">100</span>]</span>
 <span id="cb10-42"><a href="#cb10-42" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb10-43"><a href="#cb10-43" aria-hidden="true" tabindex="-1"></a><span class="co"># Output plot_data for inspection</span></span>
-<span id="cb10-44"><a href="#cb10-44" aria-hidden="true" tabindex="-1"></a>plot_data</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb10-44"><a href="#cb10-44" aria-hidden="true" tabindex="-1"></a>plot_data</span></code></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Key: &lt;website&gt;
    website hour_gap ln_premium price_index
@@ -550,410 +610,162 @@ div.csl-indent {
 </div>
 </div>
 </section>
-<section id="minor-issues-and-observations" class="level2">
-<h2 class="anchored" data-anchor-id="minor-issues-and-observations">Minor Issues and Observations</h2>
+<section id="minor-issues-and-observations" class="level2" data-number="4.2">
+<h2 data-number="4.2"><span class="header-section-number">4.2</span> Minor Issues and Observations</h2>
 <p>While the scatter plot was technically the simplest to reproduce, there were minor issues:</p>
-<p>Data Alignment: Ensuring the merged datasets (regression predictions and frequency metrics) matched by retailer.</p>
-<p>Axis Reversal and Log Scale: Combining log scale and reversed x-axis in ggplot2 required careful use of scale_x_log10() and scale_x_reverse().</p>
-<p>Plot Aesthetics: Matching the original font size, label positions, and color intensity was time-consuming. For example, label overlap required adjusting geom_text() positioning.</p>
+<ol type="i">
+<li><p>Data Alignment: Ensuring the merged datasets (regression predictions and frequency metrics) matched by retailer.</p></li>
+<li><p>Axis Reversal and Log Scale: Combining log scale and reversed x-axis in ggplot2 required careful use of scale_x_log10() and scale_x_reverse().</p></li>
+<li><p>Plot Aesthetics: Matching the original font size, label positions, and color intensity was time-consuming. For example, label overlap required adjusting geom_text() positioning.</p></li>
+</ol>
 </section>
-<section id="outcome" class="level2">
-<h2 class="anchored" data-anchor-id="outcome">Outcome</h2>
+<section id="outcome" class="level2" data-number="4.3">
+<h2 data-number="4.3"><span class="header-section-number">4.3</span> Outcome</h2>
 <p>The final scatter plot accurately captured the intended economic narrative from the original article. It successfully showed the inverse relationship between frequency and pricing level — aligning with the hypothesis that algorithmic retailers both price higher and update more often. This graph helped validate the log premium values from the regression table and served as a bridge between graphical and tabular analysis.</p>
-<p>This plot compared each retailer’s median time between price changes (in hours) to their average price level (measured by the price index = exp(ln_premium) * 100). Key steps included:</p>
-<p>Calculating hour gaps between daily price changes per website.</p>
-<p>Calculating median hour gaps.</p>
-<p>Estimating average ln_price per website.</p>
-<p>Merged data was used to produce a scatter plot:</p>
+<p>Merged data was used to produce a scatter plot as displayed in the code below:</p>
 <div class="cell">
-<div class="cell-output-display">
-<div id="fig-hour-gap" class="quarto-float quarto-figure quarto-figure-center anchored">
-<figure class="quarto-float quarto-float-fig figure">
-<div aria-describedby="fig-hour-gap-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<img src="apa-report_files/figure-html/fig-hour-gap-1.png" class="img-fluid figure-img" width="672">
+<div class="sourceCode" id="cb12"><pre class="sourceCode r cell-code"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggplot2)</span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(plot_data, <span class="fu">aes</span>(<span class="at">x =</span> hour_gap, <span class="at">y =</span> price_index, <span class="at">label =</span> website)) <span class="sc">+</span></span>
+<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">size =</span> <span class="dv">3</span>, <span class="at">color =</span> <span class="st">&quot;steelblue&quot;</span>) <span class="sc">+</span></span>
+<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_text</span>(<span class="at">nudge_y =</span> <span class="dv">2</span>, <span class="at">size =</span> <span class="fl">3.5</span>) <span class="sc">+</span></span>
+<span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(</span>
+<span id="cb12-7"><a href="#cb12-7" aria-hidden="true" tabindex="-1"></a>    <span class="at">x =</span> <span class="st">&quot;Median Hour Gap Between Price Changes&quot;</span>,</span>
+<span id="cb12-8"><a href="#cb12-8" aria-hidden="true" tabindex="-1"></a>    <span class="at">y =</span> <span class="st">&quot;Price Index&quot;</span></span>
+<span id="cb12-9"><a href="#cb12-9" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
+<span id="cb12-10"><a href="#cb12-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>(<span class="at">base_size =</span> <span class="dv">12</span>)</span></code></pre></div>
 </div>
-<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-hour-gap-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;1: Price Index vs.&nbsp;Median Hour Gap
-</figcaption>
-</figure>
-</div>
-</div>
-</div>
-<p>The plot revealed that more frequent pricing (lower median_gap) was associated with higher price levels for some retailers.</p>
+<hr />
 </section>
 </section>
-<section id="regression-table-replication" class="level1">
-<h1>Regression Table Replication</h1>
-<p>During an in-class presentation of the project, a reviewer (the professor) suggested enhancing the replication by showing greater diversity in R skills. Specifically, they recommended going beyond graphical replication to include at least one econometric model. This feedback led to the decision to replicate a regression table from the original paper — specifically, the table comparing log price premiums across retailers using different specifications.</p>
-<section id="what-the-table-shows" class="level2">
-<h2 class="anchored" data-anchor-id="what-the-table-shows">What the Table Shows</h2>
-<p>The replicated table displays the results of multiple fixed-effects regressions where the dependent variable is the natural logarithm of the price. The key independent variables are dummy indicators for each retailer (B to E), with Retailer A as the baseline. Each regression model includes different sample restrictions: Full sample Sample where the product appears on all five retailers Sample restricted to observations after July 1, 2019 Each specification includes fixed effects for product and time period.</p>
-<p>These models aim to quantify average price differences across retailers, after controlling for time and product-specific effects. The resulting coefficients are interpreted as the log price premium relative to Retailer A.</p>
-</section>
-<section id="implementation-in-r" class="level2">
-<h2 class="anchored" data-anchor-id="implementation-in-r">Implementation in R</h2>
-<p>To replicate the table, the following steps were carried out: Encode retailer website identifiers:</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(data.table)</span>
-<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(fixest)</span>
-<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>df[, website_code <span class="sc">:</span><span class="er">=</span> <span class="fu">as.integer</span>(<span class="fu">factor</span>(website))]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-<p>Create log price and product count variables:</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>df[, ln_price <span class="sc">:</span><span class="er">=</span> <span class="fu">log</span>(price)]</span>
-<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>df[, product_count_sites <span class="sc">:</span><span class="er">=</span> .N, by <span class="ot">=</span> product_id]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-<p>Run and store regression models:</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Full sample</span></span>
-<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> (<span class="fu">length</span>(<span class="fu">unique</span>(df<span class="sc">$</span>website_code)) <span class="sc">&gt;=</span> <span class="dv">2</span>) {</span>
-<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a>  a1 <span class="ot">&lt;-</span> <span class="fu">feols</span>(ln_price <span class="sc">~</span> <span class="fu">factor</span>(website_code) <span class="sc">|</span> product_id <span class="sc">+</span> period_id, <span class="at">data =</span> df)</span>
-<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a>} <span class="cf">else</span> {</span>
-<span id="cb14-5"><a href="#cb14-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">message</span>(<span class="st">"Model a1 skipped: not enough variation in website_code"</span>)</span>
-<span id="cb14-6"><a href="#cb14-6" aria-hidden="true" tabindex="-1"></a>}</span>
-<span id="cb14-7"><a href="#cb14-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb14-8"><a href="#cb14-8" aria-hidden="true" tabindex="-1"></a><span class="co"># Restricted to products available on all five websites</span></span>
-<span id="cb14-9"><a href="#cb14-9" aria-hidden="true" tabindex="-1"></a>df_a2 <span class="ot">&lt;-</span> df[product_count_sites <span class="sc">==</span> <span class="dv">5</span>]</span>
-<span id="cb14-10"><a href="#cb14-10" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> (<span class="fu">length</span>(<span class="fu">unique</span>(df_a2<span class="sc">$</span>website_code)) <span class="sc">&gt;=</span> <span class="dv">2</span>) {</span>
-<span id="cb14-11"><a href="#cb14-11" aria-hidden="true" tabindex="-1"></a>  a2 <span class="ot">&lt;-</span> <span class="fu">feols</span>(ln_price <span class="sc">~</span> <span class="fu">factor</span>(website_code) <span class="sc">|</span> product_id <span class="sc">+</span> period_id, <span class="at">data =</span> df_a2)</span>
-<span id="cb14-12"><a href="#cb14-12" aria-hidden="true" tabindex="-1"></a>} <span class="cf">else</span> {</span>
-<span id="cb14-13"><a href="#cb14-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">message</span>(<span class="st">"Model a2 skipped: not enough variation in website_code"</span>)</span>
-<span id="cb14-14"><a href="#cb14-14" aria-hidden="true" tabindex="-1"></a>}</span>
-<span id="cb14-15"><a href="#cb14-15" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb14-16"><a href="#cb14-16" aria-hidden="true" tabindex="-1"></a><span class="co"># Only after July 1, 2019</span></span>
-<span id="cb14-17"><a href="#cb14-17" aria-hidden="true" tabindex="-1"></a>df_a3 <span class="ot">&lt;-</span> df[date <span class="sc">&gt;=</span> <span class="fu">as.Date</span>(<span class="st">"2019-07-01"</span>)]</span>
-<span id="cb14-18"><a href="#cb14-18" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> (<span class="fu">length</span>(<span class="fu">unique</span>(df_a3<span class="sc">$</span>website_code)) <span class="sc">&gt;=</span> <span class="dv">2</span>) {</span>
-<span id="cb14-19"><a href="#cb14-19" aria-hidden="true" tabindex="-1"></a>  a3 <span class="ot">&lt;-</span> <span class="fu">feols</span>(ln_price <span class="sc">~</span> <span class="fu">factor</span>(website_code) <span class="sc">|</span> product_id <span class="sc">+</span> period_id, <span class="at">data =</span> df_a3)</span>
-<span id="cb14-20"><a href="#cb14-20" aria-hidden="true" tabindex="-1"></a>} <span class="cf">else</span> {</span>
-<span id="cb14-21"><a href="#cb14-21" aria-hidden="true" tabindex="-1"></a>  <span class="fu">message</span>(<span class="st">"Model a3 skipped: not enough variation in website_code"</span>)</span>
-<span id="cb14-22"><a href="#cb14-22" aria-hidden="true" tabindex="-1"></a>}</span>
-<span id="cb14-23"><a href="#cb14-23" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb14-24"><a href="#cb14-24" aria-hidden="true" tabindex="-1"></a><span class="co"># Products on all five sites and after July 1, 2019</span></span>
-<span id="cb14-25"><a href="#cb14-25" aria-hidden="true" tabindex="-1"></a>df_a4 <span class="ot">&lt;-</span> df[product_count_sites <span class="sc">==</span> <span class="dv">5</span> <span class="sc">&amp;</span> date <span class="sc">&gt;=</span> <span class="fu">as.Date</span>(<span class="st">"2019-07-01"</span>)]</span>
-<span id="cb14-26"><a href="#cb14-26" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> (<span class="fu">length</span>(<span class="fu">unique</span>(df_a4<span class="sc">$</span>website_code)) <span class="sc">&gt;=</span> <span class="dv">2</span>) {</span>
-<span id="cb14-27"><a href="#cb14-27" aria-hidden="true" tabindex="-1"></a>  a4 <span class="ot">&lt;-</span> <span class="fu">feols</span>(ln_price <span class="sc">~</span> <span class="fu">factor</span>(website_code) <span class="sc">|</span> product_id <span class="sc">+</span> period_id, <span class="at">data =</span> df_a4)</span>
-<span id="cb14-28"><a href="#cb14-28" aria-hidden="true" tabindex="-1"></a>} <span class="cf">else</span> {</span>
-<span id="cb14-29"><a href="#cb14-29" aria-hidden="true" tabindex="-1"></a>  <span class="fu">message</span>(<span class="st">"Model a4 skipped: not enough variation in website_code"</span>)</span>
-<span id="cb14-30"><a href="#cb14-30" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-<p>Display regression table (HTML version only due to LaTeX export limitations):</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(modelsummary)</span>
-<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Build a named list of available models</span></span>
-<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a>models <span class="ot">&lt;-</span> <span class="fu">list</span>()</span>
-<span id="cb15-5"><a href="#cb15-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb15-6"><a href="#cb15-6" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> (<span class="fu">exists</span>(<span class="st">"a1"</span>)) models[[<span class="st">"Full sample"</span>]] <span class="ot">&lt;-</span> a1</span>
-<span id="cb15-7"><a href="#cb15-7" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> (<span class="fu">exists</span>(<span class="st">"a2"</span>)) models[[<span class="st">"Restricted to 5 sites"</span>]] <span class="ot">&lt;-</span> a2</span>
-<span id="cb15-8"><a href="#cb15-8" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> (<span class="fu">exists</span>(<span class="st">"a3"</span>)) models[[<span class="st">"After July 1, 2019"</span>]] <span class="ot">&lt;-</span> a3</span>
-<span id="cb15-9"><a href="#cb15-9" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> (<span class="fu">exists</span>(<span class="st">"a4"</span>)) models[[<span class="st">"Restricted + time cutoff"</span>]] <span class="ot">&lt;-</span> a4</span>
-<span id="cb15-10"><a href="#cb15-10" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb15-11"><a href="#cb15-11" aria-hidden="true" tabindex="-1"></a><span class="co"># Now safely call modelsummary</span></span>
-<span id="cb15-12"><a href="#cb15-12" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> (<span class="fu">length</span>(models) <span class="sc">&gt;</span> <span class="dv">0</span>) {</span>
-<span id="cb15-13"><a href="#cb15-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">modelsummary</span>(models, <span class="at">stars =</span> <span class="cn">TRUE</span>, <span class="at">gof_omit =</span> <span class="st">"IC|Log|Adj|Std"</span>, <span class="at">output =</span> <span class="st">"latex"</span>)</span>
-<span id="cb15-14"><a href="#cb15-14" aria-hidden="true" tabindex="-1"></a>} <span class="cf">else</span> {</span>
-<span id="cb15-15"><a href="#cb15-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">message</span>(<span class="st">"No models available for summary."</span>)</span>
-<span id="cb15-16"><a href="#cb15-16" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output-display">
-<!-- preamble start -->
-
-    <script>
-
-      function styleCell_u1gdeqob9j4l0vqnk1qb(i, j, css_id) {
-          var table = document.getElementById("tinytable_u1gdeqob9j4l0vqnk1qb");
-          var cell = table.rows[i]?.cells[j];  // Safe navigation to avoid errors
-          if (cell) {
-              console.log(`Styling cell at (${i}, ${j}) with class ${css_id}`);
-              cell.classList.add(css_id);
-          } else {
-              console.warn(`Cell at (${i}, ${j}) not found.`);
-          }
-      }
-      function insertSpanRow(i, colspan, content) {
-        var table = document.getElementById('tinytable_u1gdeqob9j4l0vqnk1qb');
-        var newRow = table.insertRow(i);
-        var newCell = newRow.insertCell(0);
-        newCell.setAttribute("colspan", colspan);
-        // newCell.innerText = content;
-        // this may be unsafe, but innerText does not interpret <br>
-        newCell.innerHTML = content;
-      }
-      function spanCell_u1gdeqob9j4l0vqnk1qb(i, j, rowspan, colspan) {
-        var table = document.getElementById("tinytable_u1gdeqob9j4l0vqnk1qb");
-        const targetRow = table.rows[i];
-        const targetCell = targetRow.cells[j];
-        for (let r = 0; r < rowspan; r++) {
-          // Only start deleting cells to the right for the first row (r == 0)
-          if (r === 0) {
-            // Delete cells to the right of the target cell in the first row
-            for (let c = colspan - 1; c > 0; c--) {
-              if (table.rows[i + r].cells[j + c]) {
-                table.rows[i + r].deleteCell(j + c);
-              }
-            }
-          }
-          // For rows below the first, delete starting from the target column
-          if (r > 0) {
-            for (let c = colspan - 1; c >= 0; c--) {
-              if (table.rows[i + r] && table.rows[i + r].cells[j]) {
-                table.rows[i + r].deleteCell(j);
-              }
-            }
-          }
-        }
-        // Set rowspan and colspan of the target cell
-        targetCell.rowSpan = rowspan;
-        targetCell.colSpan = colspan;
-      }
-      // tinytable span after
-      window.addEventListener('load', function () {
-          var cellsToStyle = [
-            // tinytable style arrays after
-          { positions: [ { i: 14, j: 1 }, { i: 14, j: 2 },  ], css_id: 'tinytable_css_ep5nuf4l57y32diaegie',}, 
-          { positions: [ { i: 8, j: 2 }, { i: 8, j: 1 },  ], css_id: 'tinytable_css_a5yt1oid285mi0oezt6v',}, 
-          { positions: [ { i: 1, j: 1 }, { i: 3, j: 1 }, { i: 4, j: 1 }, { i: 5, j: 1 }, { i: 6, j: 1 }, { i: 7, j: 1 }, { i: 6, j: 2 }, { i: 9, j: 1 }, { i: 10, j: 1 }, { i: 11, j: 1 }, { i: 12, j: 1 }, { i: 13, j: 1 }, { i: 12, j: 2 }, { i: 2, j: 1 }, { i: 1, j: 2 }, { i: 2, j: 2 }, { i: 3, j: 2 }, { i: 4, j: 2 }, { i: 5, j: 2 }, { i: 10, j: 2 }, { i: 7, j: 2 }, { i: 9, j: 2 }, { i: 11, j: 2 }, { i: 13, j: 2 },  ], css_id: 'tinytable_css_op0de42cwfse10u8zr1u',}, 
-          { positions: [ { i: 0, j: 1 }, { i: 0, j: 2 },  ], css_id: 'tinytable_css_02s8pertri86ygglfnu1',}, 
-          { positions: [ { i: 14, j: 0 },  ], css_id: 'tinytable_css_fji6p2mzdaiues1isgpt',}, 
-          { positions: [ { i: 8, j: 0 },  ], css_id: 'tinytable_css_keiu1x9j11emudmo73bb',}, 
-          { positions: [ { i: 1, j: 0 }, { i: 2, j: 0 }, { i: 3, j: 0 }, { i: 4, j: 0 }, { i: 5, j: 0 }, { i: 6, j: 0 }, { i: 7, j: 0 }, { i: 12, j: 0 }, { i: 9, j: 0 }, { i: 10, j: 0 }, { i: 11, j: 0 }, { i: 13, j: 0 },  ], css_id: 'tinytable_css_dk8e4w3wrkdmg5y09khg',}, 
-          { positions: [ { i: 0, j: 0 },  ], css_id: 'tinytable_css_cz684xccppb4i5qx2csw',}, 
-          ];
-
-          // Loop over the arrays to style the cells
-          cellsToStyle.forEach(function (group) {
-              group.positions.forEach(function (cell) {
-                  styleCell_u1gdeqob9j4l0vqnk1qb(cell.i, cell.j, group.css_id);
-              });
-          });
-      });
-    </script>
-
-    <style>
-      /* tinytable css entries after */
-      .table td.tinytable_css_ep5nuf4l57y32diaegie, .table th.tinytable_css_ep5nuf4l57y32diaegie { text-align: center; border-bottom: solid #d3d8dc 0.1em; }
-      .table td.tinytable_css_a5yt1oid285mi0oezt6v, .table th.tinytable_css_a5yt1oid285mi0oezt6v { text-align: center; border-bottom: solid black 0.05em; }
-      .table td.tinytable_css_op0de42cwfse10u8zr1u, .table th.tinytable_css_op0de42cwfse10u8zr1u { text-align: center; }
-      .table td.tinytable_css_02s8pertri86ygglfnu1, .table th.tinytable_css_02s8pertri86ygglfnu1 { text-align: center; border-top: solid #d3d8dc 0.1em; border-bottom: solid #d3d8dc 0.05em; }
-      .table td.tinytable_css_fji6p2mzdaiues1isgpt, .table th.tinytable_css_fji6p2mzdaiues1isgpt { text-align: left; border-bottom: solid #d3d8dc 0.1em; }
-      .table td.tinytable_css_keiu1x9j11emudmo73bb, .table th.tinytable_css_keiu1x9j11emudmo73bb { text-align: left; border-bottom: solid black 0.05em; }
-      .table td.tinytable_css_dk8e4w3wrkdmg5y09khg, .table th.tinytable_css_dk8e4w3wrkdmg5y09khg { text-align: left; }
-      .table td.tinytable_css_cz684xccppb4i5qx2csw, .table th.tinytable_css_cz684xccppb4i5qx2csw { text-align: left; border-top: solid #d3d8dc 0.1em; border-bottom: solid #d3d8dc 0.05em; }
-    </style>
-    <div class="container">
-      <table class="table table-borderless" id="tinytable_u1gdeqob9j4l0vqnk1qb" style="width: auto; margin-left: auto; margin-right: auto;" data-quarto-disable-processing="true">
-        <thead>
-        
-              <tr>
-                <th scope="col"> </th>
-                <th scope="col">Full sample</th>
-                <th scope="col">After July 1, 2019</th>
-              </tr>
-        </thead>
-        <tfoot><tr><td colspan="3">+ p \num{&lt; 0.1}, * p \num{&lt; 0.05}, ** p \num{&lt; 0.01}, *** p \num{&lt; 0.001}</td></tr></tfoot>
-        <tbody>
-                <tr>
-                  <td>factor(website\_code)2</td>
-                  <td>\num{0.064}**</td>
-                  <td>\num{0.047}</td>
-                </tr>
-                <tr>
-                  <td></td>
-                  <td>(\num{0.021})</td>
-                  <td>(\num{0.030})</td>
-                </tr>
-                <tr>
-                  <td>factor(website\_code)3</td>
-                  <td>\num{0.092}***</td>
-                  <td>\num{0.107}***</td>
-                </tr>
-                <tr>
-                  <td></td>
-                  <td>(\num{0.024})</td>
-                  <td>(\num{0.028})</td>
-                </tr>
-                <tr>
-                  <td>factor(website\_code)4</td>
-                  <td>\num{0.249}***</td>
-                  <td>\num{0.289}***</td>
-                </tr>
-                <tr>
-                  <td></td>
-                  <td>(\num{0.023})</td>
-                  <td>(\num{0.028})</td>
-                </tr>
-                <tr>
-                  <td>factor(website\_code)5</td>
-                  <td>\num{0.284}***</td>
-                  <td>\num{0.366}***</td>
-                </tr>
-                <tr>
-                  <td></td>
-                  <td>(\num{0.023})</td>
-                  <td>(\num{0.029})</td>
-                </tr>
-                <tr>
-                  <td>Num.Obs.</td>
-                  <td>\num{3606956}</td>
-                  <td>\num{677651}</td>
-                </tr>
-                <tr>
-                  <td>R2</td>
-                  <td>\num{0.947}</td>
-                  <td>\num{0.964}</td>
-                </tr>
-                <tr>
-                  <td>R2 Within</td>
-                  <td>\num{0.255}</td>
-                  <td>\num{0.503}</td>
-                </tr>
-                <tr>
-                  <td>RMSE</td>
-                  <td>\num{0.15}</td>
-                  <td>\num{0.11}</td>
-                </tr>
-                <tr>
-                  <td>FE: product\_id</td>
-                  <td>X</td>
-                  <td>X</td>
-                </tr>
-                <tr>
-                  <td>FE: period\_id</td>
-                  <td>X</td>
-                  <td>X</td>
-                </tr>
-        </tbody>
-      </table>
-    </div>
-<!-- hack to avoid NA insertion in last line -->
-</div>
-</div>
-</section>
-<section id="challenges-encountered" class="level2">
-<h2 class="anchored" data-anchor-id="challenges-encountered">Challenges Encountered</h2>
-<p>Coefficient naming issues: Factor levels automatically generated by R (factor(website_code)2, etc.) required custom mapping for display.</p>
-<p>Rendering limitations: Exporting directly to LaTeX in the style of the original Stata esttab output proved difficult. The focus was placed on HTML output.</p>
-<p>Model filtering: Ensuring proper sample filtering (product_count_sites == 5, date restriction) had to be verified manually.</p>
-<p>Alignment with original paper: Although values were similar, some differences existed due to formatting and package estimation defaults.</p>
-<p>Despite these, the regression models were successfully run, interpreted, and tabulated. The table illustrates meaningful differences in pricing behavior across retailers and confirms part of the study’s conclusions.</p>
-<p>This extension broadens the scope of the replication by showing how econometric modeling can complement data visualization.</p>
-</section>
-</section>
-<section id="publishing-the-quarto-presentation-on-github" class="level1">
-<h1>Publishing the Quarto Presentation on GitHub</h1>
+<section id="publishing-the-quarto-presentation-on-github" class="level1" data-number="5">
+<h1 data-number="5"><span class="header-section-number">5</span> Publishing the Quarto Presentation on GitHub</h1>
 <p>After completing the Quarto .qmd presentation in RStudio, I published it as a live HTML webpage using GitHub Pages. The process involved the following key steps:</p>
 <ol type="1">
-<li><p>Organizing Project Files: I saved my Quarto presentation (index.qmd) and all related files — including images and outputs — in a folder structured to support Quarto rendering. All image paths were stored inside a docs/images/ folder.</p></li>
-<li><p>Rendering the Presentation: I used RStudio’s Render button to generate the HTML output. This created an index.html file in the docs/ folder, which GitHub Pages requires to display the website.</p></li>
-<li><p>Configuring GitHub Repository: I pushed the updated folder to GitHub. In my GitHub repository, I went to Settings &gt; Pages, selected the main branch and the /docs folder as the source, and saved it. Live Website Published: GitHub then generated a public URL (e.g., https://nanaosei95.github.io/Replica/), which I shared with others.</p></li>
-<li><p>Fixing Broken Images: Initially, images did not load on other devices because absolute paths were used (e.g., C:/Users/…). This was resolved by: Converting all image references to relative paths.</p></li>
-<li><p>Ensuring that image files were tracked with Git (git add docs/images/…).</p></li>
-<li><p>Committing and pushing the updated files to GitHub again.</p></li>
+<li><p>I saved my Quarto presentation (index.qmd) and all related files — including images and outputs — in a folder structured to support Quarto rendering. All image paths were stored inside a docs/images/ folder.</p></li>
+<li><p>I used RStudio’s Render button to generate the HTML output. This created an index.html file in the docs/ folder, which GitHub Pages requires to display the website.</p></li>
+<li><p>I configured the git and github repository, by pushing the updated folder to GitHub. In my GitHub repository, I went to Settings &gt; Pages, selected the main branch and the /docs folder as the source, and saved it. GitHub then generated a public URL, <strong>https://nanaosei95.github.io/Replica/</strong> , which I shared with others.</p></li>
+<li><p>Fixing Broken Images: Initially, images did not load on other devices because absolute paths were used (e.g., C:/Users/…). This was resolved by Converting all image references to relative paths, then ensuring that image files were tracked with Git (git add docs/images/…). I then committed and pushed the updated files to GitHub again. This process made the presentation publicly accessible and shareable.</p></li>
 </ol>
-<p>This process made the presentation publicly accessible and shareable, fulfilling the requirement of having an HTML version of the final project.</p>
 </section>
-<section id="making-the-pull-request" class="level1">
-<h1>Making the Pull Request</h1>
-<p>As part of this replication project, a mandatory task was to create a pull request to demonstrate basic proficiency in GitHub collaboration workflows. Chevis Mbatha (2023) provides an accessible and educational walkthrough of the pull request workflow, which was essential for first-time contributors <span class="citation" data-cites="mbatha2023github">(<a href="#ref-mbatha2023github" role="doc-biblioref">Mbatha 2023</a>)</span>. Following the instructions provided in the README of the GitHub repository, the process involved several structured steps: 1. Fork the repository: I first navigated to the public repository at https://github.com/hubchev/make_a_pull_request and forked it to my personal GitHub account. 2. Clone the forked repository: Using the terminal in RStudio, I cloned the forked repository to my local system via the git clone command. 3. Create a new branch: I created a separate branch using git checkout -b <branch-name> to safely make changes without affecting the main branch. 4. Add my name to the Contributors.md file: I opened the file and added my name to the contributors list as instructed. 5. Commit changes: I staged the modified file and committed the change with a meaningful message using git add and git commit. 6. Push to GitHub: I pushed the new branch to my GitHub repository using git push origin <branch-name>. 7. Create a pull request: Finally, I opened the original repository, clicked “Compare &amp; Pull Request,” and submitted the pull request for review.</branch-name></branch-name></p>
+<section id="making-the-pull-request" class="level1" data-number="6">
+<h1 data-number="6"><span class="header-section-number">6</span> Making the Pull Request</h1>
+<p>A mandatory task was to create a pull request to demonstrate basic skill in GitHub collaboration workflows. Chevis Mbatha (2023) provides an accessible process of the pull request workflow, <span class="citation" data-cites="mbatha2023github">(<a href="#ref-mbatha2023github" role="doc-biblioref">Mbatha, 2023</a>)</span>. I successfully executed this following the steps outlined below:</p>
+<ol type="1">
+<li><p>Fork the repository: I first navigated to the public <a href="https://github.com/hubchev/make_a_pull_request">repository</a> and forked it to my personal GitHub account.</p></li>
+<li><p>Clone the forked repository: I cloned the forked repository to my local system via the git clone command in Rstudio.</p></li>
+<li><p>Create a new branch: I created a separate branch using “git checkout -b add Tony-Osei” to safely make changes without affecting the main branch.</p></li>
+<li><p>Add my name to the Contributors.md file: I used Rstudio to open the file and added my name and title of the paper to the contributors list as instructed.</p></li>
+<li><p>Commit changes: I staged the modified file and committed the change with a meaningful message using git add and git commit.</p></li>
+<li><p>Push to GitHub: I pushed the new branch to my GitHub repository using “git push -u origin add-Tony-Osei”.</p></li>
+<li><p>Create a pull request: Finally, I opened the original repository, clicked “Compare &amp; Pull Request,” and submitted the pull request for review.</p></li>
+</ol>
 </section>
-<section id="challenges-encountered-1" class="level1">
-<h1>Challenges Encountered</h1>
-<p>While the technical replication of the graphs presented several coding and formatting difficulties, there were also broader project challenges that required significant effort to overcome. These challenges stemmed primarily from workflow, version control, and tooling within the RStudio and GitHub environments. Below are the most notable ones:</p>
-<section id="publishing-the-project-on-github" class="level2">
-<h2 class="anchored" data-anchor-id="publishing-the-project-on-github">1. Publishing the Project on GitHub</h2>
-<p>One of the biggest hurdles arose when trying to push the project to a GitHub repository. Initially, an error prevented the push from completing because the dataset analysis_data.dta exceeded GitHub’s 100MB file limit. Multiple attempts were made to upload the file directly, which consistently failed. To resolve this, a .gitignore file was created at the root of the Git repository to exclude the large data files from being tracked. Additionally, unnecessary temporary files such as .RData and index.html were also added to .gitignore to prevent further upload conflicts. Despite these efforts, there were persistent issues with large hidden files being tracked, leading to the need for Git Large File Storage (LFS). However, due to time constraints and setup complexity, this route was abandoned. Instead, the Git history was cleaned using the BFG Repo-Cleaner, which required installing Java and running commands through the terminal. This GitHub crisis happened the night before the final project presentation, and resolving it took over an hour of debugging with a group member (Christian) until past midnight. Eventually, the push was successful, and all important project files (excluding the large datasets) were made available on GitHub.</p>
+<section id="challenges-encountered" class="level1" data-number="7">
+<h1 data-number="7"><span class="header-section-number">7</span> Challenges Encountered</h1>
+<p>Apart from the problems i have listed earlier, I faced several broader challenges related to workflow, version control, and tooling within RStudio and GitHub. Below are the most notable ones:</p>
+<section id="publishing-the-project-on-github" class="level2" data-number="7.1">
+<h2 data-number="7.1"><span class="header-section-number">7.1</span> Publishing the Project on GitHub</h2>
+<p>A major issue was pushing the project to GitHub due to the analysis_data.dta file exceeding GitHub’s 100MB limit. Initial upload attempts failed. To resolve this, a .gitignore file was added to exclude large and temporary files (e.g., .RData, index.html). Despite this, hidden large files still caused push errors. Git Large File Storage (LFS) was considered but skipped due to setup complexity. Instead, the BFG Repo-Cleaner was used to clean Git history, requiring Java and terminal commands. This GitHub fix took over an hour and was completed with help from a teammate (Christian) just before the final deadline.</p>
 </section>
-<section id="quarto-rendering-and-visual-mode-issues" class="level2">
-<h2 class="anchored" data-anchor-id="quarto-rendering-and-visual-mode-issues">2. Quarto Rendering and Visual Mode Issues</h2>
-<p>Another major challenge was with Quarto’s visual and source mode compatibility. The R code chunks for graph replication were correctly written and displayed in source mode. However, when switching to visual mode, these chunks disappeared, and the code was rendered as plain text. This problem caused a lot of confusion and rework. To temporarily fix this, changes were made only in source mode, and every time the document was saved, care was taken not to switch views. However, this limitation made working in Quarto’s user-friendly interface less practical and introduced a risk of losing code formatting. Additionally, during rendering, missing object errors would sometimes halt the document compilation if a data frame or object used in a chunk wasn’t defined in the rendered environment. This was resolved by setting eval = FALSE in most code chunks — allowing the code to be displayed without being executed — ensuring reproducibility without execution errors.</p>
-</section>
-<section id="image-and-file-path-issues" class="level2">
-<h2 class="anchored" data-anchor-id="image-and-file-path-issues">3. Image and File Path Issues</h2>
-<p>A third challenge involved getting images to display correctly in both local and published HTML versions of the presentation. Initially, images were referenced using absolute file paths. These worked locally but failed to render on other devices or when hosted online. The fix involved relocating images into the docs/images/ folder and using relative paths, e.g.,: markdown CopyEdit <img src="images/chart1.png" class="img-fluid"> Even then, the images had to be tracked with git add to appear in the live site. Forgetting to add them manually resulted in broken image links.</p>
-</section>
-<section id="package-installation-hurdles" class="level2">
-<h2 class="anchored" data-anchor-id="package-installation-hurdles">4. Package Installation Hurdles</h2>
-<p>Throughout the project, several packages had to be installed manually, often at critical moments. For example, the fixest package was essential for running fixed effects models, and modelsummary was required to generate HTML tables. In many cases, package errors interrupted workflow due to version mismatches or uninstalled dependencies. Installing matrixStats, janitor, and lubridate was also necessary to get the graphs and regression models working correctly. These installations often had to be done through the terminal or via RStudio prompts and required troubleshooting during code execution.</p>
-</section>
-<section id="efficient-handling-of-a-large-dataset" class="level2">
-<h2 class="anchored" data-anchor-id="efficient-handling-of-a-large-dataset">5. Efficient Handling of a Large Dataset</h2>
-<p>The dataset used in the replication (analysis_data.dta) was over 500 MB in size and contained more than 5 million rows across 23 variables. Loading and processing such a large file posed a significant challenge in terms of memory usage and computational speed. To address this, the data.table package was used extensively. It provided fast, memory-efficient operations for filtering, grouping, and collapsing the data. In particular:</p>
-<p>Subsetting the data early in the pipeline (e.g., selecting only rows where price_change == 1) reduced memory overhead.</p>
-<p>Using collapse() and by = operations helped avoid excessive loops and accelerated summary statistics generation.</p>
-<p>Temporary tables were created to isolate and analyze specific dimensions like product-week or hour-of-week, preventing unnecessary memory bloat. These optimizations ensured that the analysis could be completed within the limits of standard hardware (a personal laptop), without the need for cloud computing or high-performance servers.</p>
+<section id="quarto-rendering-and-visual-mode-issues" class="level2" data-number="7.2">
+<h2 data-number="7.2"><span class="header-section-number">7.2</span> Quarto Rendering and Visual Mode Issues</h2>
+<p>Quarto’s visual mode caused R code chunks to disappear or render as plain text. This forced all editing to be done in source mode. Switching views risked formatting loss. Additionally, some chunks failed during rendering due to undefined objects. Setting eval = FALSE ensured code displayed correctly without executing — preserving reproducibility and avoiding runtime errors.</p>
 </section>
 </section>
-<section id="collaboration-and-experience" class="level1">
-<h1>Collaboration and Experience</h1>
-<p>This project was completed as part of a three-member group. Active collaboration was primarily carried out between two members — Christian and myself — from the beginning to the end of the replication process. The third member, Vansh, did not participate in any part of the project. Despite multiple efforts to involve him through class announcements, meeting invitations, and direct communication, there was no engagement on his part. Each group member initially selected specific graphs or tables from the article to replicate, and Christian and I divided responsibilities accordingly. While the work was individually assigned, we frequently consulted each other to resolve issues, review code, and ensure consistency across outputs. The collaborative environment between the two active members contributed positively to the project’s outcomes. It reinforced accountability and was particularly valuable during more complex stages — such as troubleshooting formatting issues in ggplot, resolving Quarto rendering problems, and deploying the project to GitHub. The shared effort and communication helped maintain momentum and ensured the replication work was both rigorous and completed on time.</p>
+<section id="collaboration-and-experience" class="level1" data-number="8">
+<h1 data-number="8"><span class="header-section-number">8</span> Collaboration and Experience</h1>
+<p>This project was completed in a group of three, though active collaboration occurred only between Christian and me. Despite repeated attempts to involve the third member, he did not participate. Christian and I divided tasks based on selected graphs and tables, regularly consulting each other to troubleshoot code, resolve formatting and rendering issues, and coordinate the GitHub deployment. Our consistent collaboration ensured the project stayed on track and maintained a high standard of accuracy and presentation.</p>
+<section id="utilisation-of-chatgpt" class="level2" data-number="8.1">
+<h2 data-number="8.1"><span class="header-section-number">8.1</span> Utilisation of ChatGpt</h2>
+<p>I would like to emphasize that, a key factor in the successful completion of this project was the consistent use of ChatGPT as an interactive coding assistant. With no prior experience in R or Quarto, I relied heavily on ChatGPT to:</p>
+<ol type="i">
+<li><p>Translate complex Stata .do files into R code, preserving the logic of fixed effects models, time-series transformations, and graphical syntax.</p></li>
+<li><p>Debug errors and interpret cryptic messages that appeared during rendering, GitHub syncing, or dataset operations.</p></li>
+<li><p>Design reproducible graph code that matched the figures in the original paper.</p></li>
+<li><p>Simplify technical explanations, which helped me learn and understand the reasoning behind each step rather than blindly executing code.</p></li>
+<li><p>Create a clean report structure, including Quarto syntax, YAML headers, chunk options, and reference integration.</p></li>
+</ol>
 </section>
-<section id="utilisation-of-chatgpt" class="level1">
-<h1>Utilisation of ChatGpt</h1>
-<p>A key factor in the successful completion of this project was the consistent use of ChatGPT as an interactive coding assistant. With no prior experience in R or Quarto, I relied heavily on ChatGPT to:</p>
-<p>Translate complex Stata .do files into R code, preserving the logic of fixed effects models, time-series transformations, and graphical syntax.</p>
-<p>Debug errors and interpret cryptic messages that appeared during rendering, GitHub syncing, or dataset operations.</p>
-<p>Design reproducible graph code that matched the figures in the original paper.</p>
-<p>Simplify technical explanations, which helped me learn and understand the reasoning behind each step rather than blindly executing code.</p>
-<p>Create a clean report structure, including Quarto syntax, YAML headers, chunk options, and reference integration.</p>
+<section id="reflections-on-learning-rstudio-as-a-beginner" class="level2" data-number="8.2">
+<h2 data-number="8.2"><span class="header-section-number">8.2</span> Reflections on Learning RStudio as a Beginner</h2>
+<p>This project was my first hands-on experience with RStudio and served as a valuable introduction to data analysis. With no prior background in R, I learned to navigate the RStudio interface, write structured code using packages like dplyr, ggplot2, and fixest, and work efficiently with large datasets. I also gained experience rendering documents with Quarto and resolving common coding errors. More importantly, the project strengthened my problem-solving skills and taught me how to break down and document complex analytical tasks — skills I can now apply in both academic and professional contexts.</p>
 </section>
-<section id="reflections-on-learning-rstudio-as-a-beginner" class="level1">
-<h1>Reflections on Learning RStudio as a Beginner</h1>
-<p>This replication project marked my first in-depth experience working with RStudio, and it served as a highly valuable learning journey. Prior to this, I had no background in R programming or data science tools. Through trial, feedback, and hands-on experimentation, I developed several key skills. Most notably, I learned how to:</p>
-<p>Use RStudio as a coding environment, including navigating the Source, Console, Files, and Terminal panes.</p>
-<p>Write and structure R code effectively, using functions from packages like dplyr, data.table, ggplot2, and fixest.</p>
-<p>Work with large datasets, applying efficient filtering, collapsing, and memory-saving techniques.</p>
-<p>Render documents using Quarto, controlling chunk options such as eval, echo, warning, and message.</p>
-<p>Diagnose and resolve common coding errors, such as missing packages, object not found, or file path issues.</p>
-<p>Beyond technical commands, this project taught me problem-solving under uncertainty, especially when debugging complex errors without prior experience. It also helped me understand how to approach a large analytical task methodically — by breaking it down into parts and documenting each stage clearly.</p>
-<p>Working on this replication has not only introduced me to R as a statistical tool but has also equipped me with a transferable data analysis mindset I can use across academic and professional projects.</p>
 </section>
-<section id="conclusion" class="level1">
-<h1>Conclusion</h1>
+<section id="conclusion" class="level1" data-number="9">
+<h1 data-number="9"><span class="header-section-number">9</span> Conclusion</h1>
 <p>The project successfully replicated core empirical results from Competition in Pricing Algorithms using RStudio. This required careful data wrangling, econometric modeling, and graph construction. Beyond replication, the process reinforced valuable skills in reproducible research and collaborative coding. The graphical replications closely matched those in the original paper, and the replication revealed the importance of both algorithmic pricing and its timing across online retailers. The project demonstrated how subtle differences in pricing strategy can be uncovered through detailed empirical work.</p>
-<hr>
+<section id="what-could-have-been-accomplished-with-more-time" class="level2" data-number="9.1">
+<h2 data-number="9.1"><span class="header-section-number">9.1</span> What could have been accomplished with more time</h2>
+<p>If more time had been available, I could have replicated a broader set of figures and tables. I planned to replicate a regression table, which i eventually aborted. Additional effort could have gone into improving visual design to match the original formatting more precisely, that is, combining graphs into panels, and refining x-axis alignment, or reproducing LaTeX-formatted tables. Also, i could have made my R code more flexible and reusable so that it can be applied to other datasets easily in the future. Lastly, writing a script that performs multiple steps in the replication process like, cleaning, transforming and graphing automatically, would have saved time and produced less errors.</p>
 </section>
-<section id="references" class="level1">
-<h1>References</h1>
+<section id="further-investigations-and-readings" class="level2" data-number="9.2">
+<h2 data-number="9.2"><span class="header-section-number">9.2</span> Further investigations and readings</h2>
+<p>Looking ahead, several avenues for further investigation remain. Future work could involve extending the analysis to additional time periods, incorporating new retailers, or exploring how algorithmic pricing interacts with promotional campaigns and consumer demand elasticity. Moreover, the evolution of pricing algorithms under competitive pressure—especially with the rise of machine learning-based systems—warrants continued empirical attention. Researchers may also benefit from engaging with recent literature on algorithmic collusion, real-time pricing strategies, and the ethics of automated pricing to deepen the interpretive lens. Replication efforts like this one offer a foundation for such expanded inquiries, contributing to more transparent, accountable, and dynamic understanding of digital marketplaces.</p>
+<hr />
+</section>
+</section>
+<section id="references" class="level1" data-number="10">
+<h1 data-number="10"><span class="header-section-number">10</span> References</h1>
 <!-- References will auto-populate in the refs div below -->
-<div id="refs" class="references csl-bib-body hanging-indent" data-entry-spacing="0" role="list">
-<div id="ref-brown2023competition" class="csl-entry" role="listitem">
-Brown, Zach Y., and Alexander MacKay. 2023. <span>“Competition in Pricing Algorithms.”</span> <em>American Economic Review</em> 113 (3): 844–80. <a href="https://doi.org/10.1257/aer.20210704">https://doi.org/10.1257/aer.20210704</a>.
+<div id="refs" class="references csl-bib-body hanging-indent" data-entry-spacing="0" data-line-spacing="2" role="list">
+<div id="ref-10.1257/mic.20210158" class="csl-entry" role="listitem">
+Brown, Z. Y., &amp; MacKay, A. (2023). Competition in pricing algorithms. <em>American Economic Journal: Microeconomics</em>, <em>15</em>(2), 109–156. <a href="https://doi.org/10.1257/mic.20210158">https://doi.org/10.1257/mic.20210158</a>
+</div>
+<div id="ref-data.table" class="csl-entry" role="listitem">
+Dowle, M., Srinivasan, A., &amp; Kalibera, T. (2024). <em>Data.table: Extension of ‘data.frame‘</em>. <a href="https://CRAN.R-project.org/package=data.table">https://CRAN.R-project.org/package=data.table</a>
 </div>
 <div id="ref-mbatha2023github" class="csl-entry" role="listitem">
-Mbatha, Chevis. 2023. <span>“Make a Pull Request.”</span> 2023. <a href="https://github.com/hubchev/make_a_pull_request">https://github.com/hubchev/make_a_pull_request</a>.
+Mbatha, C. (2023). <em>Make a pull request</em>. <a href="https://github.com/hubchev/make_a_pull_request" class="uri">https://github.com/hubchev/make_a_pull_request</a>.
 </div>
 <div id="ref-quarto" class="csl-entry" role="listitem">
-Quarto Development Team. 2024. <em>Quarto: Scientific and Technical Publishing System</em>. <a href="https://quarto.org/">https://quarto.org/</a>.
+Quarto Development Team. (2024). <em>Quarto: Scientific and technical publishing system</em>. <a href="https://quarto.org/">https://quarto.org/</a>
 </div>
 <div id="ref-rsoftware" class="csl-entry" role="listitem">
-R Core Team. 2024. <em>R: A Language and Environment for Statistical Computing</em>. Vienna, Austria: R Foundation for Statistical Computing. <a href="https://www.R-project.org/">https://www.R-project.org/</a>.
+R Core Team. (2024). <em>R: A language and environment for statistical computing</em>. R Foundation for Statistical Computing. <a href="https://www.R-project.org/">https://www.R-project.org/</a>
+</div>
+<div id="ref-ggplot2" class="csl-entry" role="listitem">
+Wickham, H. (2016). <em>ggplot2: Elegant graphics for data analysis</em>. Springer-Verlag New York. <a href="https://ggplot2.tidyverse.org">https://ggplot2.tidyverse.org</a>
+</div>
+<div id="ref-haven" class="csl-entry" role="listitem">
+Wickham, H., Miller, E., &amp; Henry, L. (2024). <em>Haven: Import and export ’SPSS’, ’stata’ and ’SAS’ files</em>. <a href="https://CRAN.R-project.org/package=haven">https://CRAN.R-project.org/package=haven</a>
 </div>
 </div>
 </section>
-<section id="appendix" class="level1">
-<h1>Appendix</h1>
+<section class="level1" data-number="11">
+<h1 data-number="11"><span class="header-section-number">11</span> Appendix</h1>
 </section>
-<section id="affidavit" class="level1">
-<h1>Affidavit</h1>
+<section id="apx-a" class="level1" data-appendixtitle="A" data-number="12">
+<h1 data-appendixtitle="A" data-number="12"><span class="header-section-number">12</span> This Section Is an Appendix</h1>
+<section id="relevant-links" class="level2" data-number="12.1">
+<h2 data-number="12.1"><span class="header-section-number">12.1</span> Relevant Links</h2>
+<p><a href="https://nanaosei95.github.io/replicapresentation/">Link to the presentation</a></p>
+<p><a href="https://github.com/Nanaosei95/replicapresentation.git">Link to the presentation repository</a></p>
+<p><a href="https://github.com/Nanaosei95/Replica.git">Link to the replication repository</a></p>
+</section>
+</section>
+<section id="affidavit" class="level1" data-number="13">
+<h1 data-number="13"><span class="header-section-number">13</span> Affidavit</h1>
 <p>I hereby affirm that this submitted paper was authored unaided and solely by me. Additionally, no other sources than those in the reference list were used. Parts of this paper, including tables and figures, that have been taken either verbatim or analogously from other works have in each case been properly cited with regard to their origin and authorship. This paper either in parts or in its entirety, be it in the same or similar form, has not been submitted to any other examination board and has not been published.</p>
 <p>I acknowledge that the university may use plagiarism detection software to check my thesis. I agree to cooperate with any investigation of suspected plagiarism and to provide any additional information or evidence requested by the university.</p>
 <p>The report includes:</p>
 <ul class="task-list">
-<li><p><label><input type="checkbox" checked="">About 4000 words per student (+/- 500).</label></p></li>
-<li><p><label><input type="checkbox" checked="">The submission contains the Quarto file of the report.</label></p></li>
-<li><p><label><input type="checkbox" checked="">The submission contains the Quarto file of the presentation.</label></p></li>
-<li><p><label><input type="checkbox" checked="">The submission contains the HTML file of the report.</label></p></li>
-<li><p><label><input type="checkbox" checked="">The submission contains the HTML file of the presentation.</label></p></li>
-<li><p><label><input type="checkbox" checked="">The submission contains the PDF file of the report.</label></p></li>
-<li><p><label><input type="checkbox" checked="">The submission contains the PDF file of the presentation.</label></p></li>
-<li><p><label><input type="checkbox" checked="">The title page of the presentation and the report contain personal details (name, email, matriculation number).</label></p></li>
-<li><p><label><input type="checkbox" checked="">The report contains an abstract.</label></p></li>
-<li><p><label><input type="checkbox" checked="">The presentation and the report contain a bibliography, created using BibTeX with APA citation style.</label></p></li>
-<li><p><label><input type="checkbox" checked="">The report contains R code that proofs the student(s) expertise in coding.</label></p></li>
-<li><p><label><input type="checkbox" checked="">The report includes an introduction to guide the reader and a conclusion summarizing the work and discussing potential further investigations and readings, respectively.</label></p></li>
-<li><p><label><input type="checkbox" checked="">All significant resources used in the report and R code development.</label></p></li>
-<li><p><label><input type="checkbox" checked="">The filled out Affidavit.</label></p></li>
-<li><p><label><input type="checkbox">A concise description of the successful use of Git and GitHub, as detailed here:&nbsp;<a href="https://github.com/hubchev/make_a_pull_request" class="uri">https://github.com/hubchev/make_a_pull_request</a>.</label></p></li>
-<li><p><label><input type="checkbox" checked="">The link to the presentation and the handout published on GitHub.</label></p>
+<li><p><label><input type="checkbox" checked="" />About 4000 words per student (+/- 500).</label></p></li>
+<li><p><label><input type="checkbox" checked="" />The submission contains the Quarto file of the report.</label></p></li>
+<li><p><label><input type="checkbox" checked="" />The submission contains the Quarto file of the presentation.</label></p></li>
+<li><p><label><input type="checkbox" checked="" />The submission contains the HTML file of the report.</label></p></li>
+<li><p><label><input type="checkbox" checked="" />The submission contains the HTML file of the presentation.</label></p></li>
+<li><p><label><input type="checkbox" checked="" />The submission contains the PDF file of the report.</label></p></li>
+<li><p><label><input type="checkbox" checked="" />The submission contains the PDF file of the presentation.</label></p></li>
+<li><p><label><input type="checkbox" checked="" />The title page of the presentation and the report contain personal details (name, email, matriculation number).</label></p></li>
+<li><p><label><input type="checkbox" checked="" />The report contains an abstract.</label></p></li>
+<li><p><label><input type="checkbox" checked="" />The presentation and the report contain a bibliography, created using BibTeX with APA citation style.</label></p></li>
+<li><p><label><input type="checkbox" checked="" />The report contains R code that proofs the student(s) expertise in coding.</label></p></li>
+<li><p><label><input type="checkbox" checked="" />The report includes an introduction to guide the reader and a conclusion summarizing the work and discussing potential further investigations and readings, respectively.</label></p></li>
+<li><p><label><input type="checkbox" checked="" />All significant resources used in the report and R code development.</label></p></li>
+<li><p><label><input type="checkbox" checked="" />The filled out Affidavit.</label></p></li>
+<li><p><label><input type="checkbox" checked="" />A concise description of the successful use of Git and GitHub, as detailed here: <a href="https://github.com/hubchev/make_a_pull_request" class="uri">https://github.com/hubchev/make_a_pull_request</a>.</label></p></li>
+<li><p><label><input type="checkbox" checked="" />The link to the presentation and the handout published on GitHub.</label></p>
 <p>Osei Tony Attefah</p>
 <p>18.07.2025</p>
 <p>Koln, Germany</p></li>
@@ -962,7 +774,7 @@ R Core Team. 2024. <em>R: A Language and Environment for Statistical Computing</
 
 </main>
 <!-- /main column -->
-<script id="quarto-html-after-body" type="application/javascript">
+<script id = "quarto-html-after-body" type="application/javascript">
 window.document.addEventListener("DOMContentLoaded", function (event) {
   const toggleBodyColorMode = (bsSheetEl) => {
     const mode = bsSheetEl.getAttribute("data-mode");
@@ -982,13 +794,6 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     }
   }
   toggleBodyColorPrimary();  
-  const icon = "";
-  const anchorJS = new window.AnchorJS();
-  anchorJS.options = {
-    placement: 'right',
-    icon: icon
-  };
-  anchorJS.add('.anchored');
   const isCodeAnnotation = (el) => {
     for (const clz of el.classList) {
       if (clz.startsWith('code-annotation-')) {                     
@@ -1381,7 +1186,6 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 </script>
 </div> <!-- /content -->
 
+</body>
 
-
-
-</body></html>
+</html>
